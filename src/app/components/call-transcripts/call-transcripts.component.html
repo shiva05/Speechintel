@@ -1,0 +1,455 @@
+<si-spinner *ngIf="loading"></si-spinner>
+<section class="wrapper-main ">
+  <div class="container-fluid no-pad">
+    <!--    <div class="row ct-links">
+      <div class="col-md-12 col-sm-12">
+        <a href="">Home</a> >
+        <a href="">Call Transcripts</a>
+      </div>
+    </div> -->
+    <div class="row title_actions no-mar">
+      <div class="col-md-4 no-pad">
+        <!--<h4 class="pull-left">Call Transcripts</h4>-->
+      </div>
+      <div class="col-md-8 text-right icon-links d-flex align-self-center justify-content-end no-pad ml-auto">
+        <!--<i style="font-size:24px;color:#172C47;" class="fa">&#xf098;</i>
+        <i style="font-size:24px;color:#172C47;margin-left:5px;" class="fa">&#xf044;</i>
+        <i style="font-size:24px;color:#172C47;margin-left:5px;" class="fa">&#xf021;</i>-->
+        <!--<a (click)="downloadTranscript()"> <i style="font-size:24px;color:#172C47;margin-left:5px;" class="fa">&#xf019;</i></a>-->
+        <ul class="iconList">
+          <li *ngIf="!authService.restrictedUser && !callTrasncriptionList">
+            <button (click)="addFrequencyDownloadChunck()" title="Split and Download" [disabled]="(fileInfoLength == null || fileInfoLength == undefined || fileInfoLength.length == 0)">
+              <img src="../../../assets/images/DownloadSplit.png" />
+            </button>
+          </li>
+          <li *ngIf="!callTrasncriptionList">
+            <a [class.disabled]="(fileInfoLength == null || fileInfoLength == undefined || fileInfoLength.length == 0)" [href]="dataService.downloadLinks.get(guid)" title="Download transcript"><i class="fa fa-download" title="Download Transcript" aria-hidden="true"></i></a>
+          </li>
+        </ul>
+        <ul class="iconList" *ngIf="callTrasncriptionList">
+          <li><a (click)="refresh();" title="Refresh"><i class="fa cr-icons">&#xf021;</i></a></li>
+        </ul>
+        <si-side-bar [instructions]="instructions" [errorWordCount]="errorWordCount" [wordTags]="wordTags" [totalWordCount]="totalWordCount"
+                     (onSearchClick)="searchClicked($event)" (onTagSelect)="tagSelected($event)" *ngIf="!authService.restrictedUser && !callTrasncriptionList"></si-side-bar>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="row call-recording-tabs no-mar pad-r5">
+        <div class="call-recording-navitem headingTile mr-2" style="width: 170px;">
+          <div class="date-filter-main">
+            <img src="../../../assets/images/new-file.png" alt="call-recording" />
+            <h4>Call Transcripts</h4>
+          </div>
+        </div>
+        <div class="call-recording-navitem mr-2">
+          <div class="date-filter-main">
+            <h5>Call Count</h5>
+            <span class="count">{{fileInfoService.overallHeaderCount.totalfileInfoLength}}</span>
+          </div>
+        </div>
+        <div class="call-recording-navitem mr-2">
+          <div class="date-filter-main">
+            <h5>Call Duration</h5>
+            <span class="count">{{fileInfoService.overallHeaderCount.totalDuration}}</span>
+          </div>
+        </div>
+        <div class="call-recording-navitem mr-2">
+          <div class="date-filter-main">
+            <h5>Avg Handle Time</h5>
+            <span class="count">{{fileInfoService.overallHeaderCount.avgHandleTime}}</span>
+          </div>
+        </div>
+        <div class="call-recording-navitem">
+          <div class="date-filter-main">
+            <h5>Word Count <span class="countType">( {{wordCountType}} )</span></h5>
+
+            <div class="totalValues">{{totalWordCount}}</div>
+            <ul class="nav wordsCount ">
+              <li class="dropdown">
+                <a href="#" class="wordCountDropdown" data-toggle="dropdown"><i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu">
+                  <li [ngClass]="wordCountType == 'All' ? 'active' : ''" (click)="changeWordCount('All')"><a><i class="icon-cog"></i>All</a></li>
+                  <li [ngClass]="wordCountType == 'Agent' ? 'active' : ''" (click)="changeWordCount('Agent')"><a><i class="icon-envelope"></i>Agent</a></li>
+                  <li [ngClass]="wordCountType == 'Customer' ? 'active' : ''" (click)="changeWordCount('Customer')"><a><i class="icon-envelope"></i>Customer</a></li>
+                </ul>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+        <!--<div class="call-recording-navitem flex-grow-1">
+    <div class="date-filter-main">
+      <h5>Transcription Score</h5>
+      <span class="count">64</span>
+    </div>
+  </div>-->
+        <!--<div class="call-recording-navitem date-filteradj flex-grow-1">
+    <app-datefilter></app-datefilter>
+    <div class="clearfix"></div>
+  </div>
+  <div class="call-recording-navitem date-filteradj flex-grow-1" *ngIf="role != 'Customer_Agent'">
+    <app-uploadDateFilter></app-uploadDateFilter>
+    <div class="clearfix"></div>
+  </div>-->
+      </div>
+    </div>
+    <div class="row no-mar transcription-details">
+      <div class="col-md-12">
+        
+        <div class="mid-section transcript-pad fullScreen">
+          <div class="row no-mar">
+            <div class="calltranscription-table  temp_withoutAgentScore" [hidden]="!callTrasncriptionList">
+              <div class="title">
+                <div class="item" (click)="sort('FileName')" [ngClass]="reverse  ? 'up' : 'down'">
+                  <span title="Name">
+                    Name
+                    <span *ngIf="key =='FileName'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                </div>
+                <div class="item" (click)="sort('Duration')" [ngClass]="reverse  ? 'up' : 'down'">
+                  <span title="Talk Time">
+                    Talk Time
+                    <span *ngIf="key =='Duration'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                </div>
+                <div class="item">
+                  <span class="item-text" (click)="sort('CustomerAccountNo')" [ngClass]="reverse  ? 'up' : 'down'" title="Customer Account Number">
+                    <!--Customer Account Number--> Cust Acct No
+                    <span *ngIf="key =='CustomerAccountNo'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('CustomerAccountNo')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.finalSelectedList.CustomerAccountNo != null"></i>
+                    </button>
+                    <div *ngIf="filterDropdownDisplay">
+                      <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="selectedColumn === 'CustomerAccountNo'">
+                        <div class="d-flex justify-content-end" *ngIf="_filterDropdownService.dataSet">
+                          <button class="btn apply-btn float-right" (click)="applyfilter('CustomerAccountNo')">Apply Filter</button>
+                          <button class="btn btn-secondary float-right" (click)="clearFilterData('CustomerAccountNo')">Clear Filter</button>
+                        </div>
+                        <app-filter-dropdown></app-filter-dropdown>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+                <div class="item">
+                  <span class="item-text" (click)="sort('CustomerPhoneNo')" [ngClass]="reverse  ? 'up' : 'down'" title="Customer Phone Number">
+                    <!--Customer Phone Number--> Cust Ph No
+                    <span *ngIf="key =='CustomerPhoneNo'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('CustomerPhoneNo')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.finalSelectedList.CustomerPhoneNo != null"></i>
+                    </button>
+                    <div *ngIf="filterDropdownDisplay">
+                      <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="selectedColumn === 'CustomerPhoneNo'">
+                        <div class="d-flex justify-content-end" *ngIf="_filterDropdownService.dataSet">
+                          <button class="btn apply-btn float-right" (click)="applyfilter('CustomerPhoneNo')">Apply Filter</button>
+                          <button class="btn btn-secondary float-right" (click)="clearFilterData('CustomerPhoneNo')">Clear Filter</button>
+                        </div>
+                        <app-filter-dropdown></app-filter-dropdown>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+                <div class="item">
+                  <span class="item-text" (click)="sort('ProgramName')" [ngClass]="reverse  ? 'up' : 'down'" title="Program Name">
+                    <!--Program Name--> Prog. Name
+                    <span *ngIf="key =='ProgramName'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('ProgramName')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.finalSelectedList.ProgramName != null"></i>
+                    </button>
+                    <div *ngIf="filterDropdownDisplay">
+                      <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="selectedColumn === 'ProgramName'">
+                        <div class="d-flex justify-content-end" *ngIf="_filterDropdownService.dataSet">
+                          <button class="btn apply-btn float-right" (click)="applyfilter('ProgramName')">Apply Filter</button>
+                          <button class="btn btn-secondary float-right" (click)="clearFilterData('ProgramName')">Clear Filter</button>
+                        </div>
+                        <app-filter-dropdown></app-filter-dropdown>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+                <div class="item">
+                  <span class="item-text" title="Call Date" (click)="sortByDate('CallDate')" [ngClass]="sortDate  ? 'up' : 'down'">
+                    Call Date
+                    <span *ngIf="key =='CallDate'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('CallDate');defaultFilter()">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.callDateFilterApplied"></i>
+                    </button>
+                    <div *ngIf="fileInfoService.dateFiltersApplied">
+                      <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="selectedColumn === 'CallDate'">
+                        <div>
+                          <button class="btn btn-secondary float-right" (click)="clearFilterData('CallDate')">Clear Filter</button>
+                        </div>
+                        <app-datefilter></app-datefilter>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+                <div class="item">
+                  <span class="item-text" title="Upload Date" (click)="sortByDate('UploadedDate')" [ngClass]="sortDate  ? 'up' : 'down'">
+                    <!--Uploaded Date--> Upload Date
+                    <span *ngIf="key =='UploadedDate'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('UploadedDate')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.uploadFilterApplied"></i>
+                    </button>
+                    <div *ngIf="fileInfoService.dateFiltersApplied">
+                      <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="selectedColumn === 'UploadedDate'">
+                        <div>
+                          <button class="btn btn-secondary float-right" (click)="clearFilterData('UploadedDate')">Clear Filter</button>
+                        </div>
+                        <app-uploadDateFilter></app-uploadDateFilter>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+                <div class="item">
+                  <span class="item-text" (click)="sort('AgentName')" [ngClass]="reverse  ? 'up' : 'down'" title="Agent Name">
+                    Agent Name 
+                    <span *ngIf="key =='AgentName'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('AgentName')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.finalSelectedList.AgentName != null"></i>
+                    </button>
+                    <div *ngIf="filterDropdownDisplay">
+                      <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="selectedColumn === 'AgentName'">
+                        <div class="d-flex justify-content-end" *ngIf="_filterDropdownService.dataSet">
+                          <button class="btn apply-btn float-right" (click)="applyfilter('AgentName')">Apply Filter</button>
+                          <button class="btn btn-secondary float-right" (click)="clearFilterData('AgentName')">Clear Filter</button>
+                        </div>
+                        <app-filter-dropdown></app-filter-dropdown>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+                <div class="item text-center">
+                  <span class="" title="Word Count" [ngClass]="reverse  ? 'up' : 'down'">
+                    <span *ngIf="wordCountType == 'All'" (click)="sort('OtherColumns.Call_Transcripts_All_WordCount')">All Word Count</span>
+                    <span *ngIf="wordCountType == 'Agent'" (click)="sort('OtherColumns.Call_Transcripts_Agent_WordCount')">Agent Word Count</span>
+                    <span *ngIf="wordCountType == 'Customer'" (click)="sort('OtherColumns.Call_Transcripts_Customer_WordCount')">Customer Word Count</span>
+                    <span class="orderBy" *ngIf="key =='OtherColumns.Call_Transcripts_All_WordCount' && wordCountType == 'All'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                    <span class="orderBy" *ngIf="key =='OtherColumns.Call_Transcripts_Agent_WordCount' && wordCountType == 'Agent'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                    <span class="orderBy" *ngIf="key =='OtherColumns.Call_Transcripts_Customer_WordCount' && wordCountType == 'Customer'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                </div>
+                <div class="item" title="Call Transcript">Call Transcript</div>
+              </div>
+              <div class="table-content ps" [perfectScrollbar]="config">
+                <div *ngFor="let file of fileInfoService.filesInfo | orderBy: key : reverse | sortByDate: key; let i = index" class="items-main d-flex align-items-center">
+                  <div class="item">
+                    <div *ngIf="file.Status == 'Completed'" class="d-flex align-items-center">
+                      <span class="pr-1"> {{file.FileName}} </span>
+                      <!--<span class="audioBtn">
+        <span (click)="audioPlay(file, i)" class="play" [hidden]="file.audioPath"><i class="fa fa-play"></i></span>
+          <audio controls autoplay [src]="file.audioPath" type="audio/mp3" class="audio"></audio>
+      </span>-->
+                    </div>
+                  </div>
+                  <div class="item">{{dataService.formatTime(file.Duration)}}</div>
+                  <div class="item">{{file.CustomerAccountNo}}</div>
+                  <div class="item">{{file.CustomerPhoneNo}}</div>
+                  <div class="item">{{file.ProgramName}}</div>
+                  <div class="item">{{file.CallDate | date:"MMM dd, yyyy"}}</div>
+                  <div class="item">{{file.UploadedDate | date:"MMM dd, yyyy"}}</div>
+                  <div class="item">{{file.AgentName}}</div>
+                  <div class="item text-center">
+                    <span class="wordCountBg" *ngIf="wordCountType == 'All'">{{file.OtherColumns.Call_Transcripts_All_WordCount}}</span>
+                    <span class="wordCountBg" *ngIf="wordCountType == 'Agent'">{{file.OtherColumns.Call_Transcripts_Agent_WordCount}}</span>
+                    <span class="wordCountBg" *ngIf="wordCountType == 'Customer'">{{file.OtherColumns.Call_Transcripts_Customer_WordCount}}</span>
+
+                  </div>
+
+                  <div class="item">
+                    <button class="btn btn-2" (click)="editFile(file.Guid, file.FileName, file.Status, i, file.TranscriptAPISource);
+                            transcriptionDetails(file.TranscriptionEditorStatusId, file.TranscriptAPISource);selectedRowToViewDetailedScore(file, i); ">
+                      View Transcript
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!--<div class="call-transcripts-pagination">
+                <strong>Pages : </strong>
+                <span class="ml-1" *ngFor="let page of totalpagecount">
+                  <button type="button" class="pageNumber" [ngClass]="selectedPage === page.pagemumber ? 'active' : ''" [disabled]="loading" (click)="selectedPageIndex(page.pagemumber)"> {{page.pagemumber}}</button>
+                </span>
+              </div>-->
+              <div class="call-transcripts-pagination">
+                <button class="btn btn-primary mr-2" (click)="firstPage()" [disabled]="selectedPage === 1">First</button>
+                <button class="btn btn-primary" (click)="prevPageCount()" [disabled]="selectedPage === 1"><i class="fa fa-angle-left"></i></button>
+                <div class="pages">
+                  <div id="activepages" [style.margin-left.px]="marginLeftValue">
+                    <span class="ml-2" *ngFor="let page of totalpagecount">
+                      <button type="button" class="pageNumber" [ngClass]="selectedPage === page.pagemumber ? 'active' : ''" [disabled]="loading" (click)="selectedPageIndex(page.pagemumber)"> {{page.pagemumber}}</button>
+                    </span>
+                  </div>
+                </div>
+                <button class="btn btn-primary ml-2" (click)="nextPageCount()" [disabled]="selectedPage === totalpagecount.length || totalpagecount.length==0"><i class="fa fa-angle-right"></i></button>
+                <button class="btn btn-primary ml-2" (click)="lastPage()"  [disabled]="selectedPage === totalpagecount.length || totalpagecount.length==0">Last</button>
+              </div>
+            </div>
+            <div *ngIf="!callTrasncriptionList" class="call-transcriptList">
+              <a (click)="transcriptList()"
+                 [hidden]="authService.navigationFromAgentPage || authService.navigationFromAgentScorePage || authService.navigationFromRedAlertPage || authService.navigationFromRedAlertScorePage || authService.navigationFromCustomerSatisfactionPage || authService.navigationFromCustomerSatisfactionScorePage || authService.navigationFromDisputedCalls || authService.navfromCallRecordings " class="blue-color underline back">
+                <i class="fa fa-angle-left" aria-hidden="true"></i> BACK
+              </a>
+              <a (click)="backToCallRecordings('Call Recordings')" *ngIf="authService.navfromCallRecordings"> <i class="fa fa-angle-left" aria-hidden="true"></i>
+              BACK </a>
+
+              <a (click)="navigateToAgentperformance('Scores')" *ngIf="authService.navigationFromAgentPage" class="blue-color underline back">
+                <i class="fa fa-angle-left" aria-hidden="true"></i> BACK
+              </a>
+              <a (click)="backtoAgentScore('Agent Performance')" *ngIf="authService.navigationFromAgentScorePage" class="blue-color underline back">
+                <i class="fa fa-angle-left" aria-hidden="true"></i> BACK
+              </a>
+              <a (click)="navigateToRedAlert('Red Alerts')" *ngIf="authService.navigationFromRedAlertPage" class="blue-color underline back">
+                <i class="fa fa-angle-left" aria-hidden="true"></i> BACK
+              </a>
+              <a (click)="backtoRedAlertScore('Red Alerts')" *ngIf="authService.navigationFromRedAlertScorePage" class="blue-color underline back">
+                <i class="fa fa-angle-left" aria-hidden="true"></i> BACK
+              </a>
+              <a (click)="navigateToCustomerSatisfaction('Customer Satisfaction')" *ngIf="authService.navigationFromCustomerSatisfactionPage" class="blue-color underline back">
+                <i class="fa fa-angle-left" aria-hidden="true"></i> BACK
+              </a>
+              <a (click)="backtoCustomerSatisfaction('Customer Satisfaction')" *ngIf="authService.navigationFromCustomerSatisfactionScorePage" class="blue-color underline back">
+                <i class="fa fa-angle-left" aria-hidden="true"></i> BACK
+              </a>
+              <a (click)="backtoDisputedCalls('Disputed Calls')" *ngIf="authService.navigationFromDisputedCalls" class="blue-color underline back">
+                <i class="fa fa-angle-left" aria-hidden="true"></i> BACK
+              </a>
+              <button [hidden]="role != 'Customer'" *ngIf="!authService.navigationFromRedAlertPage && !authService.navigationFromRedAlertScorePage" (click)="navigatedScoreDetails('Agent Performance')" style="color:#fff;float:right" class="btn btn-2 agenttranscript-Btn" [disabled]="IsViewScoreDataLoaded"> View Score</button>
+              <button [hidden]="role != 'Customer'" (click)="backtoRedAlertScore('Red Alerts')" *ngIf="authService.navigationFromRedAlertPage || authService.navigationFromRedAlertScorePage" style="color:#fff;float:right" class="btn btn-2 agenttranscript-Btn" [disabled]="IsViewScoreDataLoaded"> View Score</button>
+
+
+              <div class="clearfix"></div>
+              <div class="float-right compltedCheckbox" *ngIf="!authService.restrictedUser && !callTrasncriptionList">
+                <div class="form-group">
+                  <input type="checkbox" name="completed" value="" [checked]="selectedTranscriptionEditorStatusId" (change)="updateTranscriptEditorStatus(2, guid)" id="completed" />
+                  <label for="completed">Completed</label>
+                </div>
+              </div>
+              <div class="row no-mar">
+                <div class="col-md-2 sidenav no-pad " style="display:none">
+                  <ul class="playlist">
+                    <li *ngFor="let file of fileInfoService.filesInfo; let i = index">
+                      <span [ngClass]="{ 'selected' : file.isActive}" *ngIf="file.Status == 'Completed'">
+                        <a (click)="editFile(file.Guid, file.FileName, file.Status, i)" title="{{file.FileName}}"> {{file.FileName}} </a>
+                      </span>
+                    </li>
+                  </ul>
+                  <div class="call-transcripts-pagination" [hidden]="loading">
+                    <strong>Pages</strong>
+                    <span *ngFor="let page of totalpagecount">
+                      <button type="button" class="pageNumber" [ngClass]="selectedPage === page.pagemumber ? 'active' : ''" (click)="selectedPageIndex(page.pagemumber)"> {{page.pagemumber}}</button>
+                    </span>
+                  </div>
+                  <!-- <div class="text-center"><button class="btn btn-primary mt-2 mb-2" *ngIf="fileInfoLength>0" [disabled]="!loadmoreflag" (click)="getFileInfo()">Load More</button></div>-->
+                </div>
+                <div class="col-md-12 no-pad transcritptionEditor">
+                  <div class="col-sm-12 d-flex">
+                    <div class="audioPlayer" [ngClass]="audioActive ? 'enableAudio' : 'disableAudio'">
+                      <audio controls id="track" #track [src]="audioSource" type="audio/mp3" class="audio"></audio>
+                      <div class="btnGroup d-flex align-self-center">
+                        <span class="speedText p-2">Speed: </span>
+                        <div class="dropup menuItems speedControl">
+                          <button type="button" class="btn dropdown-toggle speedBtn" data-toggle="dropdown">
+                            {{selectedSpeed}}X
+                          </button>
+                          <div class="dropdown-menu range ">
+                            <a *ngFor="let speed of speedArray" class="dropdown-item" (click)="speedChanger(speed)">{{speed}}X</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div *ngIf="!loading">
+                    <h6 *ngIf="fileInfoLength == null || fileInfoLength == undefined || fileInfoLength.length == 0" class="mt-5 text-center">No records found</h6>
+                    <div class="call-details"><h6 class="ml-5 mt-2">Agent : {{dataService.selectedFile.AgentName}}</h6></div>
+                    <div class="call-details"><h6 class="ml-5 mt-2">Call Handle Time : {{dataService.formatTime(dataService.selectedFile .Duration)}}</h6></div>
+                    <div class="call-details" style="margin-right:0;display:none"><h6 class="ml-5 mt-2">Agent Performance score: </h6></div>
+                    <div class="clearfix"></div>
+                    <div class="transcription" (window:keydown)="handleKeyboardEvent($event)" (window:keyup)="handleKeyboardEvent($event)">
+                      <si-transcription-text class="transcription-text" [selectedTagType]="selectedTagType" [searchClick]="searchClick" [transcription]="transcription"></si-transcription-text>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Download Chunks Popup-->
+<div class="newModel" *ngIf="addfrequency">
+  <div class="body">
+    <div class="modal-header">
+      <h4 class="modal-title">Add Frequency</h4>
+      <button type="button" class="close" aria-label="Close" (click)="closePopup()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="text-left">
+        <form class="form-group" name="splittedAudioRequestfrm">
+          <label class="text-left">Frequency(in second not more than 100)</label>
+          <input type="number" min="5" max="100" name="frequency" class="form-control" [(ngModel)]="splittedAudioRequest.Frequency" />
+          <div class="text-right mt-3">
+            <button type="button" class="btn btn-primary" (click)="proceedToDownloadChunks()" [disabled]="!(splittedAudioRequest.Frequency>=5 && splittedAudioRequest.Frequency<=100)">Ok</button>
+            <button type="button" class="btn btn-danger ml-2" (click)="closePopup()">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,16 @@
+.search {
+   /*padding: 25px 0px 10px 0px;*/
+    background: #293F56;
+}
+.wrapper{
+  display: inline-block;
+}
+.searchInput {
+  width: 95%;
+  background-image: url('../../../assets/images/search-icon.png');
+  background-repeat: no-repeat;
+  background-position: 99% 50%;
+  background-size: 18px 18px;
+  padding-left: 10px;
+  border: none;
+}

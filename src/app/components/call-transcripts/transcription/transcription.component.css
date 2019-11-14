@@ -1,0 +1,129 @@
+.text {
+  padding: 0px;
+  margin: 0px 2px;
+  font-size: 0.97em;
+}
+
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: 10px;
+}
+
+.highlight {
+  background: yellow;
+  color: black;
+}
+
+.searchHighlight {
+  background: rgb(169, 233, 233);
+}
+
+.highlightSpecificWord {
+  background: burlywood;
+}
+
+.markRed {
+  border-bottom: 2px solid red;
+}
+
+/* .dropdown-content {
+    display: none;
+    position: absolute;
+    margin-top: -12px;
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 0px;
+    text-decoration: none;
+    display: block;
+  } */
+
+.rightPanel {
+  background: white;
+  border: 1px solid rgb(133, 132, 132);
+  box-shadow: 1px 1px 0px 1px rgb(165, 165, 165);
+  margin-top: 3px;
+  width: 70px;
+  font-size: 0.9em;
+  z-index: 1000;
+}
+
+.rightPanel ul {
+  padding: 0px;
+  margin: 0px;
+}
+
+ul {
+  padding: 0px;
+  list-style: none;
+  margin: 0px;
+}
+
+.rightPanel ul li {
+  border-bottom: 1px solid rgb(221, 222, 223);
+}
+
+.rightPanel ul li:last-child {
+  border-bottom: none;
+}
+
+
+.rightPanel a {
+  text-decoration: none;
+  padding: 4px 3px;
+  color: black;
+}
+
+.rightPanel li:hover,
+.rightPanel ul li a:hover {
+  background: #80aacf;
+  color: white;
+  cursor: pointer;
+}
+
+.noMargin {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.underlineGreen {
+  border-bottom: 2px solid green;
+}
+
+.addTagModal {
+  display: block;
+  margin: 0 auto;
+}
+
+.modal-body p {
+  text-align: center;
+}
+
+table.addTagTable td {
+  padding: 10px;
+}
+
+table.addTagTable td:nth-child(1) {
+  text-align: right;
+}
+
+.validationMessage {
+  color: red;
+}
+
+.highlightTagType {
+  background: rgb(188, 188, 233);
+}
+
+.tagList {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+[contenteditable]:focus {
+    outline: 0px solid transparent;
+}

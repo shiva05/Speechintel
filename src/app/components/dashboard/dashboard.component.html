@@ -1,0 +1,33 @@
+
+<div class="v_wrapper" style="height:100vh;overflow: hidden;width: 100%; display:flex; flex-flow:column nowrap;">
+  <app-header style="flex:0 0 auto; width:100%" class="app-header"></app-header>
+  
+  <div class="header-strip">
+    <div class="menu-toggle">
+      <a (click)="toggleSideNav()"><i class="fa fa-bars" aria-hidden="true"></i></a>
+    </div>
+    <!--<h5>abc</h5>-->
+    <!--<p class="dateTime">
+      {{dateTime}}
+    </p>-->
+    <app-search style="flex:0 0 auto; padding: 0;" class="hidden"></app-search>
+  </div>
+  <div class="app-content">
+    <div class="sideNavMenu-main" [ngClass]="sideNavToggle ? 'sideNavShow':'sideNavHide'">
+      <app-side-nav (onSubMenuClicked)="subMenuClicked($event)" class="app-side-nav app-sidenav-wrapper" ></app-side-nav>
+      <!--<div class="sideNavMenu-toggle" [ngClass]="sideNavToggle ? 'right-arrow':'left-arrow'">
+        <a (click)="toggleSideNav()">
+          <span *ngIf="!sideNavToggle"><i style="font-size:24px;" class="fa fa-angle-right" aria-hidden="true"></i></span>
+          <span *ngIf="sideNavToggle"><i style="font-size:24px;" class="fa fa-angle-left" aria-hidden="true"></i></span>
+        </a>
+      </div>-->
+    </div>
+    <div class="content-right content-right2 d-flex flex" style="width:calc(100% - 20rem);height: 100%;float:left; overflow:hidden;flex-flow:column nowrap;" [ngClass]="{'MenuCollapsed':!sideNavToggle}">
+      <div class="rightcontent-wrap">
+        <router-outlet style="flex:1 0 auto;" class="router-outlet"></router-outlet>
+      </div>
+      <app-footer style="flex:0 0 auto; padding: 1rem 0;margin: auto 0 0;" class="app-footer"></app-footer>
+    </div>
+  </div>
+
+</div>

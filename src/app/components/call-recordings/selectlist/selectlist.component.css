@@ -1,0 +1,49 @@
+.radioBtn{
+    display: inline;
+    margin-left: 15%;
+    position: relative;
+    top: 20px;
+   font-size: 14px;
+}
+
+/* .radioBtn span {
+    margin-bottom: 15px;
+} */
+.nav {
+    border-style: none;
+  }
+
+.nav-link.active, .nav-link:hover {
+  background-color: #eaeaea;
+  color: #172C47 !important;
+  /*border: 3px solid #293F56;*/
+  font-weight: 500;
+  height: 100%;
+  width: 100%;
+}
+  .nav-link:hover span{
+    color: #172C47 !important;
+  }
+  .nav-tabs .nav-link {
+    /*border: 3px solid transparent;*/
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+  }
+.nav-link input[type=radio] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  display: none;
+}
+label{
+  margin-bottom: 0;
+}
+label:hover {
+  cursor: pointer;
+}
+.call-recording-tabs .count {
+  position:absolute;
+  bottom: 5px;
+  left: 0;
+}

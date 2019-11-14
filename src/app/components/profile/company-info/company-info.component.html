@@ -1,0 +1,73 @@
+<div class="profile-info">
+  <h5 class="heading">
+    <span *ngIf="!canEdit">{{_authService.UserProfiledetails.customer.name}}</span>
+    <input type="text" *ngIf="canEdit" [(ngModel)]="_authService.UserProfiledetails.customer.name"/>
+    <span *ngIf="editFeature" (click)="onEdit()"><span *ngIf="!canEdit"><i class="fas fa-pencil-alt pointer"></i></span></span>
+    <span *ngIf="canEdit" (click)="updateCompanyName()"><i class="fas fa-check pointer"></i></span>
+    <span *ngIf="canEdit" (click)="onSave()"><i class="fas fa-times pointer"></i></span>
+  </h5>
+  <div class="alert alert-primary" *ngIf="message">
+    Image size cannot be more than 300kb
+  </div>
+  <div class="photo-upload" *ngIf="editFeature">
+    <div class="user-image-main">
+      <img src="{{_authService.UserProfiledetails.customer.companyLogo}}" id="companylogoimg" name="companylogoimg"
+           alt="image" class="profilePic" />
+      <div class="removeUserImage text-right"
+           *ngIf="!(_authService.UserProfiledetails.customer.companyLogo == '../assets/images/sample.PNG')">
+        <a (click)="removeImage($event)"><i class="fa fa-times" aria-hidden="true"></i></a>
+      </div>
+    </div>
+    <div class="upload-options">
+      <p class="mb-0">Upload your logo..</p>
+      <p class="mb-0">Photo should be atleast 300px*300px</p>
+      <div id="upload_button">
+        <label>
+          <input type="file" (change)="uploadCompanyLogo($event)" />
+          <span class="btn btn-primary upload-btn">Upload Logo</span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <h5 class="mt-3 heading">Change Password</h5>
+  <form [formGroup]="passwordForm">
+    <div class="form-group" >
+      <div class="required-field">
+        <label for="cpassword">Verify Current Password</label>
+      </div>
+      <input type="password" [(ngModel)]="_authService.UserProfiledetails.oldPassword" class="form-control" formControlName="cpassword" id="cpassword"   aria-describedby="cpassword">
+      <span *ngIf="isPasswordVerified"><i class="fa fa-check" aria-hidden="true"></i></span>
+       
+    </div>
+    <div class="form-group" [ngClass]="{
+        'has-danger': passwordForm.controls.npassword.invalid && (passwordForm.controls.npassword.dirty || passwordForm.controls.npassword.touched) || validationMsg}">
+      <div class="required-field">
+        <label for="npassword">New Password</label>
+      </div>
+      <input type="password" [(ngModel)]="_authService.UserProfiledetails.password" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" class="form-control" formControlName="npassword" id="npassword"
+             aria-describedby="npassword"  >
+      
+    </div>
+    <div class="form-group m-0">
+      <ul class="twocolumns">
+        <li *ngFor="let rule of passwordRules"><span>{{rule}}</span></li>
+      </ul>
+    </div>
+    <div class="form-group" [ngClass]="{
+        'has-danger': passwordForm.controls.cnfmpassword.invalid && (passwordForm.controls.cnfmpassword.dirty || passwordForm.controls.cnfmpassword.touched) }">
+      <div class="required-field">
+        <label for="cnfmpassword">Confirm New Password</label>
+      </div>
+      <input type="password" [(ngModel)]="_authService.UserProfiledetails.confirmPassword" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" class="form-control" id="cnfmpassword" formControlName="cnfmpassword"
+               aria-describedby="cnfmpassword">
+       
+    </div>
+    <button type="submit" class="btn btn-primary upload-btn" (click)="updatePassword()"    >Update</button>
+  </form>
+  <!--<div *ngIf="finalFlag" [ngClass]="{'error error-message' : errorclass , 'success-message' : !errorclass}">{{statusMsg}}</div>-->
+  
+</div>
+
+<div *ngIf="loader">
+  <si-spinner></si-spinner>
+</div>

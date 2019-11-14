@@ -1,0 +1,110 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  background: #124775;
+  margin-top: 2px;
+  height: 100%;
+  width: 55px;
+}
+
+/*ul {
+  padding: 0px;
+  list-style: none;
+  margin: 0px;
+
+}*/
+
+
+
+table.infoTable {
+  width: 80%;
+  text-align: center;
+  margin: 15px auto;
+}
+
+.InfoHeading {
+  background: lightskyblue;
+  padding: 15px;
+  color: white;
+}
+
+.infoTable td {
+  padding: 10px;
+}
+
+table.infoTable,
+.infoTable td {
+  border: 1px solid cadetblue;
+  padding: 10px;
+  border-collapse: collapse;
+}
+
+
+
+li span {
+  /*color: #000;*/
+  cursor: pointer;
+}
+
+.iconText {
+  font-size: 0.6em;
+}
+
+.iconSymbol {
+  align-self: center;
+}
+
+.save {
+  /*margin-top: 10px;*/
+}
+
+.saveIcon {
+  /*padding-top: 6px;*/
+}
+
+ul li.instructionsIcon {
+  font-size: 1.2em;
+  /*padding-top: 6px;
+  padding-bottom: 3px;*/
+}
+
+.active {
+  background: #124775;
+  color: white;
+}
+
+.tagsPopUp {
+  min-width: 600px;
+}
+
+.tags h6 {
+  text-align: center;
+}
+
+ul {
+  padding: 0px;
+  list-style: none;
+}
+
+.tagList {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.tagItem {
+  margin: 5px;
+}
+
+.noTags {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.popBtn {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+

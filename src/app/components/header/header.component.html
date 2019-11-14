@@ -1,0 +1,61 @@
+<header>
+  <div class="row">
+    <div class="col">
+      <img src="../../../assets/images/Logo_Final.png" class="siLogo pointer" alt="logo"  (click)="home()"/>
+    </div>
+    <div class="col customerLogo">
+      <!-- <div class="logoText">
+    <div class="logoTextInner">
+      <div class="customerLogoText">CUSTOMER LOGO</div>
+      <div class="blurAdmin">
+        <span class="blur">Blur</span>Admin
+      </div>
+    </div>
+  </div> -->
+      <!--<img src="../../../assets/images/press-ganey-holdings-inc-logo.png" alt="">-->
+      <h3 *ngIf="auth.UserProfiledetails.customer.companyLogo == '../assets/images/sample.PNG' || auth.UserProfiledetails.customer.name == '' ">{{auth.UserProfiledetails.customer.name}}</h3>
+      <!--<img *ngIf="auth.UserProfiledetails.customer.companyLogo == '../assets/images/sample.PNG' || auth.UserProfiledetails.customer.name == '' " src="../assets/images/LMG_logo.png"/>-->
+      <img src="{{auth.UserProfiledetails.customer.companyLogo}}" *ngIf="auth.UserProfiledetails.customer.companyLogo != '../assets/images/sample.PNG'" id="companylogoimghead" name="companylogoimghead" alt="image" class="profilePic" />
+
+    </div>
+    <div class="col headerRight">
+      <ul class="headerMenu">
+        <li (click)="home()">
+          Home
+          <span>
+            <i class="fas fa-home"></i>
+          </span>
+        </li>
+        <li>
+          <ul class="nav pull-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings</a>
+              <ul class="dropdown-menu">
+                <li><a routerLink="/dashboard/profile" (click)="SideNavSelected('Profile')"><i class="icon-cog"></i>Profile</a></li>
+                <li *ngIf="role == 'Customer'"><a routerLink="/dashboard/scoringEngine" (click)="SideNavSelected('Scoring Engine')"><i class="icon-envelope"></i>Scoring Engine</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li (click)="doLogout()">
+          Logout
+          <span class="logoutIcon">
+            <i class="fas fa-power-off"></i>
+          </span>
+        </li>
+        <!--<li class="profileMenu">
+          <a [routerLink]="['profile']">Profile</a>
+          <span>
+            <i class="fas fa-user"></i>
+          </span>
+        </li>
+        <li class="profileMenu">
+          <a [routerLink]="['questionnaire']">Questioner</a>
+          <span>
+            <i class="fa fa-question-circle" aria-hidden="true"></i>
+          </span>
+        </li>-->
+      </ul>
+    </div>
+  </div>
+</header>

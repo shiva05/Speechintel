@@ -1,0 +1,265 @@
+<si-spinner *ngIf="loading"></si-spinner>
+<si-spinner [ngClass]="audioActive ? 'disableAudio' : 'enableAudio'"></si-spinner>
+<section class="wrapper-main ">
+  <div class="container-fluid no-pad">
+    <!--    <div class="row ct-links">
+      <div class="col-md-12 col-sm-12">
+        <a href="">Home</a> >
+        <a href="">Call Transcripts</a>
+      </div>
+    </div> -->
+    <div class="row title_actions no-mar">
+      <div class="col-md-4 no-pad">
+        <!--<h4 class="pull-left">Call Transcripts</h4>-->
+
+      </div>
+      <div class="col-md-8 text-right icon-links d-flex align-self-center justify-content-end no-pad ml-auto">
+        <!--<i style="font-size:24px;color:#172C47;" class="fa">&#xf098;</i>
+        <i style="font-size:24px;color:#172C47;margin-left:5px;" class="fa">&#xf044;</i>
+        <i style="font-size:24px;color:#172C47;margin-left:5px;" class="fa">&#xf021;</i>-->
+        <!--<a (click)="downloadTranscript()"> <i style="font-size:24px;color:#172C47;margin-left:5px;" class="fa">&#xf019;</i></a>-->
+        <ul class="iconList">
+          <li *ngIf="!authService.restrictedUser && !callTrasncriptionList">
+            <button (click)="addFrequencyDownloadChunck()" title="Split and Download" [disabled]="(fileInfoLength == null || fileInfoLength == undefined || fileInfoLength.length == 0)">
+              <img src="../../../assets/images/DownloadSplit.png" />
+            </button>
+          </li>
+          <li *ngIf="!callTrasncriptionList">
+            <a [class.disabled]="(fileInfoLength == null || fileInfoLength == undefined || fileInfoLength.length == 0)" [href]="dataService.downloadLinks.get(guid)" title="Download transcript"><i class="fa fa-download" title="Download Transcript" aria-hidden="true"></i></a>
+          </li>
+        </ul>
+        <ul class="iconList" *ngIf="callTrasncriptionList">
+          <li><a (click)="refresh();" title="Refresh"><i class="fa cr-icons">&#xf021;</i></a></li>
+        </ul>
+        <si-side-bar [instructions]="instructions" [errorWordCount]="errorWordCount" [wordTags]="wordTags" [totalWordCount]="totalWordCount"
+                     (onSearchClick)="searchClicked($event)" (onTagSelect)="tagSelected($event)" *ngIf="!authService.restrictedUser && !callTrasncriptionList"></si-side-bar>
+      </div>
+    </div>
+    <div class="col-md-12" hidden>
+      <div class="row call-recording-tabs no-mar pad-r5" *ngIf="showTiles">
+        <div class="call-recording-navitem headingTile mr-2" style="width: 170px;">
+          <div class="date-filter-main">
+            <img src="../../../assets/images/new-file.png" alt="call-recording" />
+            <h4>Call Transcripts</h4>
+          </div>
+        </div>
+        <div class="call-recording-navitem mr-2">
+          <div class="date-filter-main">
+            <h5>Call Count</h5>
+            <span class="count">{{fileInfoService.overallHeaderCount.totalfileInfoLength}}</span>
+          </div>
+        </div>
+        <div class="call-recording-navitem mr-2">
+          <div class="date-filter-main">
+            <h5>Call Duration</h5>
+            <span class="count">{{fileInfoService.overallHeaderCount.totalDuration}}</span>
+          </div>
+        </div>
+        <div class="call-recording-navitem mr-2">
+          <div class="date-filter-main">
+            <h5>Avg Handle Time</h5>
+            <span class="count">{{fileInfoService.overallHeaderCount.avgHandleTime}}</span>
+          </div>
+        </div>
+        <div class="call-recording-navitem">
+          <div class="date-filter-main">
+            <h5>Word Count <span class="countType">( {{wordCountType}} )</span></h5>
+
+            <div class="totalValues">{{totalWordCount}}</div>
+            <ul class="nav wordsCount ">
+              <li class="dropdown">
+                <a href="#" class="wordCountDropdown" data-toggle="dropdown"><i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu">
+                  <li [ngClass]="wordCountType == 'All' ? 'active' : ''" (click)="changeWordCount('All')"><a><i class="icon-cog"></i>All</a></li>
+                  <li [ngClass]="wordCountType == 'Agent' ? 'active' : ''" (click)="changeWordCount('Agent')"><a><i class="icon-envelope"></i>Agent</a></li>
+                  <li [ngClass]="wordCountType == 'Customer' ? 'active' : ''" (click)="changeWordCount('Customer')"><a><i class="icon-envelope"></i>Customer</a></li>
+                </ul>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+        <!--<div class="call-recording-navitem flex-grow-1">
+    <div class="date-filter-main">
+      <h5>Transcription Score</h5>
+      <span class="count">64</span>
+    </div>
+  </div>-->
+        <!--<div class="call-recording-navitem date-filteradj flex-grow-1">
+    <app-datefilter></app-datefilter>
+    <div class="clearfix"></div>
+  </div>
+  <div class="call-recording-navitem date-filteradj flex-grow-1" *ngIf="role != 'Customer_Agent'">
+    <app-uploadDateFilter></app-uploadDateFilter>
+    <div class="clearfix"></div>
+  </div>-->
+      </div>
+    </div>
+    <div class="row no-mar transcription-details" [ngClass]="showTiles ? 'transcriptTilesWidth':'transcriptFullWidth'">
+      <div class="col-md-12">
+     
+        <div class="mid-section transcript-pad">
+          <!--<div class="call-details"><h6 class="ml-5 mt-2">Agent : {{dataService.selectedFile.AgentName}}</h6></div>
+          <div class="call-details"><h6 class="ml-5 mt-2">Cust Account Num : {{dataService.selectedFile.CustomerAccountNo}}</h6></div>
+         <div class="clearfix"></div>-->
+
+          <div class="row no-mar">
+        
+            <div *ngIf="!callTrasncriptionList || authService.navigationFromAgentPage" class="call-transcriptList">
+              <div class="titlesSection">
+                <!--<a (click)="transcriptList()"
+     [hidden]="authService.navigationFromAgentPage || authService.navigationFromAgentScorePage || authService.navigationFromRedAlertPage || authService.navigationFromRedAlertScorePage || authService.navigationFromCustomerSatisfactionPage || authService.navigationFromCustomerSatisfactionScorePage || authService.navfromCallRecordings " class="blue-color underline back d-inline-block mt-1">
+    <i class="fa fa-angle-left" aria-hidden="true"></i> BACK
+  </a>
+  <a (click)="backToCallRecordings('Call Recordings')" *ngIf="authService.navfromCallRecordings"> <i class="fa fa-angle-left" aria-hidden="true"></i> BACK </a>-->
+
+                <a (click)="navigateToAgentperformance('Agent Performance')" *ngIf="authService.navigationFromAgentPage" class="blue-color underline back d-inline-block mt-1">
+                  <i class="fa fa-angle-left" aria-hidden="true"></i> BACK
+                </a>
+                <!--<a (click)="backtoAgentScore('Agent Performance')" *ngIf="authService.navigationFromAgentScorePage" class="blue-color underline back d-inline-block mt-1">
+    <i class="fa fa-angle-left" aria-hidden="true"></i> BACK
+  </a>-->
+                <a (click)="navigateToRedAlert('Red Alerts')" *ngIf="authService.navigationFromRedAlertPage" class="blue-color underline back d-inline-block mt-1">
+                  <i class="fa fa-angle-left" aria-hidden="true"></i> BACK
+                </a>
+                <!--<a (click)="backtoRedAlertScore('Red Alerts')" *ngIf="authService.navigationFromRedAlertScorePage" class="blue-color underline back d-inline-block mt-1">
+    <i class="fa fa-angle-left" aria-hidden="true"></i> BACK
+  </a>
+  <a (click)="navigateToCustomerSatisfaction('Customer Satisfaction')" *ngIf="authService.navigationFromCustomerSatisfactionPage" class="blue-color underline back d-inline-block mt-1">
+    <i class="fa fa-angle-left" aria-hidden="true"></i> BACK
+  </a>
+  <a (click)="backtoCustomerSatisfaction('Customer Satisfaction')" *ngIf="authService.navigationFromCustomerSatisfactionScorePage" class="blue-color underline back d-inline-block mt-1">
+    <i class="fa fa-angle-left" aria-hidden="true"></i> BACK
+  </a>-->
+                <!--<a [hidden]="role != 'Customer'"   (click)="navigatedScoreDetails('Agent Performance')" style="color:#fff;float:right" class="btn btn-2 agenttranscript-Btn"> View Score</a>-->
+
+
+                <div class="float-right compltedCheckbox" *ngIf="!authService.restrictedUser && !callTrasncriptionList ">
+                  <div class="form-group">
+                    <input type="checkbox" name="completed" value="" [checked]="selectedTranscriptionEditorStatusId" (change)="updateTranscriptEditorStatus(2, guid)" id="completed" />
+                    <label for="completed">Completed</label>
+                  </div>
+                </div>
+                <span class="fileName"><strong>File Name</strong> : {{dataService.selectedFile.FileName}}</span>
+              </div>
+              <div class="row no-mar">
+                <div class="col-sm-8 transcritptionEditor">
+                  <div class="audioPlayer" [ngClass]="audioActive ? 'enableAudio' : 'disableAudio'">
+                    <audio controls id="track" #track (ended)="showAvgScore()" [src]="audioSource" type="audio/mp3" class="audio"></audio>
+                    <!--<div class="btnGroup d-flex align-self-center" >
+          <span class="speedText p-2">Speed: </span>
+          <div class="dropup menuItems speedControl">
+            <button type="button" class="btn dropdown-toggle speedBtn" data-toggle="dropdown">
+              {{selectedSpeed}}X
+            </button>
+            <div class="dropdown-menu range ">
+              <a *ngFor="let speed of speedArray" class="dropdown-item" (click)="speedChanger(speed)">{{speed}}X</a>
+            </div>
+          </div>
+        </div>-->
+                  </div>
+                  <div *ngIf="!loading">
+                    <h6 *ngIf="fileInfoLength == null || fileInfoLength == undefined || fileInfoLength.length == 0" class="mt-5 text-center">No records found</h6>
+                    <!--<div class="call-details"><h6 class="ml-5 mt-2">Agent : {{dataService.selectedFile.AgentName}}</h6></div>
+        <div class="call-details"><h6 class="ml-5 mt-2">Call Handle Time : {{dataService.formatTime(dataService.selectedFile .Duration)}}</h6></div>
+        <div class="call-details" style="margin-right:0;display:none"><h6 class="ml-5 mt-2">Agent Performance score: </h6></div>-->
+                    <div class="clearfix"></div>
+                    <div class="transcription" (window:keydown)="handleKeyboardEvent($event)" (window:keyup)="handleKeyboardEvent($event)">
+
+                      <!--have to hide the below component when call is ended to show the recommendations of questionnaire-->
+                      <div *ngIf="!showRecommendations">
+                        <app-view-transcript-text class="transcription-text" [selectedTagType]="selectedTagType" [searchClick]="searchClick" [transcription]="transcription"></app-view-transcript-text>
+                      </div>
+                      <div *ngIf="showRecommendations">
+                        <div class="recommendations">
+                          <h3>Recommendations</h3>
+                          <ul>
+                            <li *ngFor="let item of recommendationsList">
+                              <p class="programCategory" >{{item.Question_Category}}</p>
+                              <p class="recomend" *ngFor="let rec of item.Question_Suggestion">{{rec}}</p>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="speechintelBot">
+                        <img src="../../../../assets/images/bolt-img.png" alt="SpeechIntel Bot"/>
+                        <p>SpeechIntel</p>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 " [ngClass]="audioActive ? 'enableAudio' : 'disableAudio'">
+                  <div class="transcript-scores mt-2">
+                    <div class="progress-main">
+                      <!--<span class="avgScoreTitle">
+            Average Score
+          </span>-->
+                      <div class="graph">
+                        <round-progress class="avgScore" [current]="agentPerformanceCalculation.ScoreWeightage"
+                                        [max]="100"
+                                        [color]="'#168427'"
+                                        [background]="'#eaeaea'"
+                                        [radius]="100"
+                                        [stroke]="25"
+                                        [semicircle]="false"
+                                        [rounded]="false"
+                                        [clockwise]="true"
+                                        [responsive]="false"
+                                        [duration]="800"
+                                        [animation]="'easeInOutQuart'"
+                                        [animationDelay]="0"></round-progress>
+                        <span class="score">{{agentPerformanceCalculation.ScoreWeightage}}%</span>
+                      </div>
+                      <div class="selectedFileName ml-1" *ngIf="agentTitle">
+                        <h4 class="filname">AGENT PERFORMANCE SCORING</h4>
+                      </div>
+                      <div class="selectedFileName ml-1" *ngIf="redAlertTitle">
+                        <h4 class="filname">RED ALERT SCORING</h4>
+                      </div>
+                    </div>
+                    <ul class="mt-5">
+                      <li *ngFor="let category of agentPerformanceCalculation.QuestionCategory">
+                        <div class="category-score">
+                          <span class="status">
+                            <span class="fill" [style.width.%]="category.Width" [style.background-color]="category.Color"></span>
+                            <span class="processPercentage">{{category.Width}} %</span>
+                          </span>
+                          <span class="title">{{category.Name}} </span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Download Chunks Popup-->
+<div class="newModel" *ngIf="addfrequency">
+  <div class="body">
+    <div class="modal-header">
+      <h4 class="modal-title">Add Frequency</h4>
+      <button type="button" class="close" aria-label="Close" (click)="closePopup()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="text-left">
+        <form class="form-group" name="splittedAudioRequestfrm">
+          <label class="text-left">Frequency(in second not more than 100)</label>
+          <input type="number" min="5" max="100" name="frequency" class="form-control" [(ngModel)]="splittedAudioRequest.Frequency" />
+          <div class="text-right mt-3">
+            <button type="button" class="btn btn-primary" (click)="proceedToDownloadChunks()" [disabled]="!(splittedAudioRequest.Frequency>=5 && splittedAudioRequest.Frequency<=100)">Ok</button>
+            <button type="button" class="btn btn-danger ml-2" (click)="closePopup()">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

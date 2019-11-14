@@ -1,0 +1,510 @@
+<!--<div style="height: 50px;padding: 0 10px;background: #293F56;display: inline-block;width: 100%;">
+  <h4 class="" style="color:#fff;margin: 10px 0 0;text-transform: capitalize;">Agent Performance</h4>
+</div>
+<span *ngIf="_authService.UserProfiledetails.customer.agentPerformanceURL.length==0" class="noData">
+  No records found!
+</span>
+<span *ngIf="_authService.UserProfiledetails.customer.agentPerformanceURL.length>0" >
+
+  <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(_authService.UserProfiledetails.customer.agentPerformanceURL )" width="100%" height="100%" frameborder="0"></iframe>
+</span>-->
+<!--<iframe [src]="_authService.UserProfiledetails.customer.agentPerformanceURL" frameborder="0"></iframe>-->
+<!--<si-spinner *ngIf="loading"></si-spinner>-->
+<section class="wrapper-main">
+  <div class="title_actions">
+    <div class="row no-mar">
+      <div class="col-md-2 col-sm-4 no-pad d-flex align-items-center">
+        <ul class="title-left">
+          <li><span><b>{{currentMonth | date:"MMMM yyyy"}} </b></span></li>
+        </ul>
+      </div>
+      <div class="col-md-8 col-sm-6 text-right icon-links d-flex align-self-center justify-content-end ml-auto">
+        <ul class="iconList">
+          <li><a title="Download CSV" (click)="downloadDisputedCallsSheet()"><i class="fa fa-download"></i></a></li>
+          <li><a title="Refresh" (click)="refresh();"><i class="fa cr-icons">&#xf021;</i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid no-pad">
+    <div class="col-md-12">
+      <div class="row call-recording-tabs no-mar agent-main pad-r5">
+        <div class="call-recording-navitem headingTile mr-2" style="width: 170px;background: #046ec8;border:1px solid #046ec8;">
+          <div class="date-filter-main">
+            <img src="../../../assets/images/increasing-stocks-graphic.png" alt="Agent Performance" />
+            <h4>Disputed Calls</h4>
+          </div>
+        </div>
+        <div class="call-recording-navitem mr-2">
+          <div class="date-filter-main">
+            <h5>Total Disputed Questions</h5>
+            <span class="count">{{totalCalls}}</span>
+          </div>
+        </div>
+        <div class="call-recording-navitem mr-2">
+          <div class="date-filter-main">
+            <h5>Open Disputed Questions</h5>
+            <span class="count">{{openCalls}}</span>
+          </div>
+        </div>
+        <div class="call-recording-navitem">
+          <div class="date-filter-main">
+            <h5>Closed Disputed Questions</h5>
+            <span class="count">{{closedCalls}}</span>
+          </div>
+        </div>
+        <div class="call-recording-navitem" hidden>
+          <div class="date-filter-main">
+            <h5>Keywords / Pharses</h5>
+            <span class="count">
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row no-mar">
+      <div class="col-md-12 agent-table-details">
+        <div class="mid-section disputedCallsMain fullScreen">
+          <div class="row no-mar">
+            <div class="agentPerformance-table mb-2" [ngClass]="role === 'Customer_Management'? 'withDisputedStatus': 'withoutDisputedStatus'">
+              <div class="title">
+                <div class="item">
+                  <span class="item-text" title="Call Date" (click)="sortByDate('Requested_On')" [ngClass]="sortDate  ? 'up' : 'down'">
+                    Disputed Call Date
+                    <span class="orderBy" *ngIf="key =='Requested_On'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('Requested_On')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.callDateFilterApplied"></i>
+                    </button>
+                    <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="selectedColumn === 'Requested_On' && fileInfoService.disputedFilterApplied">
+                      <div>
+                        <button class="btn btn-secondary float-right" (click)="clearFilterData('Requested_On')">Clear Filter</button>
+                      </div>
+                      <app-datefilter></app-datefilter>
+                    </div>
+                  </span>
+                </div>
+                <div class="item" (click)="sort('Id')" [ngClass]="reverse  ? 'up' : 'down'">
+                  <span title="Call Audio">
+                    Dispute ID
+                    <span class="orderBy" *ngIf="key =='Id'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                </div>
+                <div class="item" (click)="sort('CallID')" [ngClass]="reverse  ? 'up' : 'down'">
+                  <span title="Call ID">
+                    <!--Uploaded Date--> Call ID
+                    <span class="orderBy" *ngIf="key =='CallID'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                </div>
+
+                <div class="item">
+                  <span class="item-text" (click)="sort('CustomerAccountNo')" [ngClass]="reverse  ? 'up' : 'down'" title="Customer Account Number">
+                    <!--Customer Account Number--> Cust Acct No
+                    <span class="orderBy" *ngIf="key =='CustomerAccountNo'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('CustomerAccountNo')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.finalDisputeCallFilterList.CustomerAccountNo != null  "></i>
+                    </button>
+                    <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="filterDropdownDisplay && selectedColumn === 'CustomerAccountNo'">
+                      <div *ngIf="_filterDropdownService.dataSet">
+                        <button class="btn btn-secondary float-right" (click)="clearFilterData('CustomerAccountNo')">Clear Filter</button>
+                        <button class="btn apply-btn float-right" (click)="applyfilter('CustomerAccountNo')">Apply Filter</button>
+                      </div>
+                      <app-filter-dropdown></app-filter-dropdown>
+                    </div>
+                  </span>
+                </div>
+                <div class="item">
+                  <span class="item-text" (click)="sort('CustomerPhoneNo')" [ngClass]="reverse  ? 'up' : 'down'" title="Customer Phone Number">
+                    <!--Customer Phone Number--> Cust Ph No
+                    <span class="orderBy" *ngIf="key =='CustomerPhoneNo'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('CustomerPhoneNo')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.finalDisputeCallFilterList.CustomerPhoneNo != null"></i>
+                    </button>
+                    <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="filterDropdownDisplay && selectedColumn === 'CustomerPhoneNo'">
+                      <div *ngIf="_filterDropdownService.dataSet">
+                        <button class="btn btn-secondary float-right" (click)="clearFilterData('CustomerPhoneNo')">Clear Filter</button>
+                        <button class="btn apply-btn float-right" (click)="applyfilter('CustomerPhoneNo')">Apply Filter</button>
+                      </div>
+                      <app-filter-dropdown></app-filter-dropdown>
+                    </div>
+                  </span>
+                </div>
+                <div class="item">
+                  <span class="item-text" (click)="sort('ProgramName')" [ngClass]="reverse  ? 'up' : 'down'" title="Program Name">
+                    <!--Program Name--> Prog. Name
+                    <span class="orderBy" *ngIf="key =='ProgramName'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('ProgramName')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.finalDisputeCallFilterList.ProgramName != null"></i>
+                    </button>
+                    <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="filterDropdownDisplay && selectedColumn === 'ProgramName'">
+                      <div *ngIf="_filterDropdownService.dataSet">
+                        <button class="btn btn-secondary float-right" (click)="clearFilterData('ProgramName')">Clear Filter</button>
+                        <button class="btn apply-btn float-right" (click)="applyfilter('ProgramName')">Apply Filter</button>
+                      </div>
+                      <app-filter-dropdown></app-filter-dropdown>
+                    </div>
+                  </span>
+                </div>
+                <div class="item" title="Agent Name">
+                  <!--<span>-->
+                  <span class="item-text" (click)="sort('AgentName')" [ngClass]="reverse  ? 'up' : 'down'">
+                    Agent Name
+                    <span class="orderBy" *ngIf="key =='AgentName'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown" *ngIf="role != 'Customer_Agent'">
+                    <button class="filter" type="button" (click)="getFilterData('AgentName')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.finalDisputeCallFilterList.AgentName != null"></i>
+                    </button>
+                    <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="filterDropdownDisplay && selectedColumn === 'AgentName'">
+                      <div *ngIf="_filterDropdownService.dataSet">
+                        <button class="btn btn-secondary float-right" (click)="clearFilterData('AgentName')">Clear Filter</button>
+                        <button class="btn apply-btn float-right" (click)="applyfilter('AgentName')">Apply Filter</button>
+                      </div>
+                      <app-filter-dropdown></app-filter-dropdown>
+                    </div>
+                  </span>
+                </div>
+                <div class="item" (click)="sort('Question_No')" [ngClass]="reverse  ? 'up' : 'down'">Q.No</div>
+                <div class="item">Section</div>
+                <div class="item">Question</div>
+                <div class="item" (click)="sort('SupervisorName')" [ngClass]="reverse  ? 'up' : 'down'" *ngIf="role === 'Customer_Management'">
+                  TM Name
+                  <span class="orderBy" *ngIf="key =='SupervisorName'">
+                    <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                    <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                  </span>
+                </div>
+                <div class="item">
+                  <span (click)="sort('Status')" [ngClass]="reverse  ? 'up' : 'down'">Dispute status
+                    <span class="orderBy" *ngIf="key =='Status'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" hidden (click)="getFilterData('Status')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed"></i>
+                    </button>
+                    <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="filterDropdownDisplay && selectedColumn === 'Status'">
+                      <div *ngIf="_filterDropdownService.dataSet">
+                        <button class="btn btn-secondary float-right" (click)="clearFilterData('Status')">Clear Filter</button>
+                        <button class="btn apply-btn float-right" (click)="applyfilter('Status')">Apply Filter</button>
+                      </div>
+                      <app-filter-dropdown></app-filter-dropdown>
+                    </div>
+                  </span>
+                </div>
+                <div class="item">
+                  <span class="item-text" (click)="sort('finalStatus')" [ngClass]="reverse  ? 'up' : 'down'">
+                    Final Status
+                    <span class="orderBy" *ngIf="key =='finalStatus'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="finalstatusFilter()">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="IsFinalStatusDropDown"></i>
+                    </button>
+                    <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 dropdownFixes" *ngIf="finalstatusfilter">
+                      <div class="clearfix">
+                        <button class="btn btn-secondary float-right" (click)="clearFinalstatusFilter()">Clear Filter</button>
+                        <button class="btn apply-btn float-right" (click)="checkFinalStatus()">Apply Filter</button>
+                      </div>
+                      <div class="finalStatusDropDown">
+                        <ul>
+                          <li>
+                            <input type="radio" name="status" id="open" value="open" [(ngModel)]="finalstatus"/>
+                            <label for="open">Open</label>
+                          </li>
+                          <li>
+                          <input type="radio" name="status" id="close" value="close" [(ngModel)]="finalstatus"/>
+                          <label for="close">Close</label>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+                <div class="item text-center">Action</div>
+              </div>
+              <div class="table-content">
+                <div class="norecords-msg" *ngIf="disputeData">
+                  <p class="text-center nodata-msg mt-5"><b>No Records Found</b></p>
+                </div>
+                <div class="items-main" *ngFor="let item of disputedCallList | orderBy: key : reverse | sortByDate: key;  let i = index">
+                  <div class="d-flex align-items-center fullwidth" id="{{i}}">
+                    <div class="item">{{item.Requested_On | date:"MMM dd, yyyy"}}</div>
+                    <div class="item">{{item.Id}}</div>
+                    <div class="item">
+                      <a class="btn anchor_text"  (click)="editFile(item.FileGuid, item.Call_FileName, 'Completed', 1, item.TranscriptAPISource);activemenu('Disputed Calls'); disputedCallSelected(item); $event.stopPropagation()">
+                        {{item.Call_ID}}
+                      </a>
+                    </div>
+                    <div class="item">{{item.CustomerAccountNo}}</div>
+                    <div class="item">{{item.CustomerPhoneNo}}</div>
+                    <div class="item">{{item.ProgramName}}</div>
+                    <div class="item">{{item.AgentName}}</div>
+                    <div class="item">
+                      {{item.Question_No}}
+                    </div>
+                    <div class="item">{{item.Question_Category}}</div>
+                    <div class="item">
+                      {{item.Question_Description}}
+                    </div>
+                    <div class="item" *ngIf="role === 'Customer_Management'">
+                      {{item.SupervisorName}}
+                    </div>
+                    <div class="item">
+                      {{item.Status}}
+                    </div>
+                    <div class="item">
+                      {{item.finalStatus}}
+                    </div>
+                    <div class="item text-center">
+                      <a class="editscore" (click)="agentDisputeView(item)" *ngIf="role === 'Customer_Agent'">
+                        <i class="far fa-eye" title="Agent Dispute View"></i>
+                      </a>
+                      <a class="editscore mr-2" (click)="superVisordisputeCallsEdit(item)" *ngIf="role === 'Customer'">
+                        <i class="fas fa-edit" aria-hidden="true"></i>
+                      </a>
+                      <a class="editscore mr-2" (click)="managerdisputeCallsEdit(item)" *ngIf="role === 'Customer_Management'">
+                        <i class="fas fa-edit" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="pagination">
+                <button class="btn btn-primary mr-2" (click)="firstPage()" [disabled]="selectedPage === 1">First</button>
+                <button class="btn btn-primary" (click)="prevPageCount()" [disabled]="selectedPage === 1"><i class="fa fa-angle-left"></i></button>
+                <div class="pages">
+                  <div id="activepages" [style.margin-left.px]="marginLeftValue">
+                    <span class="ml-2" *ngFor="let page of totalpagecount">
+                      <button type="button" class="pageNumber" [ngClass]="selectedPage === page.pagemumber ? 'active' : ''" (click)="selectedPageIndex(page.pagemumber)"> {{page.pagemumber}}</button>
+                    </span>
+                  </div>
+                </div>
+                <button class="btn btn-primary ml-2" (click)="nextPageCount()" [disabled]="selectedPage === totalpagecount.length || totalpagecount.length==0"><i class="fa fa-angle-right"></i></button>
+                <button class="btn btn-primary ml-2" (click)="lastPage()" [disabled]="selectedPage === totalpagecount.length || totalpagecount.length==0">Last</button>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="newModel" *ngIf="IsAgentDisputeView">
+  <div class="body">
+    <div class="modal-header">
+      <h4 class="modal-title">Approval of the Agent Dispute</h4>
+      <button type="button" class="close" aria-label="Close" (click)="closePopup()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="text-left">
+        <form class="form-group">
+        
+          <!--<div class="mb-2" *ngIf="role === 'Customer_Management'" >
+            <label class="text-left">Disputed Phrases</label>
+            <input class="form-control" type="text" name="disputephrase" disabled="disabled" [(ngModel)]="ApprovalAgentDispute.Dispute_Phrase"/>
+          </div>-->
+          <div class="mb-2">
+            <label class="text-left mt-2">Comment<sup class="red-color">*</sup> </label>
+            <textarea class="form-control" disabled="disabled" [(ngModel)]="ApprovalAgentDispute.AgentComment" name="Agentcomment"></textarea>
+          </div>
+          <div class="mb-2">
+            <label class="text-left">Status</label>
+            <input class="form-control" type="text" disabled="disabled" name="score" [(ngModel)]="status" />
+          </div>
+           <div class="commentsHistory">
+            <!--<div class="block" *ngIf="role === 'Customer_Management'">
+              <span class="title">Disputed Phrase</span>
+              <span class="desc cap">{{ApprovalAgentDispute.Dispute_Phrase}}</span>
+            </div>-->
+            <div class="block" *ngIf="AgentComment != null">
+              <span class="title">{{AgentName}}</span>
+              <span class="desc">{{AgentComment}}</span>
+            </div>
+            <div class="block" *ngIf="SupervisorComment != null">
+              <span class="title">{{SupervisorName}}</span>
+              <span class="desc">{{SupervisorComment}}</span>
+            </div>
+            <div class="block" *ngIf= "ManagerComment != null">
+              <span class="title">{{ManagerName}}</span>
+              <span class="desc">{{ManagerComment}}</span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="newModel" *ngIf="IsSupervisorDisputeEdit">
+  <div class="body">
+    <div class="modal-header">
+      <h4 class="modal-title">Approval of the Supervisor Dispute</h4>
+      <button type="button" class="close" aria-label="Close" (click)="closePopup()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" [ngClass]="managerApproved ? 'approved' : ''">
+      <div class="text-left">
+        <form class="form-group">
+          <div class="mb-2">
+            <label class="text-left">Status </label>
+            <select class="form-control" name="status" *ngIf="!managerApproved" [(ngModel)]="status" (change)="ChangedSupervisorStatus($event)" [ngModelOptions]="{standalone: true}">
+              <option value="TM_Approved" [selected]="status === 'TM_Approved'">Approved</option>
+              <option value="TM_Rejected" [selected]="status === 'TM_Rejected'">Rejected</option>
+              <option value="Pending" [selected]="status === 'Pending'" style="display:none">Pending</option>
+            </select>
+            <input class="form-control" *ngIf="managerApproved" type="text" name="status" disabled="disabled" [(ngModel)]="status" />
+
+          </div>
+
+          <div class="mb-2">
+            <label class="text-left mt-2">Comment</label>
+            <textarea class="form-control" [(ngModel)]="ApprovalAgentDispute.SupervisorComment" [ngModelOptions]="{standalone: true}"></textarea>
+          </div>
+          <div class="mb-2">
+            <label class="text-left mt-2">QA Manager Name <sup class="red-color">*</sup> </label>
+            <input class="form-control" type="text" name="Manager Name" disabled="disabled" [(ngModel)]="ApprovalAgentDispute.QAManagerName" />
+          </div>
+          <label class="text-left mt-2">Comments</label>
+          <div class="commentsHistory">
+            <!--<div class="block" *ngIf="role === 'Customer_Management'">
+              <span class="title">Disputed Phrase</span>
+              <span class="desc cap">{{ApprovalAgentDispute.Dispute_Phrase}}</span>
+            </div>-->
+            <div class="block" *ngIf="AgentComment != null">
+              <span class="title">{{AgentName}}</span>
+              <span class="desc">{{AgentComment}}</span>
+            </div>
+            <div class="block" *ngIf="SupervisorComment != null">
+              <span class="title">{{SupervisorName}}</span>
+              <span class="desc">{{SupervisorComment}}</span>
+            </div>
+            <div class="block" *ngIf="ManagerComment != null">
+              <span class="title">{{ManagerName}}</span>
+              <span class="desc">{{ManagerComment}}</span>
+            </div>
+          </div>
+          <div class="text-right mt-3">
+            <button type="button" class="btn btn-primary" (click)="approvalSupervisorDispute()" [disabled]="supervisorStatusChanged === false && SupervisorComment === null">Submit</button>
+            <button type="button" class="btn btn-danger ml-2" (click)="closePopup()">Clear</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="newModel" *ngIf="IsManagerDisputeEdit">
+  <div class="body">
+    <div class="modal-header">
+      <h4 class="modal-title">Approval of the Manager Dispute</h4>
+      <button type="button" class="close" aria-label="Close" (click)="closePopup()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" [ngClass]="ReadOnlyScreen ? 'disabledFields' : ''">
+      <div class="text-left">
+        <form class="form-group">
+          <fieldset>
+            <div class="mb-2" *ngIf="role === 'Customer_Management'">
+              <label class="text-left">Disputed Phrases</label>
+              <input class="form-control" type="text" name="disputephrase" [(ngModel)]="updatedDisputeScore.Dispute_Phrase" />
+            </div>
+            <div class="mb-2">
+              <label class="text-left">Status </label>
+              <select class="form-control" name="status" [(ngModel)]="status" (change)="ChangedManagerStatus($event)" [ngModelOptions]="{standalone: true}">
+                <option value="QAM_Approved" [selected]="status === 'QAM_Approved'">Approved</option>
+                <option value="QAM_Rejected" [selected]="status === 'QAM_Rejected'">Rejected</option>
+                <option value="Pending" [selected]="status === 'Pending'" style="display:none">Pending</option>
+              </select>
+
+            </div>
+
+            <div class="mb-2">
+              <label class="text-left">Score update <sup class="red-color">*</sup> </label>
+              <select class="form-control" name="updatedscore" [(ngModel)]="scoreChanged" (change)="getvalue()">
+                <option *ngFor="let score of scoreValue" [value]="score">{{score}}</option>
+              </select>
+            </div>
+
+            <div class="mb-2">
+              <label class="text-left mt-2">Comment</label>
+              <textarea class="form-control" [(ngModel)]="ManagerComments" [ngModelOptions]="{standalone: true}"></textarea>
+            </div>
+
+            <label class="text-left mt-2">Comments</label>
+
+            <div class="commentsHistory">
+              <div class="block" *ngIf="role === 'Customer_Management'">
+                <span class="title">Disputed Phrase</span>
+                <span class="desc cap">{{ApprovalAgentDispute.Dispute_Phrase}}</span>
+              </div>
+              <div class="block" *ngIf="AgentComment != null && SupervisorName != null">
+                <span class="title">{{AgentName}}</span>
+                <span class="desc">{{AgentComment}}</span>
+              </div>
+              <div class="block" *ngIf="SupervisorComment != null">
+                <span class="title">{{SupervisorName}}</span>
+                <span class="desc">{{SupervisorComment}}</span>
+              </div>
+              <div class="block" *ngIf="ManagerComment != null">
+                <span class="title">{{ManagerName}}</span>
+                <span class="desc">{{ManagerComment}}</span>
+              </div>
+            </div>
+          </fieldset>
+          <div class="text-right mt-3">
+            <button type="button" class="btn btn-primary" (click)="approvalManagerDispute()"  [disabled]="managerStatusChanged === false && ManagerComment === null ">Submit</button>
+            <button type="button" class="btn btn-danger ml-2" (click)="closePopup()">Clear</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

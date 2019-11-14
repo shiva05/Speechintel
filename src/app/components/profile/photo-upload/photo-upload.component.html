@@ -1,0 +1,22 @@
+<h5 class="heading">
+    <span *ngIf="!canEdit">{{title}}</span>
+    <input type="text" *ngIf="canEdit" value="company name" />
+    <span  *ngIf="editable && (!canEdit)" (click)="onEdit()"><i class="fas fa-pencil-alt pointer" ></i></span>
+    <span  *ngIf="canEdit" (click)="onSave()"><i class="fas fa-check pointer" ></i></span>
+    <span  *ngIf="canEdit" (click)="onSave()"><i class="fas fa-times pointer" ></i></span>
+</h5>
+<!--<div class="photo-upload">
+  <div>
+    <img [src]="imagePath" alt="image" />
+  </div>
+  <div class="upload-options">
+    <p class="mb-0">Upload your logo..</p>
+    <p class="mb-0">Photo should be atleast 300px*300px</p>
+    <div id="upload_button">
+      <label>
+        <input type="file" (change)="uploadCompanyLogo($event)"/>
+        <span class="btn btn-primary upload-btn">Upload Logo</span>
+      </label>
+    </div>
+  </div>
+</div>-->

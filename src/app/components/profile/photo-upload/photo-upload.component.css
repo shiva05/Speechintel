@@ -1,0 +1,42 @@
+.photo-upload {
+  display: inline-flex;
+  margin-bottom: 10px;
+}
+#upload_button {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 14px;
+}
+#upload_button input[type=file] {
+  display:none;
+}
+.upload-options {
+  color: gray;
+  font-size: 14px;
+  font-family: Segoe UI;
+  font-weight: 500;
+  margin-left: 10px;
+}
+.profile-pic {
+  background: #172C47;
+}
+  .profile-pic .userImage {
+    color: rgb(146, 146, 204);
+    display: inline-block;
+    padding: 25px 28px;
+    border-radius: 42px;
+    -webkit-border-radius: 42px;
+    -moz-border-radius: 42px;
+    background: #d4d4d4;
+    margin: 10px;
+  }
+.heading input[type=text] {
+  border: none;
+  width: 50%;
+  border-bottom: 2px solid dimgrey;
+  color: gray;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 18px !important;
+}
+

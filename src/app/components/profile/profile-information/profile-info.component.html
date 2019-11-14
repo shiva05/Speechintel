@@ -1,0 +1,93 @@
+<div class="">
+  <h5 class="heading">
+    <span>{{title}}</span>
+  </h5>
+  <div class="alert alert-primary" *ngIf="message">
+    Image size cannot be more than 300kb
+  </div>
+  <div class="photo-upload">
+    <div class="user-image-main">
+     <img src="{{_authService.UserProfiledetails.profilePhotoPath}}"
+           id="userprofilelogoimg" name="userprofilelogoimg" alt="image" class="profilePic" />
+      <div class="removeUserImage text-right" *ngIf="!(_authService.UserProfiledetails.profilePhotoPath == '../assets/images/sample.PNG')">
+        <a (click)="removeImage($event , false)"><i class="fa fa-times" aria-hidden="true"></i></a>
+      </div>
+    </div>
+    <div class="upload-options">
+      <p class="mb-0">Upload your logo..</p>
+      <p class="mb-0">Photo should be atleast 300px*300px</p>
+      <div id="upload_button">
+        <label>
+          <input type="file" accept="image/jpeg" (change)="uploadProfileImage($event)" />
+          <span class="btn btn-primary upload-btn">Upload Photo</span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <h5 class="mt-3 heading">Basic Information</h5>
+  <form [formGroup]="profileInfo">
+    <div class="form-group" [ngClass]="{
+        'has-danger': profileInfo.controls.uname.invalid && (profileInfo.controls.uname.dirty || profileInfo.controls.uname.touched) }">
+      <div class="required-field">
+        <label for="uname">Username</label>
+      </div>
+      <input type="text" class="form-control" [(ngModel)]="_authService.UserProfiledetails.userName" formControlName="uname" id="uname" aria-describedby="username"
+             placeholder="Enter username">
+      <div *ngFor="let validation of validation_messages.uname">
+        <p class="error-message error"
+           *ngIf="profileInfo.get('uname').hasError(validation.type) && (profileInfo.get('uname').dirty || profileInfo.get('uname').touched)">
+          <span [ngModel]="validation.message"></span>
+        </p>
+      </div>
+    </div>
+    <div class="form-group" [ngClass]="{
+        'has-danger': profileInfo.controls.fname.invalid && (profileInfo.controls.fname.dirty || profileInfo.controls.fname.touched) }">
+      <div class="required-field">
+        <label for="fname">First Name</label>
+      </div>
+      <input type="text" class="form-control" [(ngModel)]="_authService.UserProfiledetails.firstName" formControlName="fname" id="fname" aria-describedby="fname"
+             placeholder="Enter First Name">
+      <div *ngFor="let validation of validation_messages.fname">
+        <p class="error-message error"
+           *ngIf="profileInfo.get('fname').hasError(validation.type) && (profileInfo.get('fname').dirty || profileInfo.get('fname').touched)">
+          <span [ngModel]="validation.message"></span>
+        </p>
+      </div>
+    </div>
+    <div class="form-group" [ngClass]="{
+        'has-danger': profileInfo.controls.lname.invalid && (profileInfo.controls.lname.dirty || profileInfo.controls.lname.touched) }">
+      <div class="required-field">
+        <label for="lname">Last Name</label>
+      </div>
+      <input type="text" class="form-control" formControlName="lname" id="lname" [(ngModel)]="_authService.UserProfiledetails.lastName" aria-describedby="lname"
+             placeholder="Enter Last Name">
+      <div *ngFor="let validation of validation_messages.lname">
+        <p class="error-message error"
+           *ngIf="profileInfo.get('lname').hasError(validation.type) && (profileInfo.get('lname').dirty || profileInfo.get('lname').touched)">
+          <span [ngModel]="validation.message"></span>
+        </p>
+      </div>
+    </div>
+    <div class="form-group" [ngClass]="{
+        'has-danger': profileInfo.controls.email.invalid && (profileInfo.controls.email.dirty || profileInfo.controls.email.touched) }">
+      <div>
+        <label for="email">Email</label>
+      </div>
+      <input type="text" class="form-control" [(ngModel)]="_authService.UserProfiledetails.email" formControlName="email" id="email" aria-describedby="email" disabled
+             placeholder="Enter Email">
+      <div *ngFor="let validation of validation_messages.email">
+        <p class="error-message error"
+           *ngIf="profileInfo.get('email').hasError(validation.type) && (profileInfo.get('email').dirty || profileInfo.get('email').touched)">
+          <span [ngModel]="validation.message"></span>
+        </p>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary upload-btn" (click)="updateInfo()">Update</button>
+  </form>
+  <!--<div *ngIf="showMessage" [ngClass]="{'error error-message' : errorclass , 'success-message' : !errorclass}">{{statusMsg}}</div>-->
+</div>
+
+<div *ngIf="loader" id="load1">
+  <si-spinner></si-spinner>
+</div>
+

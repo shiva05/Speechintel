@@ -1,0 +1,251 @@
+<si-spinner *ngIf="loading"></si-spinner>
+<section class="wrapper-main">
+  <div class="container-fluid no-pad">
+    <div class="row title_header no-mar align-items-center">
+      <div class="col-md-4 no-pad">
+        <h4 class="white-color">Scoring Engine</h4>       
+      </div>
+      <div class="col-md-8 col-sm-6 text-right icon-links d-flex align-self-center justify-content-end ml-auto">
+        <ul class="iconList">
+          <li><a title="Download CSV" (click)="downloadQuestionarySheet()"><i class="fa fa-download"></i></a></li>
+          <!--<li><a title="Refresh" (click)="refresh();"><i class="fa cr-icons">&#xf021;</i></a></li>-->
+          <li class="white-color justify-content-end d-flex mb-0" *ngIf="questionsList.length>0">
+          <p class="mb-0" *ngIf="selectedVersionType !='Draft'"><strong>Last published Date :  {{jsondata.LastUpdatedDate |  date:"MMM dd, yyyy " }}</strong>
+            </p></li>
+        </ul>
+        <!--<div>
+          <h6 class="white-color justify-content-end d-flex mb-0" *ngIf="selectedVersionType !='Draft'">Last published Date :  {{jsondata.LastUpdatedDate |  date:"MMM dd, yyyy " }}</h6>
+        </div>-->
+      </div>
+      </div>
+      <div class="profile-page">
+        <!--<h3 class="ml-3 mt-3 mb-3"></h3>-->
+        <div class="row no-mar mt-4 mb-4 d-flex align-items-center">
+          <div class="col-sm-3 selectScoringType">
+            <label class="heading mr-2">Select Program Name</label>
+            <select class="selectAdj" [(ngModel)]="Question_Program_Name" name="Question_Category" (change)="getQuestions()">
+                            <option style="display:none"></option>
+                            <option *ngFor="let program of programName" [value]="program.Name" >{{program.ProgramDescription}}</option>
+                          </select>
+          </div>
+          <div class="col-sm-3 selectScoringType">
+            <label class="heading mr-2">Select Scoring Engine</label>
+            <select class="selectAdj" [(ngModel)]="Question_Template_TypeID" name="Question_Category" (change)="typeChange()">
+              <option *ngFor="let category of Question_Template_Type" [value]="category.Question_Template_Type_ID"
+                      [selected]="category.Question_Template_Type_ID == Question_Template_TypeID">
+                {{category.Question_Template_Type_Name}}
+              </option>
+            </select>
+          </div>
+          <div class="col-sm-3 selectScoringType">
+            <label class="heading mr-2">Select Scoring Engine Version</label>
+            <select class="selectAdj" [(ngModel)]='selectedVersionType' name="Question_Category" (change)="changeVersion()">
+              <option value="Draft">Draft</option>
+              <option value="Publish" [disabled]="role=== 'Customer'">Published</option>
+            </select>
+          </div>
+        </div>
+        <div class="row no-mar mt-5">
+          <div class="col-md-12">
+            <div class="row mb-2">
+              <div class="col-md-4">
+                <h5 class="heading d-flex align-self-center">
+                  Add or Update Scoring Rules
+                </h5>
+              </div>
+              <div class="col-md-8 text-right" *ngIf="role != 'Customer'">              
+                <button class="publishBtn btn-success mr-3" [disabled]="addnewRule" *ngIf="selectedVersionType=='Draft' && questionsList.length!=0" (click)="publishQuestion()" form="ngForm">
+                  Publish 
+                </button>
+                <button type="button" class="addBtn" (click)="addNewQuestion()" [disabled]="addnewRule" *ngIf="selectedVersionType=='Draft'">
+                  Add <i class="fas fa-plus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="questionnarieList" [ngClass]="[selectedVersionType=='Draft' ? 'drafttable' : 'publishtable', (Question_Template_TypeID == 4 ) ? 'suggestion':'']">
+              <div class="titles">
+                <div class="item"><span class="pull-left">Q No</span> <span [hidden]="!addnewRule" class="manditory">*</span></div>
+                <div class="item"><span class="">Max Threshold (sec)</span></div>
+                <div class="item"><span class="pull-left">Category</span> <span [hidden]="!addnewRule" class="manditory">*</span></div>
+                <div class="item"><span class="pull-left">Program Name</span> <span [hidden]="!addnewRule" class="manditory">*</span></div>
+                <div class="item"><span class="pull-left">Description</span> <span [hidden]="!addnewRule" class="manditory">*</span></div>
+                <div class="item"><span class="">Recommendations</span> <span  class="manditory"></span></div>
+                <div class="item"><span class="pull-left">Keywords or Phrases </span><span [hidden]="!addnewRule" class="manditory">*</span></div>
+                <div class="item"><span class="">Rules</span> <span [hidden]="!addnewRule" class="manditory">*</span></div>
+                <div class="item" *ngIf="Question_Template_TypeID != 4" style="position:relative;"><span class="pull-left">Score Weightage </span><span [hidden]="!addnewRule" style="position:absolute;top:3px;right:15px" class="manditory">*</span></div>
+                <div class="item" *ngIf="Question_Template_TypeID == 4"><span class="">Suggestion URL</span></div>
+                <div class="item" *ngIf="selectedVersionType =='Draft'">Actions </div>
+              </div>
+              <div class="detailsSection">
+                <div class="questionDetails" [hidden]="!addnewRule" >
+                  <div class="addQuestion" *ngIf="selectedVersionType =='Draft'">
+                    <form name="questionDetails" #signupForm="ngForm" (ngSubmit)=" question.IsPublished = false;addquestioner()" novalidate>
+                      <div class="item">
+                        <input type="text" name="Question_No" id="category" [(ngModel)]="question.Question_No" required class="fullwidth" [ngModelOptions]="{standalone: true}" />
+                      </div>
+                      <div class="item">
+                        <input type="text" name="Question_Threshold" id="threshold" [(ngModel)]="question.Question_Threshold" required class="fullwidth" [ngModelOptions]="{standalone: true}" />
+                      </div>
+                      <div class="item">
+                        <input type="text" name="Question_Category" [(ngModel)]="question.Question_Category" required class="fullwidth" [ngModelOptions]="{standalone: true}" />
+                      </div>
+                      <div class="item">
+                        <div class="form-group">
+                          <!--<select class="fullwidth" [(ngModel)]="question.Program_Name" name="Program_Name" disabled>
+        <option style="display:none"></option>
+        <option *ngFor="let program of programName" [value]="program.ProgramDescription" [selected]="program.Name === question.Program_Name">{{program.ProgramDescription}}</option>
+      </select>-->
+                          <input type="text" name="Program_Name" [(ngModel)]="question.Program_Name" disabled required class="fullwidth disabled" [ngModelOptions]="{standalone: true}" />
+
+
+                        </div>
+                      </div>
+                      <div class="item">
+                        <div class="form-group">
+                          <textarea [(ngModel)]="question.Question_Description" name="Question_Description" required class="fullwidth" [ngModelOptions]="{standalone: true}"></textarea>
+                        </div>
+                      </div>
+                      <div class="item suggestion">
+                        <textarea type="text" name="Suggestion" [(ngModel)]="question.Question_Suggestion" required class="fullwidth" ></textarea>
+                      </div>
+                      <div class="item">
+                        <div class="form-group">
+                          <textarea [(ngModel)]="question.Question_Rules.Keyword_list" name="Keyword_list" required class="fullwidth" [ngModelOptions]="{standalone: true}"></textarea>
+                        </div>
+                      </div>
+                      <div class="item">
+                        <div class="form-group">
+                          <!--<select class="fullwidth" [(ngModel)]="question.Question_Rules.Conditon" name="Condition">
+                            <option style="display:none"></option>
+                            <option *ngFor="let rule of rules" [value]="rule" [selected]="rule===question.Question_Rules.Conditon">{{rule}}</option>
+                          </select>-->
+                          <button type="button" name="rules" class="btn btn-primary" (click)="addNewRulesModel(question)">Add Rules</button>
+                        </div>
+                      </div>
+                      <div class="item">
+                        <div class="form-group">
+                          <input type="text" pattern="^[0-9]" *ngIf="Question_Template_TypeID != 4" [(ngModel)]="question.Score_Weightage" required name="Score_Weightage" class="fullwidth" [ngModelOptions]="{standalone: true}" />
+                          <input type="text" *ngIf="Question_Template_TypeID == 4" [(ngModel)]="question.SuggestionURL" required name="SuggestionURL" class="fullwidth" [ngModelOptions]="{standalone: true}" />
+                        </div>
+                      </div>
+                      <div class="item d-flex align-items-center">
+                        <button [disabled]="question.Question_Rules.Conditon=='' || question.Question_Rules.Keyword_list == '' || question.Question_Description=='' || question.Program_Name=='' || question.Question_Category=='' || question.Question_No == ''" class="btn btn-primary" type="submit">
+                          <i class="fa fa-check" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary ml-1" (click)="resetForm()" name="reset"><i class="fa fa-times" aria-hidden="true"></i></button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="questionDetails" *ngFor="let item of questionsList; let i = index" [ngClass]="i === selectedRow ? 'hightlighted-row' : 'unhightlighted-row'">
+                  <div class="item"><p>{{item.Question_No}}</p></div>
+                  <div class="item"><p>{{item.Question_Threshold}}</p></div>
+                  <div class="item"><p>{{item.Question_Category}}</p></div>
+                  <div class="item"><p>{{item.Program_Name}}</p></div>
+                  <div class="item"><p>{{item.Question_Description}}</p></div>
+                  <div class="item suggestion">
+                    {{item.Question_Suggestion}}
+                  </div>
+                  <div class="item"><span class="chip" *ngFor="let key of item.Question_Rules.Keyword_list">{{key}}</span></div>
+                  <div class="item"><p>{{item.Question_Rules.Conditon}}</p></div>
+                  <div class="item" *ngIf="Question_Template_TypeID != 4"><p>{{item.Score_Weightage}}</p></div>
+                  <div class="item" *ngIf="Question_Template_TypeID == 4">
+                    {{item.SuggestionURL}}
+                  </div>
+                  <div class="item d-flex edit-buttons" *ngIf="selectedVersionType =='Draft'">
+                    <button class="blue-color mr-3" (click)="editquestioner(item, i)" [ngClass]="role ==='Customer' ? 'disabled' : ''">
+                      <i class="fas fa-edit" aria-hidden="true"></i>
+                    </button>
+                    <button class="red-color" (click)="deleteQuestioner(item, i)" [ngClass]="role==='Customer' ? 'disabled' :  ''" [disabled]="i === selectedRow">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+<!--Delete Popup-->
+<div class="newModel" *ngIf="deleteQuery">
+  <div class="body">
+    <div class="modal-header">
+      <h4 class="modal-title">Delete Questioner</h4>
+      <button type="button" class="close" aria-label="Close" (click)="closePopup()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body text-left">
+      <p class="deleteText">Are you sure to delete this questioner?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="deleteFile()">Yes</button>
+      <button type="button" class="btn btn-danger" (click)="closePopup()">Close</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="newModel addRules" *ngIf="addRules">
+  <div class="body">
+    <div class="modal-header">
+      <h4 class="modal-title">Add or Update Scoring Rules</h4>
+      <button type="button" class="close" aria-label="Close" (click)="closePopup()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body text-left">
+      <form>
+        <div class="fields">
+          <div class="question">
+            <span>Question : </span>
+            <span>{{selectedQuestion.Question_Description}}</span>
+
+            <span class="pull-right">
+              <select name="condition" [(ngModel)]="condition" class="form-group">
+                <option value="all">If all conditions are met</option>
+                <option value="any">If any condition is met</option>
+              </select>
+            </span>
+          </div>
+          <h3 class="title">Select Rule</h3>
+          <span class="pull-right">
+            <button type="button" name="Add rule" class="" (click)="addNewRuleSet()">Add Rule</button>
+            <button type="button" name="Delete rule" class="">Delete Rule</button>
+          </span>
+
+          <div class="rules">
+            <div class="item" *ngFor="let item of createRulesObj">
+              <div class="checkbox">
+                <input type="checkbox" name="rule" [(ngModel)]="item.IsDelete"/>
+              </div>
+              <div class="row fileds">
+                <div class="col-sm-4">
+                  <select name="category" class="form-group" [(ngModel)]="item.Category">
+                    <option>category 1</option>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <select name="rule" class="form-group" [(ngModel)]="item.Rule"> 
+                    <option>Rule 1</option>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <select name="condition" class="form-group" [(ngModel)]="item.Condition">
+                    <option>Condition 1</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="addNewRules()">Add</button>
+      <button type="button" class="btn btn-danger" (click)="closePopup()">Close</button>
+    </div>
+  </div>
+</div>

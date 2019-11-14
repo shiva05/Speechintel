@@ -1,0 +1,120 @@
+ <div class="wrapper" contenteditable="true" *ngIf="!authService.restrictedUser" (keyup)="onContentChange()" #tr spellcheck="true">
+  <span #curWord (contextmenu)="onRightClick($event, Word)" (paste)="onHandlePaste($event,Word)" *ngFor="let Word of transcript; let i = index" id="{{Word.Begin}}"
+        (dblclick)="wordClicked(Word)" class="text" [ngClass]="{'highlight': (currentTime >= Word.Begin) && (currentTime <= (Word.Begin + Word.Duration)), 'markRed': Word.Confidence < 0.8, 'noMargin': Word.Word === '', 'underlineGreen': Word.IsEdited, 'highlightTagType':checkTagType(Word.Tag)}">
+    {{Word.Word}}
+    <span *ngIf="(Word.Begin === rightclickedWord)" contenteditable="false" [ngStyle]="rightPanelStyle" class="rightPanel" (clickOutside)="closeContextMenu()">
+      <ul>
+        <li (click)="ignore(curWord, i, Word.Begin, Word.Word)" *ngIf="(Word.Begin === rightclickedWord) && (Word.Confidence < 0.8)">
+          <a>Ignore</a>
+        </li>
+        <li (click)="ignoreAll()">
+          <a>Ignore All</a>
+        </li>
+        <li (click)="addTag(Word, i, curWord, addTagPopUp)">
+          <a>Tag</a>
+        </li>
+        <li *ngIf="Word.Tag" (click)="removeTag(Word, i, curWord, removeTagPopUp)" data-toggle="modal" data-target="#removeTagModal">
+          <a>Untag</a>
+        </li>
+        <li (click)="closeContextMenu();lineBreak(Word , i , originalData ,transcript)">
+          <a>LineBreak</a>
+        </li>
+      </ul>
+    </span>
+  </span>
+</div>
+
+<div class="wrapper" contenteditable="false" *ngIf="authService.restrictedUser" (keyup)="onContentChange()" #tr spellcheck="true">
+  <span #curWord (contextmenu)="onRightClick($event, Word)" (paste)="onHandlePaste($event,Word)" *ngFor="let Word of transcript; let i = index" id="{{Word.Begin}}"
+        (dblclick)="wordClicked(Word)" class="text" [ngClass]="{'highlight': (currentTime >= Word.Begin) && (currentTime <= (Word.Begin + Word.Duration)), 'noMargin': Word.Word === '', 'highlightTagType':checkTagType(Word.Tag)}">
+    {{Word.Word}}     
+  </span>
+</div>
+<!-- Add tag The Modal -->
+<ng-template #addTagPopUp>
+  <div class="modal-header">
+    <h4 class="modal-title">Add Tag</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body addTagModal">
+    <table class="addTagTable">
+      <tr>
+        <td>
+          Word:
+        </td>
+        <td>
+          {{tagForWord}}
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Tags:
+        </td>
+        <td>
+          <ul>
+            <li>
+              {{wordTags ? wordTags : 'No tags added'}}
+            </li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Add Tag:
+        </td>
+        <td>
+          <form [formGroup]="tagForm">
+            <div>
+              <input [ngClass]="{'has-error':tagForm.controls['addTag'].errors?.required  && tagForm.controls['addTag'].dirty}" type="text"
+                     class="form-control" formControlName="addTag" name="tag" placeholder="Tag Name" />
+            </div>
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <div class="validationMessage" *ngIf="tagForm.controls['addTag'].errors?.required && tagForm.controls['addTag'].dirty">
+            <em>Please enter tag name</em>
+          </div>
+          <div class="validationMessage" *ngIf="tagForm.controls['addTag'].errors?.maxlength && tagForm.controls['addTag'].dirty">
+            <em>Cannot exceed 20 characters.</em>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="saveTag()">Save</button>
+    <button type="button" class="btn btn-danger" (click)="close()">Close</button>
+  </div>
+</ng-template>
+
+<!-- Remove tag The Modal -->
+<ng-template #removeTagPopUp>
+  <div class="modal-header">
+    <h4 class="modal-title">Remove Tag</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>word: {{tagForWord}}</p>
+    <ul class="tagList">
+      <li *ngFor="let tag of curWordtags; let i = index">
+        {{tag}}
+        <span (click)="deleteTag(i)">
+          <i class="fas fa-times-circle"></i>
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="saveAfterDeleting()">Save</button>
+    <button type="button" class="btn btn-danger" (click)="close()">Close</button>
+  </div>
+</ng-template>
+<si-spinner *ngIf="loading">
+</si-spinner>

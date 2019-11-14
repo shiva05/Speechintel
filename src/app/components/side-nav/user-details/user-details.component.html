@@ -1,0 +1,16 @@
+<div class="wrapper">
+  <div class="user">
+    <div class="userImage">
+      <img src="{{_authService.UserProfiledetails.profilePhotoPath}}"
+           id="userdetaillogoimg" name="userdetaillogoimg" alt="image" class="profilePic" />
+    </div>
+  </div>
+  <div class="userInfo">
+    <p class="text-capitalize">
+      {{
+_authService.UserProfiledetails.firstName + ' ' +
+    _authService.UserProfiledetails.lastName
+      }}
+    </p>
+  </div>
+</div>

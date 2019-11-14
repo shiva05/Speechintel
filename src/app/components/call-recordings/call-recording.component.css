@@ -1,0 +1,538 @@
+
+.cr-links a {
+  color: gray;
+}
+
+.cr-heading, .cr-links {
+  padding: 5px;
+}
+
+  .cr-heading h5 {
+    color: #293F56;
+  }
+
+.downloadLink {
+  color: #124775;
+}
+
+.nav {
+  border-style: none;
+}
+
+.nav-link.active {
+  background-color: #172C47;
+  border: 3px solid #293F56;
+  color: #0EC0EC;
+}
+
+.cr-icons {
+  margin-left: 5px;
+}
+
+table {
+  border: 1px solid #293F56;
+  /*text-align: center;*/
+}
+
+  table > thead > tr > th {
+    background-color: #172C47;
+    color: white;
+  }
+
+  table tr td {
+    vertical-align: middle;
+  }
+
+    table tr td .btn {
+      font-size: 12px;
+      height: 30px;
+      line-height: 30px;
+      padding: 0 10px;
+    }
+
+      table tr td .btn .btn-icon {
+        font-size: 10px;
+      }
+
+  table tr th {
+    border: none;
+  }
+
+    table tr td:first-child, table tr th:first-child {
+      max-width: 250px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+
+.callrecords-main .callList {
+  display: block;
+  /*overflow:hidden;*/
+  position: relative;
+}
+
+  .callrecords-main .callList .listHeader {
+    background: #293F56;
+    display: flex;
+    /*overflow: hidden;*/
+  }
+
+    .callrecords-main .callList .listHeader .title {
+      color: #fff;
+      float: left;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      position: relative;
+    }
+
+      .callrecords-main .callList .listHeader .title:hover {
+        background: #4e7ac7;
+      }
+
+  .callrecords-main .callList .CallTranscriptionData .details {
+    float: left;
+    color: #000;
+    /*overflow: hidden;*/
+    padding: 10px;
+    font-size: 13px;
+    text-overflow: ellipsis;
+  }
+
+    .callrecords-main .callList .listHeader .title:first-child,
+    .callrecords-main .callList .CallTranscriptionData .details:first-child {
+      width: 250px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+.CallTranscriptionData {
+  display: block;
+  overflow: hidden;
+  height: calc(100vh - 395px);
+  overflow-y: auto;
+  min-height: 400px;
+  border: 1px solid #293f56;
+}
+
+  .CallTranscriptionData .transcriptDescription {
+    display: block;
+    overflow: hidden;
+    border-bottom: 1px solid #ddd;
+    height: 45px;
+  }
+
+    .CallTranscriptionData .transcriptDescription:hover {
+      background: #d8ebff;
+    }
+
+.records-details {
+  /*height: calc(100vh - 175px);
+      overflow-y: auto;*/
+  display: block;
+}
+
+.call-recorde-details {
+  height: calc(100vh - 305px);
+  overflow-y: auto;
+  padding: 0 15px;
+}
+/********************
+    Customer css
+***********************/
+.callrecords-main.customerLoggedIn .callList .listHeader .title span {
+  display: inline-block;
+}
+
+.callrecords-main.customerLoggedIn .callList .listHeader .title .sort-icon {
+  font-size: 0.9rem;
+  position: absolute;
+  top: 16px;
+}
+.callrecords-main.customerLoggedIn .callList .listHeader .title:nth-child(2),
+.callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-child(2) {
+  width: 115px;
+}
+.callrecords-main.customerLoggedIn .callList .listHeader .title:nth-child(3),
+.callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-child(3) {
+  width: 175px;
+}
+
+.callrecords-main.customerLoggedIn .callList .listHeader .title:nth-last-child(3),
+.callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-last-child(3) {
+  width: 160px;
+}
+
+.callrecords-main.customerLoggedIn .callList .listHeader .title:last-child {
+  cursor: default;
+  background: inherit;
+}
+
+.callrecords-main.customerLoggedIn .callList .listHeader .title:last-child,
+.callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:last-child {
+  width: 100px;
+}
+
+.callrecords-main.customerLoggedIn .callList .listHeader .title:nth-last-child(2),
+.callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-last-child(2) {
+  width: 167px;
+}
+
+.callrecords-main.customerLoggedIn .callList .listHeader .title,
+.callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details {
+  width: 150px;
+}
+
+/********************
+    otherusers css
+***********************/
+
+.callrecords-main.otherUser .callList .listHeader .title span {
+  display: inline-block;
+  vertical-align: middle;
+
+}
+
+.callrecords-main.otherUser .callList .listHeader .title,
+.callrecords-main.otherUser .callList .CallTranscriptionData .details {
+  display: block;
+  text-overflow: ellipsis;
+  /*overflow: hidden;*/
+  white-space: nowrap;
+}
+.callrecords-main.otherUser .callList .listHeader .title .sort-icon {
+  font-size: 0.8rem;
+}
+
+.callrecords-main.otherUser .callList .listHeader .title:nth-child(2),
+.callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(2) {
+  width: 100px;
+}
+
+.callrecords-main.otherUser .callList .listHeader .title:nth-child(3),
+.callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(3) {
+  width: 105px;
+}
+
+.callrecords-main.otherUser .callList .listHeader .title:nth-child(4),
+.callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(4) {
+  width: 160px;
+}
+
+.callrecords-main.otherUser .callList .listHeader .title:nth-child(5),
+.callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(5) {
+  min-width: 130px;
+}
+
+.callrecords-main.otherUser .callList .listHeader .title:nth-child(5),
+.callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(5),
+.callrecords-main.otherUser .callList .listHeader .title:nth-child(6),
+.callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(6) {
+  width: calc((100% - 1410px)/2);
+}
+
+.callrecords-main.otherUser .callList .listHeader .title:nth-child(7),
+.callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(7) {
+  width: 165px;
+}
+
+.callrecords-main.otherUser .callList .listHeader .title:last-child,
+.callrecords-main.otherUser .callList .CallTranscriptionData .details:last-child,
+.callrecords-main.otherUser .callList .listHeader .title:nth-last-child(3),
+.callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-last-child(3)
+/*.callrecords-main.otherUser .callList .listHeader .title:nth-last-child(2),
+.callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-last-child(2)*/ {
+  width: 100px;
+}
+/*.callrecords-main.otherUser .callList .listHeader .title:nth-last-child(3),
+.callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-last-child(3) {
+    width: 80px;
+}*/
+.callrecords-main.otherUser .callList .listHeader .title:nth-last-child(2),
+.callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-last-child(2),
+.callrecords-main.otherUser .callList .listHeader .title:nth-last-child(4),
+.callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-last-child(4),
+.callrecords-main.otherUser .callList .listHeader .title:nth-last-child(5),
+.callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-last-child(5) {
+  width: 160px;
+}
+.callrecords-main.otherUser .callList .CallTranscriptionData .details,
+.callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details {
+  overflow:hidden;
+}
+
+  @media all and (min-width: 1561px) {
+    .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:first-child {
+    width: calc(100% - 1322px);
+    min-width: 150px;
+  }
+  .callrecords-main.customerLoggedIn .callList .listHeader .title:first-child {
+    width: calc(100% - 1327px);
+    min-width: 150px;
+  }
+}
+
+@media all and (max-width: 1560px) and (min-width: 1360px) {
+  .CallTranscriptionData {
+    height: calc(100vh - 405px);
+  }
+  .callrecords-main.customerLoggedIn .callList .listHeader .title,
+  .callrecords-main .callList .CallTranscriptionData .details {
+    font-size: 14px;
+    text-overflow: ellipsis;
+    /*overflow: hidden;*/
+    white-space: nowrap;
+  }
+  .callrecords-main .callList .CallTranscriptionData .details {
+    overflow:hidden;
+  }
+
+    .callrecords-main.customerLoggedIn .callList .listHeader .title:nth-last-child(2),
+    .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-last-child(2) {
+      width: 150px;
+    }
+
+   
+    .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:first-child {
+      width: calc(100% - 770px)
+    }
+  .callrecords-main.customerLoggedIn .callList .listHeader .title:first-child{
+    width: calc(100% - 775px)
+  }
+  .callrecords-main.customerLoggedIn .callList .listHeader .title:last-child,
+  .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:last-child
+  /*.callrecords-main.customerLoggedIn .callList .listHeader .title:nth-last-child(2),
+      .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-last-child(2)*/ {
+    width: 90px;
+  }
+
+    .callrecords-main.customerLoggedIn .callList .listHeader .title:nth-last-child(3),
+    .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-last-child(3) {
+      width: 200px;
+    }
+
+    /*.callrecords-main.customerLoggedIn .callList .listHeader .title:nth-last-child(3),
+      .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-last-child(3) {
+        width: 135px;
+      }*/
+
+    .callrecords-main.customerLoggedIn .callList .listHeader .title:nth-child(3),
+    .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-child(3) {
+      width: 150px;
+    }
+
+    .callrecords-main.customerLoggedIn .callList .listHeader .title:nth-child(2),
+    .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-child(2) {
+      width: 120px;
+      min-width: 50px;
+    }
+
+  .callrecords-main.customerLoggedIn .callList .listHeader .title,
+  .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details {
+    width: 140px;
+  }
+    .callrecords-main.customerLoggedIn .callList .listHeader .title:nth-last-child(3),
+    .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-last-child(3),
+    .callrecords-main.customerLoggedIn .callList .listHeader .title:nth-last-child(4),
+    .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-last-child(4) {
+      width: 130px;
+    }
+  /*******other users********/
+  .callrecords-main.otherUser .callList .listHeader .title,
+  .callrecords-main.otherUser .callList .CallTranscriptionData .details {
+    padding: 5px;
+    font-size: 12px;
+  }
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:first-child {
+      width: 200px;
+    }
+    .callrecords-main.otherUser .callList .listHeader .title:first-child {
+      width: 205px;
+    }
+    .callrecords-main.otherUser .callList .listHeader .title:nth-child(2),
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(2),
+    .callrecords-main.otherUser .callList .listHeader .title:nth-child(3),
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(3) {
+      width: 75px;
+    }
+
+    .callrecords-main.otherUser .callList .listHeader .title:nth-child(4),
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(4) {
+      width: 105px;
+    }
+
+    .callrecords-main.otherUser .callList .listHeader .title:nth-child(5),
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(5),
+    .callrecords-main.otherUser .callList .listHeader .title:nth-child(6),
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(6) {
+      width: calc((100% - 765px) / 2);
+    }
+
+    .callrecords-main.otherUser .callList .listHeader .title:nth-child(7),
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(7) {
+      width: 130px;
+    }
+
+    /*.callrecords-main.otherUser .callList .listHeader .title:last-child,
+      .callrecords-main.otherUser .callList .CallTranscriptionData .details:last-child
+      .callrecords-main.otherUser .callList .listHeader .title:nth-last-child(2),
+      .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-last-child(2) {
+        width: 10px;
+      }*/
+
+    /*.callrecords-main.otherUser .callList .listHeader .title:nth-last-child(3),
+      .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-last-child(3) {
+        width: 70px;
+      }*/
+
+    .callrecords-main.otherUser .callList .listHeader .title:nth-last-child(2),
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-last-child(2) {
+      width: 80px;
+    }
+
+      .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-last-child(2) .btn {
+        width: 100%;
+        font-size: 10px;
+        padding: 0;
+      }
+}
+
+@media all and (max-width: 1360px) {
+  .callrecords-main.customerLoggedIn .callList .listHeader .title,
+  .callrecords-main .callList .CallTranscriptionData .details {
+    font-size: 12px;
+    padding: 5px;
+  }
+
+    .callrecords-main.customerLoggedIn .callList .listHeader .title:last-child,
+    .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:last-child {
+      width: 70px;
+    }
+
+
+    .callrecords-main.customerLoggedIn .callList .listHeader .title:nth-last-child(2),
+    .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-last-child(2) {
+      width: 140px;
+    }
+
+    .callrecords-main.customerLoggedIn .callList .listHeader .title:nth-last-child(3),
+    .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-last-child(3) {
+      width: 150px;
+    }
+
+    .callrecords-main.customerLoggedIn .callList .listHeader .title:nth-child(3),
+    .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-child(3) {
+      width: 160px;
+    }
+
+    .callrecords-main.customerLoggedIn .callList .listHeader .title:nth-child(2),
+    .callrecords-main.customerLoggedIn .callList .CallTranscriptionData .details:nth-child(2) {
+      width: 100px;
+    }
+
+   
+    .callrecords-main .callList .CallTranscriptionData .details:first-child {
+      width: calc(100% - 620px);
+    }
+  .callrecords-main .callList .listHeader .title:first-child {
+    width: calc(100% - 625px);
+  }
+  /*******other users********/
+  .callrecords-main.otherUser .callList .listHeader .title,
+  .callrecords-main.otherUser .callList .CallTranscriptionData .details {
+    padding: 5px;
+    font-size: 9px;
+  }
+
+   
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:first-child {
+      width: 140px;
+    }
+    .callrecords-main.otherUser .callList .listHeader .title:first-child {
+      width: 145px;
+    }
+
+    .callrecords-main.otherUser .callList .listHeader .title:nth-child(2),
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(2),
+    .callrecords-main.otherUser .callList .listHeader .title:nth-child(3),
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(3) {
+      width: 55px;
+    }
+
+    .callrecords-main.otherUser .callList .listHeader .title:nth-child(4),
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(4) {
+      width: 80px;
+    }
+
+    .callrecords-main.otherUser .callList .listHeader .title:nth-child(5),
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(5),
+    .callrecords-main.otherUser .callList .listHeader .title:nth-child(6),
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(6) {
+      width: calc((100% - 620px) / 2);
+    }
+
+    .callrecords-main.otherUser .callList .listHeader .title:nth-child(7),
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-child(7) {
+      width: 100px;
+    }
+
+    .callrecords-main.otherUser .callList .listHeader .title:last-child,
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:last-child
+    /*.callrecords-main.otherUser .callList .listHeader .title:nth-last-child(2),
+      .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-last-child(2)*/ {
+      width: 35px;
+    }
+
+    /*.callrecords-main.otherUser .callList .listHeader .title:nth-last-child(3),
+      .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-last-child(3) {
+        width: 70px;
+      }*/
+
+    /*.callrecords-main.otherUser .callList .listHeader .title:nth-last-child(2),
+      .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-last-child(2) {
+        width: 50px;
+      }*/
+
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-last-child(2) .btn {
+      width: 100%;
+      font-size: 10px;
+      padding: 0;
+    }
+
+    .callrecords-main.otherUser .callList .CallTranscriptionData .details:nth-last-child(4) .btn .type {
+      display: none;
+    }
+}
+
+
+.actions {
+  text-align: center;
+}
+
+  .actions > div {
+    width: 20px;
+    height: 20px;
+    float: left;
+  }
+
+  .actions a {
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+/*.pages {
+  max-width: 395px;
+  overflow: hidden;
+  height: 32px;
+  display: block;
+  margin: 0 10px;
+}*/
+
+/*.pageindex {
+  display: inline-flex;
+  margin: 2px 5px 5px;
+}*/
+

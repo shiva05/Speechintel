@@ -1,0 +1,43 @@
+
+<div class="row call-recording-tabs no-mar d-flex bd-highlight">
+  <div class="call-recording-navitem headingTile mr-2" style="width:170px">
+    <div class="date-filter-main">
+      <img src="../../../assets/images/call.png" alt="call-recording" />
+      <h4>Call Recording</h4>
+    </div>
+  </div>
+  <div class="call-recording-navitem mr-2">
+    <a class="nav-link" [ngClass]="{'active': authService.selectedRadioButtonValue == 'All'}">
+      <label>
+        <input type="radio" name="selectItem" value="All" [(ngModel)]="authService.selectedRadioButtonValue" (change)="onRadioButtonSelectionChange()">
+        <h5>{{'All Call Count'}}</h5>
+        <span class="count">{{fileInfoService.overallHeaderCount.totalfileInfoLength}}</span>
+      </label>
+    </a>
+  </div>
+  <div class="call-recording-navitem mr-2">
+    <a class="nav-link" [ngClass]="{'active':authService.selectedRadioButtonValue == 'Processing'}">
+      <label>
+        <input type="radio" name="selectItem" value="Processing" [(ngModel)]="authService.selectedRadioButtonValue"
+               (change)="onRadioButtonSelectionChange()">
+        <h5>{{'Processing Call Count'}}</h5>
+        <span class="count">{{fileInfoService.overallHeaderCount.totalProcessingLength}}</span>
+      </label>
+    </a>
+  </div>
+  <div class="call-recording-navitem">
+    <a class="nav-link" [ngClass]="{'active':authService.selectedRadioButtonValue == 'Completed'}">
+      <label>
+        <input type="radio" name="selectItem" value="Completed" [(ngModel)]="authService.selectedRadioButtonValue" (change)="onRadioButtonSelectionChange()">
+        <h5>{{'Completed Call Count'}}</h5>
+        <span class="count">{{fileInfoService.overallHeaderCount.totalCompletedLength}}</span>
+      </label>
+    </a>
+  </div>
+  <!--<div class="call-recording-navitem date-filteradj flex-grow-1">
+    <app-datefilter></app-datefilter>
+  </div>
+  <div class="call-recording-navitem date-filteradj flex-grow-1">
+    <app-uploadDateFilter></app-uploadDateFilter>
+  </div>-->
+</div>

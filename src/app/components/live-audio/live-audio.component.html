@@ -1,0 +1,51 @@
+
+
+<div class="livecall">
+  <div class="col-sm-12 title_actions no-pad">
+    <!--<h4 class="pull-left no-pad">Live Call Analytics</h4>-->
+    <span class="glyphicon glyphicon-refresh pull-right glyph"></span>
+  </div>
+  <div class="row no-mar chat">
+    <div class="col-sm-8">
+      <h3 class="chatTitle">Live Assistance - Andrew Burton</h3>
+      <div class="converasation">
+          <iframe src="http://34.219.170.117:9096/livecall.html" allow="microphone http://34.219.170.117:9096/livecall.html" width="100%" class="speech" frameborder="0" ></iframe>
+      </div>
+    </div>
+    <div class="chatInstructions" *ngIf="!showChatbox" (click)="showChat()">
+      <img src="../../../assets/images/speechintelHead.png" alt="chat icon" />
+      <p>Live Assistance</p>
+    </div>
+    <div class="col-sm-4" >
+      <div class="chatInstructionsList" *ngIf="showChatbox">
+        <div class="title">
+          <div class="logo">
+            <img src="../../../assets/images/speechintelHead.png" alt="chat icon" />
+          </div>
+          <div class="agent">
+            <p>Live Assistance</p>
+            <span class="agentname">Andrew Burton</span>
+          </div>
+          <div class="close">
+            <span (click)="closeChat()">
+              <img src="../../../assets/images/cancel.png" alt="chat icon" />
+            </span>
+          </div>
+        </div>
+        <div class="instructions">
+          <div class="item" *ngFor="let items of instructions">
+            <span class="icon">
+              <img src="../../../assets/images/speechintelHead.png" alt="chat icon" />
+            </span>
+            <span class="qtn" [style.background-color]="items.background">
+              {{items.Question}}
+              <span class="success" *ngIf="items.Success">Verified</span>
+            </span>
+          </div>
+
+        </div>
+        </div>
+      </div>
+
+    </div>
+</div>

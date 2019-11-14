@@ -1,0 +1,50 @@
+<div class="date-filter-main">
+  <!--<h5>
+    Call Date Filter
+  </h5>-->
+  <form #dateFilter="ngForm">
+    <div class="d-flex justify-content-end">
+      <button (click)="applyCallDateChanges(dateFilter)" class="btn apply-btn">Apply Filter</button>
+      <!--<button [disabled]="!dateFilter.form.valid" (click)="revertchanges()" class="btn btn-secondary">Clear Filter</button>-->
+    </div>
+    <div class="d-inline-block">
+      <div class="date-filter-field pr-2">
+        <!--<input name="date" class="form-control"
+         [(ngModel)]="_FileInfoService.filtercriteria.callDateRange.callFromDate"
+         bsDatepicker
+         [minDate]="_FileInfoService.filtercriteria.callDateRange.orgCallFromDate"
+         value="{{_FileInfoService.filtercriteria.callDateRange.callFromDate | date:'MMM dd, yyyy'}}"
+         [maxDate]="_FileInfoService.filtercriteria.callDateRange.orgCallToDate"
+         [bsConfig]="{ dateInputFormat: 'MMM DD, YYYY', containerClass: 'theme-blue' }"
+         ng-model-options="{timezone: 'UTC'}"
+         #dp="bsDatepicker">-->
+        <input name="date" class="form-control"
+               [(ngModel)]="_FileInfoService.filtercriteria.callDateRange.callFromDate"
+               bsDatepicker
+               value="{{_FileInfoService.filtercriteria.callDateRange.callFromDate | date:'MMM dd, yyyy'}}"
+               [bsConfig]="{ dateInputFormat: 'MMM DD, YYYY', containerClass: 'theme-blue' }"
+               ng-model-options="{timezone: 'UTC'}"
+               #dp="bsDatepicker">
+      </div>
+      <div class="date-filter-field">
+        <!--<input name="datePicker" class="form-control"
+         [(ngModel)]="_FileInfoService.filtercriteria.callDateRange.callToDate"
+         bsDatepicker
+         [minDate]="_FileInfoService.filtercriteria.callDateRange.orgCallFromDate"
+         value="{{_FileInfoService.filtercriteria.callDateRange.callToDate | date:'MMM dd, yyyy'}}"
+         [maxDate]="_FileInfoService.filtercriteria.callDateRange.orgCallToDate"
+         [bsConfig]="{ dateInputFormat: 'MMM DD, YYYY', containerClass: 'theme-blue' }"
+         ng-model-options="{timezone: 'UTC'}"
+         #dp2="bsDatepicker">-->
+        <input name="datePicker" class="form-control"
+               [(ngModel)]="_FileInfoService.filtercriteria.callDateRange.callToDate"
+               bsDatepicker
+               value="{{_FileInfoService.filtercriteria.callDateRange.callToDate | date:'MMM dd, yyyy'}}"
+               [bsConfig]="{ dateInputFormat: 'MMM DD, YYYY', containerClass: 'theme-blue' }"
+               ng-model-options="{timezone: 'UTC'}"
+               #dp2="bsDatepicker">
+      </div>
+    </div>
+  </form>
+</div>
+

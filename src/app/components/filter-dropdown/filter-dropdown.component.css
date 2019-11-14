@@ -1,0 +1,10 @@
+.multiselect {
+  display: inline-block;
+  margin: 0 15px;
+  color: #fff;
+  min-width: 350px;
+  right: 0px;
+  position: relative;
+  top: 0px;
+}
+

@@ -1,0 +1,84 @@
+.spinner {
+    position: absolute;
+    text-align: center;
+    top: 48%;
+    left: 48%;
+    -webkit-animation: spin 1000ms linear infinite;
+    animation: spin 1000ms linear infinite;
+     z-index: 9999;
+  }
+
+
+.load {
+  top: 40px;
+  left: -2.5px;
+}
+
+  .load span {
+    display: inline-block;
+    width: 5px;
+    height: 20px;
+    background-color: #046ec8;
+  }
+
+.load span:nth-child(1) {
+  animation: grow 1s ease-in-out infinite;
+}
+
+    .load span:nth-child(2) {
+      animation: grow 1s ease-in-out 0.15s infinite;
+    }
+
+    .load span:nth-child(3) {
+      animation: grow 1s ease-in-out 0.30s infinite;
+    }
+
+    .load span:nth-child(4) {
+      animation: grow 1s ease-in-out 0.45s infinite;
+    }
+
+@keyframes grow {
+  0%, 100% {
+    -webkit-transform: scaleY(1);
+    -ms-transform: scaleY(1);
+    -o-transform: scaleY(1);
+    transform: scaleY(1);
+  }
+
+  50% {
+    -webkit-transform: scaleY(1.8);
+    -ms-transform: scaleY(1.8);
+    -o-transform: scaleY(1.8);
+    transform: scaleY(1.8);
+  }
+}
+
+/* keyframes for animation */
+/*@-webkit-keyframes spin {
+  0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(359deg);
+      transform: rotate(359deg);
+    }
+  }
+  
+  @keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(359deg);
+      transform: rotate(359deg);
+    }
+  }
+
+  @media only screen and (min-width: 1500px)  and (max-width:2000px) {
+    .spinner {
+      left: 48.5%;
+    }
+    
+  }*/

@@ -1,0 +1,62 @@
+<div class="date-filter-main"> 
+  <!--<h5>
+    Call Uploaded Date Filter
+  </h5>-->
+  <form #dateFilter="ngForm">
+    <div class="d-flex justify-content-end">
+      <button (click)="applyUploadedDateChanges(dateFilter)" class="btn apply-btn">Apply Filter</button>
+    </div>
+    <div class="d-inline-block">
+      <!--<range-slider
+                  [min]="_FileInfoService.filtercriteria.callDateRange.orgfromDate"
+                  [max]="_FileInfoService.filtercriteria.callDateRange.orgtoDate"
+                  [toolTips]="[false,false]"
+                  [(ngModel)]="twoWayRange">
+    </range-slider>-->
+
+      <div class="date-filter-field pr-2">
+        <!--<input name="date" class="form-control"
+               [(ngModel)]="_FileInfoService.filtercriteria.callDateRange.uploadedFromDate"
+               bsDatepicker
+               [isOpen]="true"
+               [minDate]="_FileInfoService.filtercriteria.callDateRange.orgUploadedFromDate"
+               value="{{_FileInfoService.filtercriteria.callDateRange.uploadedFromDate | date:'MMM dd, yyyy'}}"
+               [maxDate]="_FileInfoService.filtercriteria.callDateRange.orgUploadedToDate"
+               [bsConfig]="{ dateInputFormat: 'MMM DD, YYYY', containerClass: 'theme-blue' }"
+               ng-model-options="{timezone: 'UTC'}"
+               #dp="bsDatepicker">-->
+        <input name="date" class="form-control"
+               [(ngModel)]="_FileInfoService.filtercriteria.callDateRange.uploadedFromDate"
+               bsDatepicker
+               [isOpen]="true"
+               value="{{_FileInfoService.filtercriteria.callDateRange.uploadedFromDate | date:'MMM dd, yyyy'}}"
+                [bsConfig]="{ dateInputFormat: 'MMM DD, YYYY', containerClass: 'theme-blue' }"
+               ng-model-options="{timezone: 'UTC'}"
+               #dp="bsDatepicker">
+      </div>
+      <div class="date-filter-field">
+        <!--<input name="datePicker" class="form-control"
+               [(ngModel)]="_FileInfoService.filtercriteria.callDateRange.uploadedToDate"
+               bsDatepicker
+               [minDate]="_FileInfoService.filtercriteria.callDateRange.orgUploadedFromDate"
+               value="{{_FileInfoService.filtercriteria.callDateRange.uploadedToDate | date:'MMM dd, yyyy'}}"
+               [maxDate]="_FileInfoService.filtercriteria.callDateRange.orgUploadedToDate"
+               [bsConfig]="{ dateInputFormat: 'MMM DD, YYYY', containerClass: 'theme-blue' }"
+               ng-model-options="{timezone: 'UTC'}"
+               #dp2="bsDatepicker">-->
+        <input name="datePicker" class="form-control"
+               [(ngModel)]="_FileInfoService.filtercriteria.callDateRange.uploadedToDate"
+               bsDatepicker
+               value="{{_FileInfoService.filtercriteria.callDateRange.uploadedToDate | date:'MMM dd, yyyy'}}"
+               [bsConfig]="{ dateInputFormat: 'MMM DD, YYYY', containerClass: 'theme-blue' }"
+               ng-model-options="{timezone: 'UTC'}"
+               #dp2="bsDatepicker">
+      </div>
+    </div>
+    <!--<div class="float-left date-filter-buttons">
+    <button [disabled]="!dateFilter.form.valid" (click)="applychanges(dateFilter)" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i></button>
+    <button (click)="revertchanges()" class="btn btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></button>
+  </div>-->
+  </form>
+</div>
+

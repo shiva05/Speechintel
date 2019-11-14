@@ -1,0 +1,50 @@
+.wrapper {
+  background: #293F56;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+ 
+}
+
+.user {
+    display: flex;
+    justify-content: center;
+    margin-top: 44px;
+}
+
+.userImage {
+  color: rgb(146, 146, 204);
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  overflow: hidden;
+  background: #fcfcfc;
+  line-height: 100px;
+  transition: all .7s linear;
+}
+  .userImage img {
+    width: 100%;
+    height:auto;
+  }
+  .dateTime {
+    text-align: center;
+    font-size: 14px;
+    color: #d4d4d4;
+    margin: 10px;
+  }
+
+.userInfo {
+    text-align: center;
+    color: white;
+}
+
+.userInfo h6 {
+    /*margin-bottom: 0px;*/
+    font-size: 16px;
+    color:#fff;
+}
+

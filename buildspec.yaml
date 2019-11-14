@@ -1,0 +1,30 @@
+version: 0.2
+env:
+   variables:
+       DEMO_S3_BUCKET: "demo-angular-build"
+       DEV_S3_BUCKET: "speechintel-dev-web"
+       PROD_S3_BUCKET: "prod-angular-build"
+phases:
+   install:
+       commands:
+           - echo Installing source NPM dependencies...
+           - npm install
+           - npm install @angular-devkit/core
+           - npm install -g @angular/cli
+   build:
+       commands:
+           - echo Build started on `date`
+           - ng build --prod --output-path=distDev --environment=development --base-href ./
+           - ng build --prod --output-path=distProd --environment=prod --base-href ./
+   post_build:
+        commands:
+           - aws s3 rm s3://${DEV_S3_BUCKET} --recursive
+           - aws s3 rm s3://${PROD_S3_BUCKET} --recursive
+           - aws s3 cp distDev s3://${DEV_S3_BUCKET} --recursive
+           - aws s3 cp distProd s3://${PROD_S3_BUCKET} --recursive
+           - echo Build completed on `date`
+artifacts:
+   files:
+       - '**/*'
+   base-directory: 'dist*'
+   discard-paths: yes

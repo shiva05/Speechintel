@@ -1,0 +1,23 @@
+audio {
+  width: 250px;
+  /*height: 32px;*/
+}
+
+.audioBtn {
+  position: relative;
+  display: inline-block;
+}
+
+.play {
+  position: absolute;
+  z-index: 99;
+  left: 20px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  background: inherit;
+  line-height: 32px;
+  top: calc(50% - 18px);
+  font-size: 20px;
+  opacity: 0;
+}

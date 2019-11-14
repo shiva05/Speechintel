@@ -1,0 +1,506 @@
+<!--<section class="wrapper-main ">
+  <div class="container-fluid no-pad">
+    <div class="col-sm-12 title_actions no-pad">
+      <h4 class="pull-left mb-4 no-pad">Red Alerts</h4>
+      <span class="glyphicon glyphicon-refresh pull-right glyph"></span>
+    </div>
+    <span *ngIf="_authService.UserProfiledetails.customer.redAlertURL.length==0" class="noData">
+      No records found!
+    </span>
+    <span *ngIf="_authService.UserProfiledetails.customer.redAlertURL.length>0">
+
+      <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(_authService.UserProfiledetails.customer.redAlertURL )" width="100%" height="100%" frameborder="0"></iframe>
+    </span>
+  </div>
+</section>-->
+<!--<iframe src="https://app.powerbi.com/view?r=eyJrIjoiMmQyNGVmYWEtYjdmZC00NWM0LTgwMzAtNDJkMzQ2MDcwODZlIiwidCI6IjJjZjI3MzdlLTBiOWEtNDA1OS05MjIyLTNhMDQwOWZmZTBlMSIsImMiOjF9" frameborder="0"></iframe>-->
+
+<si-spinner *ngIf="loading"></si-spinner>
+<section class="wrapper-main">
+  <div class="title_actions">
+    <div class="row no-mar">
+      <div class="col-md-2 col-sm-4 no-pad d-flex align-items-center">
+        <ul class="title-left">
+          <li><span><b>{{currentMonth | date:"MMMM yyyy "}}</b></span></li>
+        </ul>
+      </div>
+      <div class="col-md-8 col-sm-6 text-right icon-links d-flex align-self-center justify-content-end ml-auto">
+        <ul class="iconList">
+          <li><button *ngIf="!ScoreDetailsList" title="Download CSV" [disabled]="(redAlertFileInfo.length == 0)" (click)="downloadRedAlertSheet()"><i class="fa fa-download"></i></button></li>
+          <li><a title="Refresh" (click)="refresh();"><i class="fa cr-icons">&#xf021;</i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid no-pad">
+    <div class="col-md-12">
+      <div class="row call-recording-tabs no-mar agent-main pad-r5">
+        <div class="call-recording-navitem headingTile mr-2" style="width: 170px;background:#940a0a;border: 1px solid #940a0a">
+          <div class="date-filter-main">
+            <i class="far fa-bell"></i>
+            <h4 class="mb-0">Red Alerts</h4>
+          </div>
+        </div>
+        <div class="call-recording-navitem mr-2">
+          <div class="date-filter-main">
+            <h5>Red Alert Count</h5>
+            <span class="count">{{tilescount.callcount}}</span>
+          </div>
+        </div>
+        <!--<div class="call-recording-navitem flex-grow-1">
+          <div class="date-filter-main">
+            <h5>Total Score</h5>
+            <span class="count">{{tilescount.totalScore}}</span>
+          </div>
+        </div>-->
+        <div class="call-recording-navitem mr-2">
+          <div class="date-filter-main">
+            <h5>Avg Score</h5>
+            <span class="count">{{tilescount.avgScore | number :'1.2-2'}}%</span>
+          </div>
+        </div>
+        <div class="call-recording-navitem mr-2">
+          <div class="date-filter-main">
+            <h5>Avg Handle Time</h5>
+            <span class="count">{{dataService.formatTime(tilescount.avgHandleTime)}}</span>
+          </div>
+        </div>
+        <div class="call-recording-navitem">
+          <!--<div class="date-filter-main">
+            <h5>Word Count</h5>
+            <select [(ngModel)]="wordCountType" (change)="changeWordCount()">
+              <option value="All">All</option>
+              <option value="Agent">Agent</option>
+              <option value="Customer">Customer</option>
+            </select>
+          </div>-->
+          <div class="date-filter-main">
+            <h5>Word Count <span class="countType">( {{wordCountType}} )</span></h5>
+            <!--<select [(ngModel)]="wordCountType" (change)="changeWordCount()">
+              <option value="All">All</option>
+              <option value="Agent">Agent</option>
+              <option value="Customer">Customer</option>
+            </select>-->
+            <div class="totalValues">{{totalWordCount}} </div>
+            <ul class="nav wordsCount ">
+              <li class="dropdown">
+                <a href="#" class="wordCountDropdown" data-toggle="dropdown"><i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu">
+                  <li [ngClass]="wordCountType == 'All' ? 'active' : ''" (click)="changeWordCount('All')"><a><i class="icon-cog"></i>All</a></li>
+                  <li [ngClass]="wordCountType == 'Agent' ? 'active' : ''" (click)="changeWordCount('Agent')"><a><i class="icon-envelope"></i>Agent</a></li>
+                  <li [ngClass]="wordCountType == 'Customer' ? 'active' : ''" (click)="changeWordCount('Customer')"><a><i class="icon-envelope"></i>Customer</a></li>
+                </ul>
+              </li>
+            </ul>
+
+          </div>
+        </div>
+        <!--<div class="call-recording-navitem date-filteradj">
+          <div class="date-filter-main scorefilter">
+            <h5 class="mb-0">Score Filter</h5>
+            <div class="filter-range">
+              <span class="block">
+                <span class="title">Min%</span>
+                <input type="text" class="text-center" [(ngModel)]="minValue" (change)="scorefilter()">
+              </span>
+              <span class="block">
+                <span class="title">Max%</span>
+                <input type="text" class="text-center" [(ngModel)]="maxValue" (change)="scorefilter()">
+              </span>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="call-recording-navitem" hidden>
+          <div class="date-filter-main">
+            <h5>Keywords / Pharses</h5>
+            <span class="count">
+            </span>
+          </div>
+        </div>
+        <div class="call-recording-navitem date-filteradj">
+          <app-datefilter></app-datefilter>
+          <div class="clearfix"></div>
+        </div>
+        <div class="call-recording-navitem date-filteradj">
+          <app-uploadDateFilter></app-uploadDateFilter>
+          <div class="clearfix"></div>
+        </div>-->
+      </div>
+    </div>
+
+    <div class="row no-mar">
+      <div class="col-md-12 agent-table-details">
+        <!--<div class="left-section">
+          <div class="selection-main">
+            <h6>Agent Name</h6>
+            <div class="selection-content">
+              <div class="selection-subcontent">
+                <input type="checkbox" name="a1" [(ngModel)]="allAgents" [disabled]="ScoreDetailsList" [checked]="allAgents" (click)="selectAndDeselectAll(1)" />
+                <label for="allAgents">Select All</label>
+              </div>
+              <div class="selection-subcontent" *ngFor="let item of customerFilterOptions.AgentNames; let i = index">
+                <input type="checkbox" [checked]="item.selected" [disabled]="ScoreDetailsList" (change)="selectedFilter(item.name , 'Agent')" />
+                <label>{{item.name}}</label>
+              </div>
+              <si-spinner *ngIf="smallLoader" class="small-spinner"></si-spinner>
+            </div>
+          </div>
+          <div class="selection-main">
+            <h6>Customer Account No</h6>
+            <div class="selection-content">
+              <div class="selection-subcontent">
+                <input type="checkbox" name="a1" [(ngModel)]="allAccountNos" [disabled]="ScoreDetailsList" [checked]="allAccountNos" (click)="selectAndDeselectAll(2)" />
+                <label for="allAccount">Select All</label>
+              </div>
+              <div class="selection-subcontent" *ngFor="let item of customerFilterOptions.customerAccountNumbers; let i = index">
+                <input type="checkbox" name="a1" [checked]="item.selected" [disabled]="ScoreDetailsList" (change)="selectedFilter(item.name , 'AccountNumber')" />
+                <label>{{item.name}}</label>
+              </div>
+              <si-spinner *ngIf="smallLoader" class="small-spinner"></si-spinner>
+            </div>
+          </div>
+          <div class="selection-main">
+            <h6>Customer Phone No</h6>
+            <div class="selection-content">
+              <div class="selection-subcontent">
+                <input type="checkbox" name="a1" [(ngModel)]="allPhoneNos" [disabled]="ScoreDetailsList" [checked]="allPhoneNos" (click)="selectAndDeselectAll(3)" />
+                <label for="allPhoneNo">Select All</label>
+              </div>
+              <div class="selection-subcontent" *ngFor="let item of customerFilterOptions.customerPhoneNumbers; let i = index">
+                <input type="checkbox" name="a1" [checked]="item.selected" [disabled]="ScoreDetailsList" (change)="selectedFilter(item.name , 'PhoneNumber')" />
+                <label>{{item.name}}</label>
+              </div>
+              <si-spinner *ngIf="smallLoader" class="small-spinner"></si-spinner>
+            </div>
+          </div>
+        </div>-->
+        <div class="mid-section transcript-pad agentpermormanceMain fullScreen">
+          <div class="row no-mar">
+            <div class="agentPerformance-table mb-2" *ngIf="!ScoreDetailsList">
+              <div class="title">
+                <div class="item" (click)="sort('FileName')" [ngClass]="reverse  ? 'up' : 'down'">
+                  <span title="Call Audio">
+                    Call Audio
+                    <span class="orderBy" *ngIf="key =='FileName'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                </div>
+                <div class="item">
+                  <span class="item-text" (click)="sort('CustomerAccountNo')" [ngClass]="reverse  ? 'up' : 'down'" title="Customer Account Number">
+                    <!--Customer Account Number--> Cust Acct No
+                    <span class="orderBy" *ngIf="key =='CustomerAccountNo'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('CustomerAccountNo')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.finalSelectedList.CustomerAccountNo != null"></i>
+                    </button>
+                    <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="filterDropdownDisplay && selectedColumn === 'CustomerAccountNo'">
+                      <div *ngIf="_filterDropdownService.dataSet">
+                        <button class="btn btn-secondary float-right" (click)="clearFilterData('CustomerAccountNo')">Clear Filter</button>
+                        <button class="btn apply-btn float-right" (click)="applyfilter('CustomerAccountNo')">Apply Filter</button>
+                      </div>
+                      <app-filter-dropdown></app-filter-dropdown>
+                    </div>
+                  </span>
+                </div>
+                <div class="item">
+                  <span class="item-text" (click)="sort('CustomerPhoneNo')" [ngClass]="reverse  ? 'up' : 'down'" title="Customer Phone Number">
+                    <!--Customer Phone Number--> Cust Ph No
+                    <span class="orderBy" *ngIf="key =='CustomerPhoneNo'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('CustomerPhoneNo')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="_filterDropdownService.selectedFilterOptions.CustomerPhoneNo.length > 0"></i>
+                    </button>
+                    <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="filterDropdownDisplay && selectedColumn === 'CustomerPhoneNo'">
+                      <div *ngIf="_filterDropdownService.dataSet">
+                        <button class="btn btn-secondary float-right" (click)="clearFilterData('CustomerPhoneNo')">Clear Filter</button>
+                        <button class="btn apply-btn float-right" (click)="applyfilter('CustomerPhoneNo')">Apply Filter</button>
+                      </div>
+                      <app-filter-dropdown></app-filter-dropdown>
+                    </div>
+                  </span>
+                </div>
+                <div class="item">
+                  <span class="item-text" (click)="sort('ProgramName')" [ngClass]="reverse  ? 'up' : 'down'" title="Program Name">
+                    <!--Program Name--> Prog. Name
+                    <span class="orderBy" *ngIf="key =='ProgramName'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('ProgramName')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.finalSelectedList.ProgramName != null"></i>
+                    </button>
+                    <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="filterDropdownDisplay && selectedColumn === 'ProgramName'">
+                      <div *ngIf="_filterDropdownService.dataSet">
+                        <button class="btn btn-secondary float-right" (click)="clearFilterData('ProgramName')">Clear Filter</button>
+                        <button class="btn apply-btn float-right" (click)="applyfilter('ProgramName')">Apply Filter</button>
+                      </div>
+                      <app-filter-dropdown></app-filter-dropdown>
+                    </div>
+                  </span>
+                </div>
+                <div class="item">
+                  <span title="Call Date" (click)="sortByDate('CallDate')" [ngClass]="sortDate  ? 'up' : 'down'">
+                    Call Date
+                    <span class="orderBy" *ngIf="key =='CallDate'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('CallDate');defaultFilter()">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.callDateFilterApplied"></i>
+                    </button>
+                    <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="fileInfoService.dateFiltersApplied && selectedColumn === 'CallDate'">
+                      <div>
+                        <button class="btn btn-secondary float-right" (click)="clearFilterData('CallDate')">Clear Filter</button>
+                      </div>
+                      <app-datefilter></app-datefilter>
+                    </div>
+                  </span>
+                </div>
+                <div class="item" *ngIf="!restrictedColumn && role != 'Customer_Agent'">
+                  <span class="item-text" title="Upload Date" (click)="sortByDate('UploadedDate')" [ngClass]="sortDate  ? 'up' : 'down'">
+                    Upload Date
+                    <span class="orderBy" *ngIf="key =='UploadedDate'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('UploadedDate')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.uploadFilterApplied"></i>
+                    </button>
+                    <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="fileInfoService.dateFiltersApplied && selectedColumn === 'UploadedDate'">
+                      <div>
+                        <button class="btn btn-secondary float-right" (click)="clearFilterData('UploadedDate')">Clear Filter</button>
+                      </div>
+                      <app-uploadDateFilter></app-uploadDateFilter>
+                    </div>
+                  </span>
+                </div>
+                <div class="item">
+                  <span class="item-text" (click)="sort('AgentName')" [ngClass]="reverse  ? 'up' : 'down'" title="Agent Name">
+                    Agent Name
+                    <span class="orderBy" *ngIf="key =='AgentName'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('AgentName')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.finalSelectedList.AgentName != null"></i>
+                    </button>
+                    <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="filterDropdownDisplay && selectedColumn === 'AgentName'">
+                      <div *ngIf="_filterDropdownService.dataSet">
+                        <button class="btn btn-secondary float-right" (click)="clearFilterData('AgentName')">Clear Filter</button>
+                        <button class="btn apply-btn float-right" (click)="applyfilter('AgentName')">Apply Filter</button>
+                      </div>
+                      <app-filter-dropdown></app-filter-dropdown>
+                    </div>
+                  </span>
+                </div>
+                <div class="item text-center">
+                  <span class="" title="Word Count" [ngClass]="reverse  ? 'up' : 'down'">
+                    <span *ngIf="wordCountType == 'All'" (click)="sort('Call_Transcripts_All_WordCount')">All Word Count</span>
+                    <span *ngIf="wordCountType == 'Agent'" (click)="sort('Call_Transcripts_Agent_WordCount')">Agent Word Count</span>
+                    <span *ngIf="wordCountType == 'Customer'" (click)="sort('Call_Transcripts_Customer_WordCount')">Customer Word Count</span>
+                    <span class="orderBy" *ngIf="key =='Call_Transcripts_All_WordCount' && wordCountType == 'All'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                    <span class="orderBy" *ngIf="key =='Call_Transcripts_Agent_WordCount' && wordCountType == 'Agent'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                    <span class="orderBy" *ngIf="key =='Call_Transcripts_Customer_WordCount' && wordCountType == 'Customer'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                </div>
+                <div class="item text-center">
+                  <span class="item-text" (click)="sort('TotalWeighted_Score')" title="Red Alert Score (%)" [ngClass]="reverse  ? 'up' : 'down'">
+                    Red Alert Score (%)
+                    <span class="orderBy" *ngIf="key =='TotalWeighted_Score'">
+                      <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                      <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                    </span>
+                  </span>
+                  <span class="filterDropdown">
+                    <button class="filter" type="button" (click)="getFilterData('TotalWeighted_Score')">
+                      <i class="fas fa-filter"></i>
+                      <i class="fas fa-check-circle filterApplyed" *ngIf="fileInfoService.finalSelectedList.TotalWeighted_Score != null"></i>
+                    </button>
+                    <div class="dropdown-menu categoryList shadow-lg p-1 mb-5 " *ngIf="filterDropdownDisplay && selectedColumn === 'TotalWeighted_Score'">
+                      <div>
+                        <button class="btn btn-secondary float-right" (click)="clearFilterData('TotalWeighted_Score')">Clear Filter</button>
+                        <button class="btn apply-btn float-right" (click)="scorefilter()">Apply Filter</button>
+                      </div>
+                      <div class="date-filter-main scorefilter">
+                        <!--<h5 class="mb-0">Score Filter</h5>-->
+                        <div class="filter-range">
+                          <span class="block">
+                            <span class="title">Min%</span>
+                            <input type="text" class="text-center" [(ngModel)]="minValue">
+                          </span>
+                          <span class="block">
+                            <span class="title">Max%</span>
+                            <input type="text" class="text-center" [(ngModel)]="maxValue">
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+                <div class="item" title="View Score">View Score</div>
+                <div class="item" title="Call Transcript">Call Transcript</div>
+              </div>
+              <div class="table-content ps" [perfectScrollbar]="config">
+                <div class="norecords-msg" *ngIf="currentMonthData">
+                  <p class="text-center nodata-msg mt-5"><b>No Records for Current month</b></p>
+                </div>
+                <div *ngFor="let file of redAlertFileInfo | orderBy: key : reverse | sortByDate: key; let i = index" class="items-main">
+                  <!--<div class="item">
+                  <input type="checkbox" [(ngModel)]="file.apselected"  (change)="filterAgentPerformance()" [checked]="file.apselected"/>
+                    </div>-->
+                  <div class="d-flex align-items-center fullwidth" id="{{i}}">
+                    <div class="item">
+                      <span class="audioBtn" [title]="file.FileName" *ngIf="audioVisible">
+                        <span (click)="audioPlay(file, i)" class="play" [hidden]="file.audioPath"><i class="fa fa-play"></i></span>
+                        <audio controls autoplay [src]="file.audioPath" type="audio/mp3" class="audio"></audio>
+                      </span>
+                      <span [title]="file.FileName" hidden>
+                        {{file.FileName}}
+                      </span>
+                    </div>
+                    <div class="item" [title]="file.CustomerAccountNo">{{file.CustomerAccountNo}}</div>
+                    <div class="item" [title]="file.CustomerPhoneNo">{{file.CustomerPhoneNo}}</div>
+                    <div class="item" [title]="file.ProgramName">{{file.ProgramName}}</div>
+                    <div class="item" [title]="file.CallDate | date:'MMM dd, yyyy'">{{file.CallDate | date:"MMM dd, yyyy"}}</div>
+                    <div class="item" [title]="getModifiedDate(file.UploadedDate)">{{getModifiedDate(file.UploadedDate)}}</div>
+                    <div class="item" [title]="file.AgentName">{{file.AgentName}}</div>
+                    <div class="item text-center">
+                      <span class="wordCountBg" *ngIf="wordCountType == 'All'">{{file.Call_Transcripts_All_WordCount}}</span>
+                      <span class="wordCountBg" *ngIf="wordCountType == 'Agent'">{{file.Call_Transcripts_Agent_WordCount}}</span>
+                      <span class="wordCountBg" *ngIf="wordCountType == 'Customer'">{{file.Call_Transcripts_Customer_WordCount}}</span>
+                    </div>
+                    <div class="item text-center marg-t5" [style.backgroundColor]="file.colorzone">{{file.TotalWeighted_Score}}<span>%</span></div>
+                    <div class="item">
+                      <a class="btn btn-1 redalertBtn" title="View Score" (click)="showDetailedScore(file); $event.stopPropagation()">
+                        View Score
+                      </a>
+                    </div>
+                    <div class="item">
+                      <span  *ngIf="role === 'Customer_Management'">
+  <a class="btn primaryBtn"  routerLink="/dashboard/callTranscripts" (click)="editFile(file.Guid, file.FileName, 'Completed', i, file.TranscriptAPISource); activemenu('Call Transcripts');navigationFromRedAlert(); $event.stopPropagation()">
+    <i class="fas fa-eye" title="View transcript"></i>
+  </a>
+  <a class="btn primaryBtn" routerLink="/dashboard/ExploreCall" (click)="exploreCallDetails();editFile(file.Guid, file.FileName, 'Completed', i, file.TranscriptAPISource); activemenu('Call Transcripts');navigationFromRedAlert(); $event.stopPropagation()">
+    <i class="far fa-compass" title="Explore call"></i>
+  </a>
+    </span>
+  <a class="btn btn-2" title="View transcript"  *ngIf="role != 'Customer_Management'" routerLink="/dashboard/callTranscripts" (click)="editFile(file.Guid, file.Call_FileName, 'Completed', i, file.TranscriptAPISource); activemenu('Call Transcripts');navigationFromRedAlert(); $event.stopPropagation()">
+    View Transcript
+  </a>
+
+                      <!--<a class="btn btn-2" title="View transcript" routerLink="/dashboard/callTranscripts" (click)="editFile(file.Guid, file.Call_FileName, 'Completed', i, file.TranscriptAPISource); activemenu('Call Transcripts');navigationFromRedAlert(); $event.stopPropagation()">
+                        View Transcript
+                      </a>-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--<div class="pagination">
+                <strong>Pages : </strong>
+                <span class="ml-1" *ngFor="let page of totalpagecount">
+                  <button type="button" class="pageNumber" [ngClass]="selectedPage === page.pagemumber ? 'active' : ''" [disabled]="loading" (click)="selectedPageIndex(page.pagemumber)"> {{page.pagemumber}}</button>
+                </span>
+              </div>-->
+              <div class="pagination">
+                <button class="btn btn-primary mr-2" (click)="firstPage()" [disabled]="selectedPage === 1">First</button>
+                <button class="btn btn-primary" (click)="prevPageCount()" [disabled]="selectedPage === 1"><i class="fa fa-angle-left"></i></button>
+                <div class="pages">
+                  <div id="activepages" [style.margin-left.px]="marginLeftValue">
+                    <span class="ml-2" *ngFor="let page of totalpagecount">
+                      <button type="button" class="pageNumber" [ngClass]="selectedPage === page.pagemumber ? 'active' : ''" [disabled]="loading" (click)="selectedPageIndex(page.pagemumber)"> {{page.pagemumber}}</button>
+                    </span>
+                  </div>
+                </div>
+                <button class="btn btn-primary ml-2" (click)="nextPageCount()" [disabled]="(selectedPage === totalpagecount.length || totalpagecount.length==0)"><i class="fa fa-angle-right"></i></button>
+                <button class="btn btn-primary ml-2" (click)="lastPage()" [disabled]="(selectedPage === totalpagecount.length || totalpagecount.length==0)">Last</button>
+              </div>
+            </div>
+            <div class="question-table backbtn" *ngIf="ScoreDetailsList">
+              <a (click)="backToAgentsPerformance()" *ngIf="_authService.navigationBackFromAgentPage  || _authService.navigatedfromCallTranscriptionPage && !_authService.navigationBackFromcalltranscrtiptionPage" class="btnactive blue-color agentback underline back pull-left"><i class="fa fa-angle-left" aria-hidden="true"></i> Back</a>
+              <a (click)="backToAgentsPerformance()" *ngIf="!_authService.navigatedfromCallTranscriptionPage && !_authService.navigationBackFromcalltranscrtiptionPage" class="blue-color agentback underline back pull-left btnactive"><i class="fa fa-angle-left" aria-hidden="true"></i> Back</a>
+              <a (click)="editFile(redAlertFileInfo[0].Guid, redAlertFileInfo[0].FileName, 'Completed', _authService.selectedFileindex, redAlertFileInfo[0].TranscriptAPISource); activemenu('Call Transcripts')" *ngIf="_authService.navigatedfromCallTranscriptionPage && _authService.navigationBackFromcalltranscrtiptionPage" class="btnactive blue-color agentback underline back pull-left"><i class="fa fa-angle-left" aria-hidden="true"></i> Back</a>
+              <a (click)="backToAgentsPerformance()" class="btnactive blue-color agentback underline back pull-left"><i class="fa fa-angle-left" aria-hidden="true"></i> Back</a>
+              <div class="call-details"><h6>Agent : {{selectedCallItem.AgentName}}</h6></div>
+              <div class="call-details"><h6>Call Handle Time : {{dataService.formatTime(selectedCallItem.Duration)}}</h6></div>
+
+              <div class="view-trascript" *ngIf="questionsList.length > 0">
+                <a (click)="editFile(redAlertFileInfo[0].Guid, redAlertFileInfo[0].FileName, 'Completed', _authService.selectedFileindex, redAlertFileInfo[0].TranscriptAPISource); activemenu('Call Transcripts')" *ngIf="_authService.navigatedfromCallTranscriptionPage" class="btn agenttranscript-Btn" style="float:right"> View Transcript </a>
+                <a (click)="editFile(redAlertFileInfo[0].Guid, redAlertFileInfo[0].FileName, 'Completed', 1,redAlertFileInfo[0].TranscriptAPISource); activemenu('Call Transcripts');navigationFromRedAlertScorepage();" *ngIf="!_authService.navigatedfromCallTranscriptionPage" class="btn agenttranscript-Btn" style="float:right"> View Transcript</a>
+              </div>
+              <div class="title">
+                <div class="item">Q.No</div>
+                <div class="item">Section</div>
+                <div class="item">Question</div>
+                <div class="item">Spotted Keyword</div>
+                <div class="item text-center" (click)="sortBy('Score_Weightage')" [ngClass]="iconToggle  ? 'up' : 'down'">
+                  Score
+                  <span *ngIf="property =='Score_Weightage'">
+                    <span class="fas sort-icon fa-long-arrow-alt-up ascending"></span>
+                    <span class="fas sort-icon fa-long-arrow-alt-down descending"></span>
+                  </span>
+                </div>
+                <!--<div class="item text-center">Avg Score</div>-->
+              </div>
+              <div class="table-content scoreList ps" [perfectScrollbar]="config">
+                <div class="items-main d-flex align-items-center" *ngFor="let file of questionsList ;  let i = index">
+                  <a class="d-flex align-items-center">
+                    <!--<div class="item">
+                      <input type="checkbox" [(ngModel)]="file.qselected" [checked]="file.qselected" />
+                    </div>-->
+                    <div class="item">
+                      <span>
+                        {{file.Question_No}}
+                      </span>
+                    </div>
+                    <div class="item">{{file.Question_Category}}</div>
+                    <div class="item">{{file.Question_Description}}</div>
+                    <div class="item"><span *ngFor="let key of file.sportedKewords"><span class="chip" *ngIf="key != ''">{{key}}</span></span></div>
+                    <div class="item text-center" [style.backgroundColor]="file.colorzone">{{file.Score_Weightage}}</div>
+                    <!--<div class="item text-center" [ngClass]="file['Score Weightage']>20 ? 'avgScoreBlue' : file['Score Weightage']>10 ? 'avgScorePink' : 'avgScoreGreen'">0</div>-->
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+

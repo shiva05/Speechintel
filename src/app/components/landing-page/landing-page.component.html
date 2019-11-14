@@ -1,0 +1,597 @@
+<div class="landing-main" style="background-image: url('../../../assets/images/bg-img.png')">
+  <header>
+    <div class="header-bar" id="navbar">
+      <div class="container-fluid">
+        <nav class="navbar navbar-toggleable-md navbar-light bg-faded text-center">
+          <!--<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                  data-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>-->
+          <div class="hedder-up text-left">
+            <a class="navbar-brand" href="index.html">
+              <img src="../../../assets/images/SpeechIntel-Logo.png" alt="SpeechIntel" class="main-logo">
+            </a>
+          </div>
+          <div class="sub-logo">
+            <img src="../../../assets/images/SpeechIntel-Caption.png" alt="Client Logo" class="img-responsive">
+          </div>
+          <div class="navbar-links  justify-content-end " id="navbarSupportedContent">
+            <ul class="navbar-nav landingPageMenu">
+              <li class="nav-item active">
+                <a class="nav-link" href="index.html">
+                  Home
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="Contact" (click)="clickToRunContact()"
+                   style="cursor:pointer">Contact</a>
+              </li>
+              <li *ngIf="_authService.isAuthenticated()">
+                <a class="nav-link" (click)="dashboardNav()">
+                  Dashboard
+                </a>
+
+              </li>
+              <li class="nav-item loginForm" *ngIf="!_authService.isAuthenticated()">
+                <a (click)="open(content)" class="nav-link">Login</a>
+              </li>
+              <li class="nav-item loginForm" *ngIf="_authService.isAuthenticated()">
+                <a (click)="doLogout()" class="nav-link">
+                  LogOut
+                  <span class="logoutIcon">
+                    <i class="fas fa-power-off"></i>
+                  </span>
+
+                </a>
+
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+    <!--Navigation-->
+  </header>
+
+  <div class="banner" id="banner" style="background-color:#010717;">
+    <div class="agile_dot_info one">
+      <div class="w3_banner_info">
+        <div class="flexslider-info">
+          <div id="carouselExampleIndicators" class="w3_banner_info_grid custom_grid carousel slide" data-interval=10000
+               data-ride="carousel">
+            <ol class="carousel-indicators carousel-indicators2 button-change">
+              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+              <div class="item carousel-item active">
+                <div class="testimonal grid-1">
+                  <div class="first-grid-custom agent">
+                    <h2>Customer Sx – Customer Satisfaction</h2>
+                    <p>
+                      Win back your customers by analyzing your contact center calls for Customer Satisfaction issues, Red Alerts or Customer Complaints.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="testimonal grid-1">
+                  <div class="first-grid-custom agent">
+                    <h2>Agent Px – Agent Performance </h2>
+                    <p>
+                      AI-powered agent performance scoring algorithm can automatically analyze 100% of your calls to help you identify, measure, and improve Agent Performance.
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+              <div class="carousel-item">
+                <div class="testimonal grid-1">
+                  <div class="first-grid-custom">
+                    <h2>Call Tx - Call Transcription</h2>
+                    <p>
+                      Access to your call transcription in the form of text-based conversation history, powered by Speech Intel’s high quality Speech-to-Text engine.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="downarrow-custom text-center">
+        <a id="scrollDown" (click)="clickToRunDown()">
+          <img src="../../../assets/images/down-arrow.png" alt="arrowdown" class="downarrow-media" />
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- //banner -->
+  <section class="wanttoknow_more">
+    <div class="container">
+      <h3>100% of your calls are recorded, but are they analyzed?</h3>
+      <div class="frame">
+        <iframe class="embed-responsive-item" width="400" height="550" src="https://www.youtube.com/embed/UeiYPjmNlmo"
+                frameborder="0"
+                allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+  <section class="voice_of">
+    <div class="container">
+      <div class="wthree_head_section-left">
+        <div id="voice-of-customer-metrics"></div>
+        <h3 class="lft">Customer Satisfaction Score</h3>
+        <p>
+          Emotion doesn’t transfer well to paper - until now. Speech Intel’s sophisticated learning algorithms can process and interpret emotional signals during customer support calls and help companies better understand consumer frustrations, positive reactions, and anger to improve their service, customer satisfaction, and experience.
+        </p>
+        <!-- <div class="moretext">View More...</div>	-->
+      </div>
+      <div class="content-img-right">
+        <h3 class="rigt img-responsive">
+          <img src="../../../assets/images/content-img2.jpg">
+        </h3>
+      </div>
+    </div>
+  </section>
+  <section class="voice_of">
+    <div class="container">
+      <div class="wthree_head_section-right">
+        <h3 class="right">Agent Performance Score</h3>
+        <p>
+          What is more important than your customer service agents, who interact with your customers every day and be a face of your company? Your agent’s performance directly impacts the performance of your business, and Speech Intel’s Agent Performance Score will help you identify, measure, and improve agent performance.
+        </p>
+        <!-- <div class="moretext">View More...</div>	-->
+      </div>
+      <div class="content-img-left">
+        <h3 class="lft img-responsive">
+          <img src="../../../assets/images/content-img5.jpg">
+        </h3>
+      </div>
+    </div>
+  </section>
+  <section class="testimonals testimonals1">
+    <div class="container">
+      <!--  <div class="agileits-feedback-grids">
+          <div id="owl-demo" class="owl-carousel owl-theme">
+              <div class="item">
+                  <div class="testimonal grid-1">
+                      <div class="first-grid">
+                      </div>
+                  </div>
+              </div>
+               <div class="item">
+              <div class="testimonal grid-1">
+                  <div class="first-grid">
+
+                      <h3>“ Speech INTEL's focuses on converting speech to high quality text using their Speech Training
+                          Platform, is core quality results ”</h3>
+                      <p>Gomez </p>
+                  </div>
+              </div>
+          </div>
+          <div class="item">
+              <div class="testimonal grid-1">
+                  <div class="first-grid">
+                      <h3>“ Speech INTEL's focuses on converting speech to high quality text using their Speech Training
+                          Platform, is core quality results ”</h3>
+                      <p>John</p>
+                  </div>
+              </div>
+          </div>
+          <div class="item">
+              <div class="testimonal grid-1">
+                  <div class="first-grid">
+                      <h3>“ Speech INTEL's focuses on converting speech to high quality text using their Speech Training
+                          Platform, is core quality results ”</h3>
+                      <p>Federekar</p>
+                  </div>
+              </div>
+          </div>
+          <div class="item">
+              <div class="testimonal grid-1">
+                  <div class="first-grid">
+                      <h3>“ Speech INTEL's focuses on converting speech to high quality text using their Speech Training
+                          Platform, is core quality results ”</h3>
+                      <p>Ram</p>
+                  </div>
+              </div>
+          </div>
+          </div>
+      </div> -->
+
+
+      <div id="carouselExampleIndicators2" class="carousel slide" data-interval=10000 data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+          <div class="item carousel-item active">
+            <div class="testimonal grid-1">
+              <div class="first-grid">
+                <h3> “We exist to serve our customers and improve customer experience, Speech Intel has exceeded our expectation in helping our customers.”</h3>
+                <p>Amy – VP Customer Experience</p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="testimonal grid-1">
+              <div class="first-grid">
+                <h3>“We moved from analyzing 2% of our phones calls to 100% of calls to measure and improve agent performance, thanks to Speech Intel Agent Performance Scoring.”</h3>
+                <p>Dan – Quality Assurance Manager</p>
+              </div>
+            </div>
+
+          </div>
+          <div class="carousel-item">
+            <div class="testimonal grid-1">
+              <div class="first-grid">
+                <h3>
+                  “Speech Intel acts as our internal Data Science/BI team, highly recommend for call center analytics.”
+                </h3>
+                <p>Eric –Data Analytics Manager</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+  <!-- /testimonals section -->
+  <section class="voice_of">
+    <div class="container">
+      <div class="wthree_head_section-left">
+        <h3 class="lft">Call Transcription</h3>
+        <p>
+          Access your Call Transcription in the form of text-based conversation history, fueled by Speech Intel’s sophisticated Speech-to-Text engine. Call Transcription is an important and powerful tool for businesses and contact centers. Speech Intel can help you to easily perform advanced searches, discover key issues, and glean key insights from the customer text-based conversation history.
+        </p>
+        <!-- <div class="moretext">View More...</div>	-->
+      </div>
+      <div class="content-img-right">
+        <h3 class="rigt img-responsive">
+          <img src="../../../assets/images/content-img3.jpg">
+        </h3>
+      </div>
+    </div>
+  </section>
+  <section class="voice_of">
+    <div class="container">
+      <div class="wthree_head_section-right">
+        <h3 class="right">Personalized Dashboard</h3>
+        <p>
+          Your customer voice can now be transformed to actionable visualization with personalized dashboard. Accessible via any connected device, you and your team can see exactly what you want, seamlessly connected to your business’ unique needs.
+        </p>
+      </div>
+      <div class="content-img-left">
+        <h3 class="lft img-responsive">
+          <img src="../../../assets/images/content-img4.jpg">
+        </h3>
+      </div>
+    </div>
+  </section>
+  <section class="what_you">
+    <div class="container">
+      <div class="wthree_head_section">
+        <h3 class="lft">Speech Intel - Products</h3>
+      </div>
+      <div class="row about-info-grids">
+        <div class="col-sm-4 about-info about-info1">
+          <img src="../../../assets/images/buck-img.png">
+          <div class="bord"></div>
+          <h4>CallTx</h4>
+          <div class="h4-underline"></div>
+          <p>
+            Convert your call recordings to high quality call transcriptions with Call-Text Synchronization, Speaker Identification, Time Codes and Download to PDF/Word format – built using Speech Intel’s powerful Speech-to-Text engine.
+          </p>
+          <!--<div class="viewmore-grn">Contact Us</div>-->
+          <button type="button" id="CallTx" (click)=" clickToRunDownthree()"
+                  class=" btn btn-success viewmore-grn products-contact-button">
+            Contact Us
+          </button>
+        </div>
+        <div class="col-sm-4 about-info1-drkblue about-info2">
+          <img src="../../../assets/images/bolt-img.png">
+          <div class="bord-drkblue"></div>
+          <h4>
+            CustomerSx
+            <br />
+            <span></span>
+          </h4>
+          <div class="h4-underline"></div>
+          <p>
+            Speech Intel’s sophisticated learning algorithms can process and interpret emotional signals during customer support calls and help companies better understand customer satisfaction and complaints.
+          </p>
+          <!--<div class="viewmore-drkblue">Contact Us</div>-->
+          <div>
+            <button type="button" id="CustomerSx" (click)="clickToRunDowntwo()"
+                    class="btn btn-primary products-contact-button2">
+              Contact Us
+            </button>
+          </div>
+        </div>
+        <div class="col-sm-4  about-info1-ltblue about-info3" id="AgentPx">
+          <img src="../../../assets/images/bruno.png">
+          <div class="bordltblue"></div>
+          <h4>AgentPx</h4>
+          <div class="h4-underline"></div>
+          <p>
+            AI-powered agent performance scoring algorithm can automatically analyze 100% of your calls to help you identify, measure, and improve agent performance. No need for sample calls - you can now score 100% of your calls only with Speech Intel and AgentPx.
+          </p>
+          <!--<div class="viewmore-ltblue">Contact Us</div>-->
+          <button type="button"
+                  id="AgentPx" (click)="clickToRunDownone()" class="btn btn-info products-contact-button3">
+            Contact Us
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- stats -->
+  <section class="stats">
+    <div class="container">
+      <div class="wthree_head_section">
+        <h3 class="lft">Speech Intel's Contact Center AI Platform</h3>
+        <img class="Contact-Center" src="../../../assets/images/contact-center-ai-e2e.png">
+      </div>
+      <!-- <div class="wthree_head_section">
+                  <h3 class="lft">How we do this?</h3>
+              </div>
+              <div class="row inner_w3l_agile_grids-1">
+                  <div class="col-sm-4 w3layouts_stats_left w3_counter_grid">
+
+                      <h3>Human-aided Speech to Text Training Platform</h3>
+                      <p>We believe in quality data which yields trust worthy results. Our patent pending human-aided speech to
+                          text training platform leverages sophisticated speech recognition systems and highly efficient, distributed
+                          human editing process converts the speech to </p>
+                  </div>
+                  <div class="col-sm-4 w3layouts_stats_left w3_counter_grid1">
+
+                      <h3>Natural Language Understanding</h3>
+                      <p>Ever wanted to analyze your customers’ valuable feedback and recommendations? With Speech INTEL’s patent-pending
+                          technology, you and your team can glean valuable data from customer support calls, email inquiries,
+                          forums, social media chatter, and live chat </p>
+                  </div>
+                  <div class="col-sm-4 w3layouts_stats_left w3_counter_grid2">
+
+                      <h3>Self Learning Engine</h3>
+                      <p>We believe in quality data which yields trust worthy results. Our patent pending human-aided speech to
+                          text training platform leverages sophisticated speech recognition systems and highly efficient, distributed
+                          human editing process converts the speech to </p>
+                  </div>
+              </div> -->
+    </div>
+  </section>
+  <!-- //stats -->
+
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-body">
+      <div class="wrapper">
+        <div class="myForm">
+          <div *ngIf="isLoginClicked">
+            <form [formGroup]="loginForm" class="myLoginForm" (ngSubmit)="loginUser()">
+              <div class="imgcontainer">
+                <span class="close closeSymbol" title="Close Modal" aria-label="Close" (click)="d('Cross click')">&times;</span>
+              </div>
+              <div class="container">
+                <div class="formFields">
+                  <label class="label" for="username" id="username">Username:</label>
+                  <div>
+                    <input [ngClass]="{'has-error':loginForm.controls['username'].errors?.required  && loginForm.controls['username'].dirty}"
+                           type="username" class="inputFields form-control" formControlName="username" id="username"
+                           name="username">
+                    <div class="validationMessage"
+                         *ngIf="loginForm.controls['username'].errors?.required  && loginForm.controls['username'].dirty">
+                      <em>Please enter username</em>
+                    </div>
+                  </div>
+                </div>
+                <div class="formFields">
+                  <label class="label" id="pwd" for="pwd">Password:</label>
+                  <div>
+                    <input [ngClass]="{'has-error':loginForm.controls['password'].errors?.required  && loginForm.controls['password'].dirty}"
+                           type="password" class="inputFields form-control" formControlName="password" id="pwd" name="pwd">
+                    <div class="validationMessage"
+                         *ngIf="loginForm.controls['password'].errors?.required  && loginForm.controls['password'].dirty">
+                      <em>Please enter password</em>
+                    </div>
+                  </div>
+                  <div [ngClass]="{'has-error':message}" *ngIf="message">
+                    <em class="validationMessage">{{ message }}</em>
+                  </div>
+                </div>
+                <div class="text-right mr-2 mb-2">
+                  <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button>
+                  <button type="button" class="btn btn-danger ml-3" aria-label="Close" (click)="d('Cross click')">Cancel</button>
+                </div>
+                <!--<button type="submit" class="loginBtn" [disabled]="!loginForm.valid">Login</button>-->
+                <!-- <button (click)="isLoginClicked = !isLoginClicked"> Register</button>
+                <label>
+                 <input type="checkbox" checked="checked" name="remember"> Remember me
+                 </label> -->
+              </div>
+              <!--<div class="container" style="background-color:#f1f1f1">
+                <button type="button" class="cancelbtn" aria-label="Close" (click)="d('Cross click')">Cancel</button>-->
+                <!--    <span class="psw" (click)="showForgotPassword = !showForgotPassword">Forgot password? </span> -->
+              <!--</div>-->
+            </form>
+            <div *ngIf="showForgotPassword">
+              <input placeholder="Enter your email id" [(ngModel)]="userEmail" class="inputFields form-control" />
+              <span class="psw">
+                <button (click)="forgotPassword(userEmail);">Send Verification</button>
+              </span>
+              <div *ngIf="showLoginButton">
+                <h3>password changed successfully.please Login</h3>
+              </div>
+            </div>
+          </div>
+          <!--  <div *ngIf="!isLoginClicked">
+               <form [formGroup]="registerForm" class="myLoginForm" (ngSubmit)="registerUser()">
+                 <div class="formFields">
+                   <label class="label" for="username" id="username">Username:</label>
+                   <div>
+                     <input [ngClass]="{'has-error':registerForm.controls['username'].errors?.required  && registerForm.controls['username'].dirty}"
+                       type="username" class="inputFields form-control" formControlName="username" id="username" name="username">
+                     <div class="validationMessage" *ngIf="registerForm.controls['username'].errors?.required  && registerForm.controls['username'].dirty">
+                       <em>Please enter username</em>
+                     </div>
+                   </div>
+                 </div>
+                 <div class="formFields">
+                   <label class="label" id="pwd" for="pwd">Password:</label>
+                   <div>
+                     <input [ngClass]="{'has-error':registerForm.controls['password'].errors?.required  && registerForm.controls['password'].dirty}"
+                       type="password" class="inputFields form-control" formControlName="password" id="pwd" name="pwd">
+                     <div class="validationMessage" *ngIf="registerForm.controls['password'].errors?.required  && registerForm.controls['password'].dirty">
+                       <em>Please enter password</em>
+                     </div>
+                   </div>
+                   <div [ngClass]="{'has-error':message}" *ngIf="message">
+                     <em class="validationMessage">{{ message }}</em>
+                   </div>
+                 </div>
+                 <div class="formFields">
+                   <label class="label" id="email" for="email">email:</label>
+                   <div>
+                     <input [ngClass]="{'has-error':registerForm.controls['email'].errors?.required  && registerForm.controls['email'].dirty}"
+                       type="text" class="inputFields form-control" formControlName="email" id="email" name="email">
+                     <div class="validationMessage" *ngIf="registerForm.controls['email'].errors?.required  && registerForm.controls['email'].dirty">
+                       <em>Please enter password</em>
+                     </div>
+                   </div>
+                   <div [ngClass]="{'has-error':message}" *ngIf="message">
+                     <em class="validationMessage">{{ message }}</em>
+                   </div>
+                 </div>
+                 <div class="formFields">
+                   <label class="label" id="pwd" for="pwd">mobile number:</label>
+                   <div>
+                     <input [ngClass]="{'has-error':registerForm.controls['mobileNumber'].errors?.required  && registerForm.controls['mobileNumber'].dirty}"
+                       type="text" class="inputFields form-control" formControlName="mobileNumber" id="mobileNumber" name="mobileNumber">
+                     <div class="validationMessage" *ngIf="registerForm.controls['mobileNumber'].errors?.required  && registerForm.controls['mobileNumber'].dirty">
+                       <em>Please enter password</em>
+                     </div>
+                   </div>
+                   <div [ngClass]="{'has-error':message}" *ngIf="message">
+                     <em class="validationMessage">{{ message }}</em>
+                   </div>
+                 </div>
+                 <div class="buttons">
+                   <button type="submit" class="loginBtn" [disabled]="!registerForm.valid">register</button>
+                 </div>
+               </form>
+               <br/>
+               <div *ngIf="confirmCode" class="row message-row">
+                 <h3>Please check your email for the validation code and enter it here:</h3>
+                 <div class="col-lg-4">
+                   <form (ngSubmit)="validateAuthCode(codeform)" #codeform="ngForm">
+                     <div class="form-group">
+                       <label for="code">Code</label>
+                       <input type="text" name="code" id="code" ngModel class="form-control" required>
+                     </div>
+                     <button type="submit" class="btn btn-primary">Validate Code</button>
+                   </form>
+                 </div>
+               </div>
+               <div *ngIf="codeWasConfirmed" class="row message-row">
+                 <h3>Verification Code was confirmed, please click to login</h3>
+               </div>
+               <div class="row message-row">
+                 <button (click)="isLoginClicked =!isLoginClicked">login</button>
+               </div>
+             </div> -->
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+
+
+
+  <!-- footer -->
+  <footer>
+    <section class="footer">
+      <div class="container footer-container">
+        <!--added->footer-container ->change-->
+        <div class="row f-bg-w3l">
+          <div class="col-md-6 w3layouts_footer_grid fokt">
+            <div id="contact-location"></div>
+            <h3>Contact Us</h3>
+            <form [formGroup]="contactUsForm" (ngSubmit)="contactUs()">
+              <input [ngClass]="{'has-error':contactUsForm.controls['username'].errors?.required  && contactUsForm.controls['username'].dirty}"
+                     formControlName="username" type="text" name="Name" id="Name" placeholder="Name...">
+              <div class="validationMessage"
+                   *ngIf="contactUsForm.controls['username'].errors?.required  && contactUsForm.controls['username'].dirty">
+                <em>Please enter username</em>
+              </div>
+
+              <input [ngClass]="{'has-error':contactUsForm.controls['email'].errors?.required  && contactUsForm.controls['email'].dirty}"
+                     formControlName="email" type="email" name="Email" id="Email" placeholder="Email...">
+              <div class="validationMessage"
+                   *ngIf="contactUsForm.controls['email'].errors?.required  && contactUsForm.controls['email'].dirty">
+                <em>Please enter email</em>
+              </div>
+
+
+              <input [ngClass]="{'has-error':contactUsForm.controls['phone'].errors?.required  && contactUsForm.controls['phone'].dirty}"
+                     formControlName="phone" type="phone" name="phone" id="Tel" placeholder="Phone number...">
+              <div class="validationMessage"
+                   *ngIf="contactUsForm.controls['phone'].errors?.required  && contactUsForm.controls['phone'].dirty">
+                <em>Please enter phone</em>
+              </div>
+
+              <textarea class="longInput" cols="47" rows="5" name="comment" formControlName="message" id="Message"
+                        placeholder="Message..."></textarea>
+
+
+              <div class="clearfix"></div>
+              <input type="submit" name="submit" [disabled]="!contactUsForm.valid" value="Submit" class="submit-button">
+            </form>
+            <div *ngIf="showMessage" class="alert alert-success alert-dismissible col-md-4 myAlert">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <strong>Message sent Successfully</strong>
+            </div>
+          </div>
+
+          <div class="col-md-6 w3layouts_footer_grid">
+            <p>Contact us to learn more about our service and Free Trial </p>
+            <ul class="con_inner_text">
+              <li>
+                <span class="fa fa-map-marker" aria-hidden="true"></span>
+                <label> 4580 KLAHANIE DR SE, NUM 127 ISSAQUAH, WA – 98029</label>
+              </li>
+              <li>
+                <span class="fa fa-envelope" aria-hidden="true"></span>
+                <a href="mailto:info@speechintel.ai">info@speechintel.ai</a>
+              </li>
+              <li>
+                <span class="fa fa-phone" aria-hidden="true"></span> +(425) 270-1955
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div id="scroll">
+          <a href="#" (click)="clickToRunTop()" id="toTop" style="display: inline;">
+            <span id="toTopHover" style="opacity: 0;">
+              <img src="../../../assets/images/arrow.png" />
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+    <!-- //footer -->
+    <p class="copyright">© 2018 Speech Intel - e24 Technologies Company.</p>
+    <!--mychanges-->
+
+  </footer>
+</div>
+<div *ngIf="loader">
+  <si-spinner></si-spinner>
+</div>

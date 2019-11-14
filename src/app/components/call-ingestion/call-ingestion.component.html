@@ -1,0 +1,349 @@
+<div class="wrapper-main">
+  <div class="col-sm-12 title_actions no-pad">
+    <h4 class="pull-left no-pad">Call Upload</h4>
+    <span class="glyphicon glyphicon-refresh pull-right glyph"></span>
+  </div>
+  <div class="inner-wrapper ps" [perfectScrollbar]="config">
+    <div class="row no-mar mt-3" *ngIf="!authService.restrictedUser">
+      <form [formGroup]="uploadForm" class="col-sm-12 col-md-6">
+        <h5 class="heading mb-3">Step 1</h5>
+        <div class="row col-md-12 col-lg-12 no-pad no-mar">
+          <div class="form-group col-md-6 col-lg-6 title pl-0">
+            <label for="title">
+              Title
+              <span class="required">*</span>
+            </label>
+            <div [ngClass]="{'has-error': uploadForm.get('title').dirty && !uploadForm.get('title').valid }">
+              <input type="text" class="form-control" name="title" formControlName="title">
+              <ul class="m-0">
+                <li *ngIf="uploadForm.controls['title'].errors?.required && uploadForm.controls['title'].dirty">
+                  <em>Please enter Title.</em>
+                </li>
+                <li *ngIf="uploadForm.controls['title'].errors?.maxlength">
+                  <em>Title cannot exceed 60 characters.</em>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group col-md-6 col-lg-6 customerId pr-0">
+            <label for="customerId">
+              Client ID
+              <span class="required">*</span>
+            </label>
+            <div [ngClass]="{'has-error': uploadForm.get('customerId').dirty && !uploadForm.get('customerId').valid }">
+              <input type="text" class="form-control" name="customerId" formControlName="customerId">
+              <ul class="m-0">
+                <li *ngIf="uploadForm.controls['customerId'].errors?.required && uploadForm.controls['customerId'].dirty">
+                  <em>Please enter Client ID.</em>
+                </li>
+                <li *ngIf="uploadForm.controls['customerId'].errors?.maxlength">
+                  <em>Customer ID cannot exceed 60 characters.</em>
+                </li>
+                <li *ngIf="uploadForm.controls['customerId'].errors?.pattern">
+                  Customer ID can only be alphanumeric with '_', '-', and '.'
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row col-md-12 col-lg-12 no-pad no-mar">
+          <div class="form-group col-md-6 col-lg-6 jobId pl-0">
+            <label for="jobId">
+              Job ID
+              <span class="required">*</span>
+            </label>
+            <div [ngClass]="{'has-error': uploadForm.get('jobId').dirty && !uploadForm.get('jobId').valid }">
+              <input type="text" class="form-control" name="jobId" formControlName="jobId">
+              <ul class="m-0">
+                <li *ngIf="uploadForm.controls['jobId'].errors?.required && uploadForm.controls['jobId'].dirty">
+                  <em>Please enter Job ID.</em>
+                </li>
+                <li *ngIf="uploadForm.controls['jobId'].errors?.maxlength">
+                  <em>Job ID cannot exceed 60 characters.</em>
+                </li>
+                <li *ngIf="uploadForm.controls['jobId'].errors?.pattern">
+                  Job ID can only be alphanumeric with '_', '-', and '.'
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group col-md-6 col-lg-6 orderId pr-0">
+            <label for="orderId">
+              Order ID
+              <span class="required">*</span>
+            </label>
+            <div [ngClass]="{'has-error': uploadForm.get('orderId').dirty && !uploadForm.get('orderId').valid }">
+              <input type="text" class="form-control" name="orderId" formControlName="orderId">
+              <ul class="m-0">
+                <li *ngIf="uploadForm.controls['orderId'].errors?.required && uploadForm.controls['orderId'].dirty">
+                  <em>Please enter Order ID.</em>
+                </li>
+                <li *ngIf="uploadForm.controls['orderId'].errors?.maxlength">
+                  <em>Order ID cannot exceed 60 characters.</em>
+                </li>
+                <li *ngIf="uploadForm.controls['orderId'].errors?.pattern">
+                  Order ID can only be alphanumeric with '_', '-', and '.'
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!--<div class="row col-md-12 col-lg-12 no-pad no-mar">
+    <div class="form-group col-md-6 col-lg-6 jobId pl-0">
+      <label for="jobId">
+        Agent Name
+        <span class="required">*</span>
+      </label>
+      <div>
+        <input type="text" class="form-control" name="agent" formControlName="agent">
+        <ul class="m-0">
+          <li *ngIf="uploadForm.controls['agent'].errors?.required && uploadForm.controls['agent'].dirty">
+            <em>Please enter Agent Name.</em>
+          </li>
+          <li *ngIf="uploadForm.controls['agent'].errors?.maxlength">
+            <em>Job ID cannot exceed 60 characters.</em>
+          </li>
+          <li *ngIf="uploadForm.controls['agent'].errors?.pattern">
+            Job ID can only be alphanumeric with '_', '-', and '.'
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-lg-6 orderId pr-0">
+      <label for="orderId">
+        Phone No
+        <span class="required">*</span>
+      </label>
+      <div>
+        <input type="text" class="form-control" name="phone" formControlName="phone">
+        <ul class="m-0">
+          <li *ngIf="uploadForm.controls['phone'].errors?.required && uploadForm.controls['phone'].dirty">
+            <em>Please enter Phone No.</em>
+          </li>
+          <li *ngIf="uploadForm.controls['phone'].errors?.maxlength">
+            <em>Order ID cannot exceed 60 characters.</em>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>-->
+        <!--<div class="row col-md-12 col-lg-12 no-pad no-mar">
+    <div class="form-group col-md-6 col-lg-6 jobId pl-0">
+      <label for="jobId">
+        Call Date
+        <span class="required">*</span>
+      </label>
+      <div>
+        <input name="date" class="form-control"
+               bsDatepicker
+               [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-blue' }"
+               #dp="bsDatepicker"
+               formControlName="calldate">
+
+
+      </div>
+    </div>
+    <div class="form-group col-md-6 col-lg-6 orderId pr-0">
+      <label for="orderId">
+        Program Name
+        <span class="required">*</span>
+      </label>
+      <div>
+        <input type="text" class="form-control" name="program" formControlName="program">
+        <ul class="m-0">
+          <li *ngIf="uploadForm.controls['program'].errors?.required && uploadForm.controls['program'].dirty">
+            <em>Please enter Program Name.</em>
+          </li>
+          <li *ngIf="uploadForm.controls['program'].errors?.maxlength">
+            <em>Order ID cannot exceed 60 characters.</em>
+          </li>
+          <li *ngIf="uploadForm.controls['program'].errors?.pattern">
+            Order ID can only be alphanumeric with '_', '-', and '.'
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>-->
+
+        <div class="row col-md-12 col-lg-12 no-pad no-mar">
+          <div class="form-group col-sm-12 jobId no-pad">
+            <label for="jobId">
+              Delivery Date
+              <span class="required">*</span>
+            </label>
+            <div>
+              <input name="date" class="form-control"
+                     bsDatepicker
+                     [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', containerClass: 'theme-blue' }"
+                     #dp="bsDatepicker"
+                     formControlName="deliveryDate">
+              <!-- <input type="date" class="form-control" name="calldate" formControlName="calldate">-->
+              <!--<ul class="m-0">
+          <li *ngIf="uploadForm.controls['calldate'].errors?.required && uploadForm.controls['calldate'].dirty">
+            <em>Please enter Job ID.</em>
+          </li>
+          <li *ngIf="uploadForm.controls['calldate'].errors?.maxlength">
+            <em>Job ID cannot exceed 60 characters.</em>
+          </li>
+          <li *ngIf="uploadForm.controls['calldate'].errors?.pattern">
+            Job ID can only be alphanumeric with '_', '-', and '.'
+          </li>
+        </ul>-->
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="row col-md-12 col-lg-12 no-pad no-mar targeterdBucket">
+          <label for="jobId" class="titleOnly">
+            Speech Recognition
+          </label>
+          <div class="form-group col-sm-3 jobId no-pad">
+            <input type="checkbox" name="aws" value="" [checked]="this.authService.UserProfiledetails.defaultAPI === 'AWS'" (change)="slectedBucket('awsurl')" id="AWS" />
+            <label for="AWS">AWS</label>
+          </div>
+          <div class="form-group col-sm-3 jobId">
+            <input type="checkbox" name="watson" value="" [checked]="this.authService.UserProfiledetails.defaultAPI !== 'AWS'" (change)="slectedBucket('url')" id="Watson" />
+            <label for="Watson">Watson</label>
+          </div>
+          <div class="form-group col-sm-3 jobId disabled">
+            <input type="checkbox" name="google" value=""  (change)="slectedBucket('url')" id="Google" />
+            <label for="google">Google</label>
+          </div>
+          <div class="form-group col-sm-3 jobId disabled">
+            <input type="checkbox" name="azure" value=""   (change)="slectedBucket('url')" id="Azure" />
+            <label for="azure">Azure</label>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label for="instructions">Extra Notes</label>
+          <div [ngClass]="{'has-error': uploadForm.get('instructions').dirty && !uploadForm.get('instructions').valid }">
+            <textarea rows="4" class="form-control" name="instructions" formControlName="instructions"></textarea>
+            <ul class="m-0">
+              <li *ngIf="uploadForm.controls['instructions'].errors?.maxlength">
+                <em>Notes cannot exceed 2000 characters.</em>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </form>
+      <div class="col-md-1 align-self-center text-center">
+        <img src="../../../assets/images/right-arrow.jpg" width="30" />
+      </div>
+      <div class="col-md-5 col-sm-12 " [ngClass]="{'customerForm' : customerLoggedIn}">
+
+        <h5 class="heading mb-3">Step 2</h5>
+        <!--<div *ngIf="uploadService.uploadingSuccess" class="alert alert-success alert-dismissible col-md-4 myAlert">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Successfully uploaded file</strong>
+        </div>
+        <div *ngIf="uploadService.uploadingFailed" class="alert alert-warning alert-dismissible col-md-4 myAlert">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Problem uploading file. Please try again</strong>
+        </div>-->
+        <div class="col-md-10 col-sm-12 col-xs-12 no-pad" [ngClass]="{'isDisabled grayOut': !uploadForm.valid}">
+          <div class="uploadInstructions mb-3">
+            <a ngbPopover="Max file size allowed is 100 MB" triggers="mouseenter:mouseleave">Max File Size: 100 MB</a> |
+            <a [ngbPopover]="fileTypes" triggers="mouseenter:mouseleave">Accepted File Types</a>
+          </div>
+          <div class="file-upload-main">
+            <div class="col-md-12 col-sm-12 col-xs-12 no-pad text-center">
+              <ng-template #fileTypes>
+                <strong>Audio File Types:</strong>
+                <span class="mp3">MP3 /WAV</span>
+              </ng-template>
+              <!-- <h5 class="">File Upload</h5>-->
+              <img src="../../../assets/images/upload.png" width="80" />
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 justify-content-center mt-3 no-pad" [ngClass]="{'isDisabled grayOut': !uploadForm.valid}">
+              <div class="">
+                <div class="">
+                  <file-drop #file (onFileDrop)="uploadFiles($event)" multiple class="text-center">
+                    <img src="../assets/images/Files-icon.png" alt="file Uploading image" width="40" height="40">
+                  </file-drop>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 no-pad mt-3 text-center" [ngClass]="{'isDisabled grayOut': !uploadForm.valid}">
+              <h5 class="drag">drag and drop or</h5>
+              <div class="fileLabel">
+                <label for="audioUpload"> Upload Files</label>
+                <input type="file" name="img" [disabled]="!uploadForm.valid" id="audioUpload" style="display: none" #file accept="" (change)="uploadFiles($event)" multiple>
+              </div>
+            </div>           
+            <div class="col-sm-12 file-adj no-pad" *ngIf="uploadService.fileuploadstatus.percentDone < 100">             
+              <div class="col-sm-12 no-pad clearfix" *ngFor="let list of uploadedFilesList">
+                <img src="../assets/images/Files-icon.png" alt="file icon image" class="mr-1">
+                <div class="uploading-details">
+                  <div class="fileName">{{list.fileName}}</div>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                         [style.width]="uploadService.fileuploadstatus.percentDone + '%'">
+                    </div>
+                  </div>
+                  <div class="uploading-per">
+                    <p *ngIf="uploadService.fileuploadstatus.percentDone < 100">uploading.....{{uploadService.fileuploadstatus.percentDone}}%</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row no-mar text-center justify-content-center mt-3" *ngIf="authService.restrictedUser">
+      <div class="col-md-5 col-sm-7 customerUpload">
+        <div class="uploadInstructions mb-3">
+          <a ngbPopover="Max file size allowed is 100 MB" triggers="mouseenter:mouseleave">Max File Size: 100 MB</a> |
+          <a [ngbPopover]="fileTypes" triggers="mouseenter:mouseleave">Accepted File Types</a>
+        </div>
+        <div class="file-upload-main">
+          <div class="col-md-12 col-sm-12 col-xs-12 no-pad text-center">
+            <ng-template #fileTypes>
+              <strong>Audio File Types:</strong>
+              <span class="mp3">MP3/WAV</span>
+            </ng-template>
+            <img src="../../../assets/images/upload.png" width="80" />
+          </div>
+          <div class="col-md-12 col-sm-12 col-xs-12 justify-content-center mt-3 no-pad">
+            <div class="">
+              <div class="">
+                <file-drop #file (onFileDrop)="uploadFiles($event)" multiple class="text-center">
+                  <img src="../assets/images/Files-icon.png" alt="file Uploading image" width="40" height="40">
+                </file-drop>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-sm-12 col-xs-12 no-pad mt-3 text-center">
+            <h5 class="drag">drag and drop or</h5>
+            <div class="fileLabel">
+              <label for="audioUpload"> Upload Files</label>
+              <input type="file" name="img" id="audioUpload" style="display: none" #file accept="" (change)="uploadFiles($event)" multiple>
+            </div>
+          </div>
+          <div class="col-sm-12 file-adj no-pad" *ngIf="uploadService.fileuploadstatus.percentDone < 100">
+            <div class="col-sm-12 no-pad clearfix" *ngFor="let list of uploadedFilesList">
+              <img src="../assets/images/Files-icon.png" alt="file icon image" class="mr-1">
+              <div class="uploading-details">
+                <div class="fileName">{{list.fileName}}</div>
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                       [style.width]="uploadService.fileuploadstatus.percentDone + '%'">
+                  </div>
+                </div>
+                <div class="uploading-per">
+                  <p *ngIf="uploadService.fileuploadstatus.percentDone < 100">uploading.....{{uploadService.fileuploadstatus.percentDone}}%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

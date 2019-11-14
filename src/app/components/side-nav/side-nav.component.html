@@ -1,0 +1,223 @@
+<div class="wrapper">
+  <app-user-details style="flex: 0 0 auto;width: 100%;"></app-user-details>
+  <div class="sideNavMenu">
+    <!--<ul class="menuItems" *ngFor="let menu of menuList">
+    <li>
+      <span class="collapsedIcons">{{menu.icon}}</span>
+      <span class="nav-descp">{{menu.name}}</span>
+    </li>
+  </ul>-->
+    <!--
+    <ul class="menuItems" *ngIf="!restrictedUser">
+      <li *ngFor="let menu of menus; let parentIndex = index"
+          [ngClass]="{ 'selected active': menu.link && menu.name == _authService.currentMenu}"
+          (click)="menu['link'] ? navigateToLink(menu):showSubmenu(menu); $event.stopPropagation();"
+          [routerLink]="menu['link'] ? menu['link'] :[]">
+        <div class="menuName" *ngIf="role == 'Customer'">
+          <span class="collapsedIcons" title="{{menu['name']}}"><img [src]="menu['icon']" /></span>
+          <span class="nav-descp">
+            {{menu['name']}}
+          </span>
+          <span *ngIf="menu['subMenu'] && toggleMenu" class="chevronIcon">
+            <i class="fas fa-chevron-up"></i>
+          </span>
+          <span *ngIf="menu['subMenu'] && !toggleMenu" class="chevronIcon">
+            <i class="fas fa-chevron-down"></i>
+          </span>
+          <span *ngIf="menu['settingMenu'] && toggleSettingsMenu" class="chevronIcon">
+            <i class="fas fa-chevron-up"></i>
+          </span>
+          <span *ngIf="menu['settingMenu'] && !toggleSettingsMenu" class="chevronIcon">
+            <i class="fas fa-chevron-down"></i>
+          </span>
+        </div>
+        <div class="menuName" *ngIf="(role == 'OperationManager' || role == 'Admin' || role == 'Customer_Management') && menu['name'] != 'Call Analytics'">
+          <span class="collapsedIcons" title="{{menu['name']}}"><img [src]="menu['icon']" /></span>
+          <span class="nav-descp">
+            {{menu['name']}}
+          </span>
+          <span *ngIf="menu['settingMenu'] && toggleSettingsMenu" class="chevronIcon">
+            <i class="fas fa-chevron-up"></i>
+          </span>
+          <span *ngIf="menu['settingMenu'] && !toggleSettingsMenu" class="chevronIcon">
+            <i class="fas fa-chevron-down"></i>
+          </span>
+        </div>
+        <div class="menuName" *ngIf="  role != 'Customer_Management' && (role == 'Editor') && menu['name'] != 'Call Analytics' && menu['name'] != 'Call Upload' && menu['name'] != 'Call Recordings'">
+          <span class="collapsedIcons" title="{{menu['name']}}"><img [src]="menu['icon']" /></span>
+          <span class="nav-descp">
+            {{menu['name']}}
+          </span>
+          <span *ngIf="menu['settingMenu'] && toggleSettingsMenu" class="chevronIcon">
+            <i class="fas fa-chevron-up"></i>
+          </span>
+          <span *ngIf="menu['settingMenu'] && !toggleSettingsMenu" class="chevronIcon">
+            <i class="fas fa-chevron-down"></i>
+          </span>
+        </div>
+        <div *ngIf="menu['subMenu'] && toggleMenu && role == 'Customer' || role == 'Customer_Management'" class="subMenuItems">
+          <div class="subMenuList" *ngIf="toggleMenu">
+            <ul class="subMenu" *ngFor="let list of menu['subMenuItems'] ;let i = index">
+              <li [ngClass]="{ 'selected active' : list.name == _authService.currentMenu}"
+                  (click)="submenu(list,$event, i);$event.stopPropagation();"
+                  [routerLink]="list['link'] ? list['link'] :[]" class="submenuListItem">
+                <span class="collapsedIcons" title="{{list['name']}}"><img [src]="list['icon']" /></span>
+                <span class="nav-descp">{{list.name}}</span>
+
+                <span *ngIf="list['subMenuTree'] && !subMenuListToggle" class="chevronIcon">
+                  <i class="fas fa-chevron-up"></i>
+                </span>
+                <span *ngIf="list['subMenuTree'] && subMenuListToggle" class="chevronIcon">
+                  <i class="fas fa-chevron-down"></i>
+                </span>
+              </li>
+              <ul class="childList" *ngIf="!subMenuListToggle" id="selectedSubList{{i}}">
+                <li *ngFor="let subMenu of list['menuListItems']">
+                  <ul>
+                    <li [ngClass]="{ 'selected active' : subMenu.name == _authService.currentMenu}"
+                        (click)="reportsMenu(subMenu,$event, i);$event.stopPropagation();"
+                        [routerLink]="subMenu['link'] ? subMenu['link'] :[]" class="submenuListItem">
+                      <span class="collapsedIcons" title="{{subMenu['name']}}"><img [src]="subMenu['icon']" /></span>
+                      <span class="nav-descp">{{subMenu.name}}</span>
+                      <span *ngIf="subMenu['childSubchild'] && !childMenuListToggle" class="chevronIcon">
+                        <i class="fas fa-chevron-up"></i>
+                      </span>
+                      <span *ngIf="subMenu['childSubchild'] && childMenuListToggle" class="chevronIcon">
+                        <i class="fas fa-chevron-down"></i>
+                      </span>
+
+                    </li>
+                  </ul>
+                  <ul *ngIf="!childMenuListToggle" class="subChild">
+                    <li *ngFor="let child of subMenu['reportsList']"
+                        [ngClass]="{ 'selected active' : child.name == _authService.currentMenu}"
+                        (click)="childList(child,$event);$event.stopPropagation();"
+                        [routerLink]="child['link'] ? child['link'] :[]">
+                      <span class="collapsedIcons" title="{{child['name']}}"><img [src]="child['icon']" /></span>
+                      <span class="nav-descp">{{child.name}}</span>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </ul>
+          </div>
+        </div>
+
+        <div *ngIf="menu['settingMenu'] && toggleSettingsMenu && role == 'Customer' " class="subMenuItems">
+          <ul class="subMenu" *ngIf="toggleSettingsMenu">
+            <li *ngFor="let subMenu of menu['subMenuItems']"
+                [ngClass]="{ 'selected active' : subMenu.name == _authService.currentMenu}"
+                (click)="subMenuClicked(subMenu,$event);"
+                [routerLink]="subMenu['link'] ? subMenu['link'] :[]">
+              <span class="collapsedIcons" title="{{subMenu['name']}}"><img [src]="subMenu['icon']" /></span>
+              <span class="nav-descp">{{subMenu.name}}</span>
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="menu['settingMenu'] && toggleSettingsMenu && role != 'Customer' && role != 'Customer_Management'" class="subMenuItems">
+          <ul class="subMenu" *ngIf="toggleSettingsMenu">
+            <li *ngFor="let subMenu of menu['subMenuItems']; let i=index "
+                [ngClass]="{ 'selected active' : subMenu.name == _authService.currentMenu}"
+                (click)="subMenuClicked(subMenu,$event)"
+                [routerLink]="subMenu['link'] ? subMenu['link'] :[]">
+              <span class="collapsedIcons" title="{{subMenu['name']}}" *ngIf="i<1"><img [src]="subMenu['icon']" /></span>
+              <span class="nav-descp" *ngIf="i<1">{{subMenu.name}}</span>
+            </li>
+          </ul>
+        </div>
+
+
+      </li>
+
+    </ul>
+    -->
+    <!-- For agent user login only -->
+    <!--
+  <ul class="menuItems agentMenu" *ngIf="restrictedUser">
+    <li *ngFor="let menu of menus; let parentIndex = index"
+        (click)="menu['link'] ? navigateToLink(menu):showSubmenu(menu); $event.stopPropagation();"
+        [routerLink]="menu['link'] ? menu['link'] :[]">
+      <div  class="subMenuItems">
+        <div class="subMenuList" *ngIf="toggleMenu">
+          <ul class="subMenu" *ngFor="let list of menu['subMenuItems'] ;let i = index">
+            <li *ngIf="list.pageAccess"
+                (click)="submenu(list,$event, i);$event.stopPropagation();"
+                [routerLink]="list['link'] ? list['link'] :[]" class="submenuListItem">
+              <span class="collapsedIcons" title="{{list['name']}}"><img [src]="list['icon']" /></span>
+              <span class="nav-descp">{{list.name}}</span>
+              <span *ngIf="list['subMenuTree'] && !subMenuListToggle" class="chevronIcon">
+                <i class="fas fa-chevron-up"></i>
+              </span>
+              <span *ngIf="list['subMenuTree'] && subMenuListToggle" class="chevronIcon">
+                <i class="fas fa-chevron-down"></i>
+              </span>
+            </li>
+            <ul class="childList" *ngIf="!subMenuListToggle" id="selectedSubList{{i}}">
+              <li *ngFor="let subMenu of list['menuListItems']">
+                <ul>
+                  <li *ngIf="subMenu.pageAccess " [ngClass]="{ 'selected active' : subMenu.name == _authService.currentMenu}"
+                      (click)="reportsMenu(subMenu,$event, i);$event.stopPropagation();"
+                      [routerLink]="subMenu['link'] ? subMenu['link'] :[]" class="submenuListItem">
+                    <span class="collapsedIcons" title="{{subMenu['name']}}"><img [src]="subMenu['icon']" /></span>
+                    <span class="nav-descp">{{subMenu.name}}</span>
+                    <span *ngIf="subMenu['childSubchild'] && !childMenuListToggle" class="chevronIcon">
+                      <i class="fas fa-chevron-up"></i>
+                    </span>
+                    <span *ngIf="subMenu['childSubchild'] && childMenuListToggle" class="chevronIcon">
+                      <i class="fas fa-chevron-down"></i>
+                    </span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+    </li>
+
+  </ul>
+      -->
+    <ul class="menuItems agentMenu mt-2">
+      <li *ngFor="let menu of menuList; let parentIndex = index"
+          (click)="menu['link'] ? navigateToLink(menu):showSubmenu(menu);getComponentPermissions(menu.pageId); $event.stopPropagation();"
+          [routerLink]="menu.link"  [ngClass]="menu.link == '' ? 'linkdisable' : ''"  routerLinkActive="active" title="{{menu.name}}">
+        <span class="icon"><img [src]="menu.icon" alt="image" /></span>
+        <span class="pageName">{{menu.name}}</span>
+
+        <ul class="submenu mt-2" *ngIf="menu.subMenuItems != null" [ngClass]="menuChild ? 'collapseMenu' : ''">
+          <span class="dropdownArrow" (click)="collapseSubmenu('menuChild'); $event.stopPropagation()">
+            <i class="fas fa-chevron-up" *ngIf="!menuChild"></i>
+            <i class="fas fa-chevron-down" *ngIf="menuChild"></i>
+          </span>
+          <li *ngFor="let subMenu of menu.subMenuItems" title="{{subMenu.name}}" [routerLink]="subMenu.link"(click)="getComponentPermissions(subMenu.pageId);$event.stopPropagation()"   [ngClass]="subMenu.link == '' ? 'linkdisable' : ''"  routerLinkActive="active">
+            <span class="icon"><img [src]="subMenu.icon" alt="image" /></span>
+            <span class="pageName">{{subMenu.name}}</span>
+
+            <ul class="subChildMenu mt-2" *ngIf="subMenu.childSubMenuItems != null" [ngClass]="menuSubChild ? 'collapseMenu' : ''">
+              <span class="dropdownArrow" (click)="collapseSubmenu('menuSubChild'); $event.stopPropagation()">
+                <i class="fas fa-chevron-up" *ngIf="!menuSubChild"></i>
+                <i class="fas fa-chevron-down" *ngIf="menuSubChild"></i>
+              </span>
+              <li *ngFor="let subChildMenu of subMenu.childSubMenuItems" title="{{subChildMenu.name}}" [routerLink]="subChildMenu.link" (click)="getComponentPermissions(subChildMenu.pageId);$event.stopPropagation()"  [ngClass]="subChildMenu.link == '' ? 'linkdisable' : ''"  routerLinkActive="active">
+                <span class="icon"><img [src]="subChildMenu.icon" alt="image" /></span>
+                <span class="pageName">{{subChildMenu.name}}</span>
+
+                <ul class="grandChildMenu mt-2" *ngIf="subChildMenu.childSubMenuItems != null" [ngClass]="menuGrandChild ? 'collapseMenu' : ''">
+                  <span class="dropdownArrow" (click)="collapseSubmenu('menuGrandChild'); $event.stopPropagation()">
+                    <i class="fas fa-chevron-up" *ngIf="!menuGrandChild"></i>
+                    <i class="fas fa-chevron-down" *ngIf="menuGrandChild"></i>
+                  </span>
+                  <li *ngFor="let grandChildMenu of subChildMenu.childSubMenuItems" title="{{grandChildMenu.name}}" [routerLink]="grandChildMenu.link" (click)="getComponentPermissions(grandChildMenu.pageId);$event.stopPropagation()"  [ngClass]="grandChildMenu.link == '' ? 'linkdisable' : ''"  routerLinkActive="active">
+                    <span class="icon"><img [src]="grandChildMenu.icon" alt="image" /></span>
+                    <span class="pageName">{{grandChildMenu.name}}</span>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      </ul>
+        
+  </div>
+</div>

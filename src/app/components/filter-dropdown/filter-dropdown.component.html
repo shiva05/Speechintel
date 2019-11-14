@@ -1,0 +1,9 @@
+<ng-multiselect-dropdown [placeholder]="_filterDropdownService.filterPlaceHolder"
+                         [data]="_filterDropdownService.dropdownList"
+                         [(ngModel)]="_filterDropdownService.selectedItems"
+                         [settings]="_filterDropdownService.dropdownSettings"
+                         (onSelect)="onItemSelect($event)"
+                         (onDeSelect)="OnItemDeSelect($event)"
+                         (onDeSelectAll)="onDeSelectAll($event)"
+                         (onSelectAll)="onSelectAll($event)" *ngIf="_filterDropdownService.dataSet" class="multiselect">
+</ng-multiselect-dropdown>

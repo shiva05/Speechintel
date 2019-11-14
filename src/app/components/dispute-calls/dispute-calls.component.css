@@ -1,0 +1,359 @@
+.agentPerformance-table {
+  width: 100%;
+  position: relative;
+}
+  .agentPerformance-table .title,
+  .question-table .title {
+    background: #293f56;
+    color: white;
+    width: 100%;
+    display: flex;
+    font-weight: 500;
+    /*overflow: hidden;*/
+  }
+
+.agentPerformanceBtn {
+  background: #046ec8;
+}
+
+.agentPerformance-table .title .item .item-text {
+  width: calc(100% - 30px);
+  display: inline-block;
+}
+
+.agentPerformance-table .title .item .filter-icon {
+  width: 30px;
+  display: inline-block;
+}
+
+.question-table .title .item,
+.agentPerformance-table .title .item {
+  float: left;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 5px;
+  position: relative;
+}
+
+.question-table .table-content .item,
+.agentPerformance-table .table-content .item {
+  align-items: center;
+  font-size: 13px;
+  padding: 10px 5px;
+}
+
+.agentPerformance-table .table-content .items-main:hover,
+.question-table .table-content .items-main > a:hover {
+  background: #d8ebff;
+}
+
+.agentPerformance-table .table-content .item:nth-child(3) {
+  width: 130px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.agentPerformance-table .table-content,
+.question-table .table-content {
+  /*height: calc((100vh - 441px)/2);*/
+  height: calc(100vh - 420px);
+  min-height: 200px;
+  overflow-y: auto;
+}
+.question-table .table-content,
+.agentPerformance-table .table-content {
+  border: 1px solid #293f56;
+}
+
+.agentPerformance-table .title .item:hover, .question-table .title .item:last-child:hover {
+  background: #4e7ac7;
+  cursor: pointer;
+}
+
+.agentPerformance-table .title .item span, .question-table .title .item span {
+  display: inline-block;
+}
+
+.agentPerformance-table .title .item .sort-icon, .question-table .title .item .sort-icon {
+  font-size: 0.9rem;
+  position: relative;
+  top: 2px;
+}
+
+.agentPerformance-table .table-content .title .item:last-child {
+  cursor: default;
+  background: inherit;
+}
+.items-main {
+  width: 100%;
+  border-bottom: 1px solid #ddd;
+}
+
+  .items-main:last-child {
+    border-bottom: none;
+  }
+.agentPerformance-table .title .item:first-child,
+.agentPerformance-table .table-content .item:first-child {
+  /*min-width: 210px;*/
+  width: 150px;
+  text-overflow: ellipsis;
+  /*white-space: nowrap;
+  padding: 4px 2px 0;*/
+}
+
+.agentPerformance-table .title .item:first-child {
+  padding: 10px;
+}
+
+.agentPerformance-table .title .item:nth-child(2),
+.agentPerformance-table .table-content .item:nth-child(2) {
+  width: 65px;
+}
+
+.agentPerformance-table .title .item:nth-child(3),
+.agentPerformance-table .table-content .item:nth-child(3) {
+  width: 60px;
+}
+.agentPerformance-table .title .item:nth-child(4),
+.agentPerformance-table .table-content .item:nth-child(4) {
+  width: 105px;
+  text-overflow: ellipsis;
+  /*white-space: nowrap;*/
+}
+
+.agentPerformance-table .title .item:nth-child(5),
+.agentPerformance-table .table-content .item:nth-child(5) {
+  width: 125px;
+}
+
+.agentPerformance-table .title .item:nth-child(8),
+.agentPerformance-table .table-content .item:nth-child(8) {
+  width: 70px;
+}
+
+.agentPerformance-table .title .item:nth-child(6),
+.agentPerformance-table .table-content .item:nth-child(6),
+.agentPerformance-table .title .item:nth-child(7),
+.agentPerformance-table .table-content .item:nth-child(7)
+ {
+  width: 130px;
+}
+/*.agentPerformance-table .title .item:nth-last-child(5),
+.agentPerformance-table .table-content .item:nth-last-child(5),
+.agentPerformance-table .title .item:nth-last-child(4),
+.agentPerformance-table .table-content .item:nth-last-child(4) {
+  width: calc(100% - 1398px);
+}*/
+.agentPerformance-table .title .item:last-child,
+.agentPerformance-table .table-content .item:last-child {
+  width: 80px;
+}
+
+.agentPerformance-table .table-content .item:nth-last-child(2),
+.agentPerformance-table .title .item:nth-last-child(2) {
+  width: 80px;
+}
+
+.agentPerformance-table .table-content .item:nth-last-child(3),
+.agentPerformance-table .title .item:nth-last-child(3) {
+  width: 130px;
+}
+.agentPerformance-table .table-content .item:nth-last-child(5),
+.agentPerformance-table .title .item:nth-last-child(5) {
+  width: 100px;
+}
+
+.agentPerformance-table .table-content .item:nth-last-child(4),
+.agentPerformance-table .title .item:nth-last-child(4) {
+  width: calc(100% - 1225px);
+}
+
+.agentPerformance-table .table-content .item:nth-last-child(2),
+.agentPerformance-table .table-content .item:last-child {
+  padding: 0 0 0 10px;
+}
+
+.agentPerformance-table .title .item:last-child:hover,
+.agentPerformance-table .title .item:nth-last-child(2):hover {
+  cursor: default;
+  background: inherit;
+}
+
+
+/**with disputed calls table ***/
+.agentPerformance-table.withDisputedStatus .table-content .item:nth-last-child(7),
+.agentPerformance-table.withDisputedStatus .title .item:nth-last-child(7) {
+  width: 80px;
+}
+.agentPerformance-table.withDisputedStatus .title .item:nth-last-child(5),
+.agentPerformance-table.withDisputedStatus .table-content .item:nth-last-child(5),
+.agentPerformance-table.withDisputedStatus .title .item:nth-last-child(6),
+.agentPerformance-table.withDisputedStatus .table-content .item:nth-last-child(6) {
+  width: calc(100% - 1398px);
+  min-width: 90px;
+}
+
+.mid-section.disputedCallsMain {
+  height: calc(100vh - 297px);
+}
+@media all and (max-width: 1780px) {
+  .agentPerformance-table .table-content {
+    height: calc(100vh - 412px);
+  }
+}
+
+@media all and (max-width: 1560px) and (min-width: 1366px) {
+  .btn-1, .btn-2 {
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  .mid-section {
+    height: calc(100vh - 266px);
+    min-height: 508px;
+  }
+ 
+  .scorefilter .filter-range {
+    margin-top: 5px;
+  }
+
+    .scorefilter .filter-range .block {
+      margin-right: .25rem;
+    }
+
+    .scorefilter .filter-range .block {
+      width: calc((100% - 30px) / 2);
+    }
+
+  .agent-table-details {
+    height: calc(100vh - 300px);
+    overflow-y: auto;
+  }
+
+  .agentPerformance-table .title .item {
+    font-size: 12px;
+  }
+
+   
+  .agentPerformance-table .table-content, .question-table .table-content {
+    height: calc(100vh - 412px);
+    min-height: 385px;
+  }
+
+  .call-recording-tabs .call-recording-navitem label span, .date-filter-main span {
+    font-size: 1.6rem;
+  }
+}
+/*.categoryList .dropdown-item:hover {
+  color: #fff;
+}*/
+
+.subCategory {
+  display: block;
+  position: relative;
+}
+
+.innerDropDown {
+  display: none;
+  position: absolute;
+  right: 99%;
+  background: #fff;
+  top: 0;
+}
+
+.subCategory:hover .innerDropDown {
+  display: block;
+  list-style: none;
+}
+
+.categoryList a:hover,
+.categoryList a:focus,
+.categoryList a:visited,
+.categoryList a:active {
+  background: #293f56;
+  color: #fff;
+}
+
+.orderBy {
+  position: absolute;
+  right: 5px;
+  bottom: 6px;
+}
+
+.call-details {
+  display: inline-block;
+  width: calc((100% - 50px) / 3);
+  color: #293f56;
+  margin-top: 5px;
+  margin-right: 10px;
+  text-align: right;
+}
+
+  .call-details h6 {
+    font-weight: bold;
+  }
+
+.editscore {
+  color: #293F56 !important;
+  text-decoration: none;
+  cursor: pointer !important;
+}
+
+
+a img {
+  cursor: pointer;
+}
+.disabledFields input, .disabledFields select, .disabledFields textarea {
+  pointer-events: none;
+  background: #eee;
+}
+.disabledFields button{
+  display: none;
+}
+.orderBy {
+  position: absolute;
+  right: 5px;
+  bottom: 6px;
+}
+.newModel .body{
+  max-height: calc(100vh - 200px);
+  width: 600px;
+}
+  .newModel .body textarea, .newModel .body select{
+    font-size: 13px;
+  }
+
+
+.anchor_text {
+  font-size: 13px;
+  text-decoration: underline !important;
+  color: #293F56;
+}
+.approved input,
+.approved textarea,
+.approved select {
+  opacity: .5;
+  background: #ececec;
+  pointer-events: none;
+}
+
+.approved button {
+  pointer-events: none;
+  opacity: .7;
+  cursor: not-allowed;
+}
+.finalStatusDropDown ul {
+  margin: 10px;
+  padding:0;
+  list-style: none;
+  box-shadow: 0 1px 5px #959595;
+}
+  .finalStatusDropDown ul li {
+    padding: 5px 10px;
+  }
+  .categoryList.dropdownFixes {
+    right: 0;
+    left: auto;
+  }
+
+  /**checkbox***/

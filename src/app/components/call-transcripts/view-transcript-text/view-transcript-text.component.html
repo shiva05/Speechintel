@@ -1,0 +1,47 @@
+<div class="view-transcript scoreDetails-Transcript">
+  <div class="transcriptOptions" *ngIf="searchClick">
+    <div class="searchTranscript" *ngIf="searchClick">
+      <input type="search" class="form-control searchInput" name="search" id="search-input" [(ngModel)]="transcriptFilter" placeholder="Search Transcript">
+      <button type="submit" class="searchIcon" title="previous word" (click)="previousWord()">
+        <i class="fa fa-angle-up"></i>
+      </button>
+      <button type="submit" class="searchIcon" title="next word" (click)="nextWord()">
+        <i class="fa fa-angle-down"></i>
+      </button>
+    </div>
+    <div class="searchTranscript replaceInput" *ngIf="searchClick">
+      <input type="search" class="form-control replaceText inputText" name="replace" id="replace-text" [(ngModel)]="replaceText" placeholder="Replace">
+      <div class="replaceBtnsGroup">
+        <button class="replaceBtn topBorder" (click)="replace()">Replace</button>
+        <button class="replaceBtn bottomBorder" (click)="replaceAll()">Replace All</button>
+      </div>
+    </div>
+  </div>
+  <div class="transcriptWrapper" [ngClass]="{'moveDown': searchClick}">
+    <div *ngFor="let t of transcription; let i = index" class="speakerTranscript speaker callexplorer" [ngClass]="transcription.length > 1 ? '' : 'fullheightChat'">
+      <div class="speakerDifferenciation" [ngClass]="t.SpeakerTranscript.Speaker === 'Speaker 0' ? 'agentChat' : 'customerChat' ">
+
+        <span class="agentIcon" *ngIf="i<2">
+          <span class="AgentTitle"> Agent </span> {{dataService.selectedFile.AgentName}}
+        </span>
+        <span class="customerIcon mr-2" *ngIf="i<2">
+          <!--<img src="../assets/images/user.png" name="customer icon" alt="image" class="" />-->
+          Customer
+        </span>
+        <span #speaker class="transcriptDetails transcriptSpeaker" (keyup)="speakerChange(i, t.SpeakerTranscript.Speaker, speaker)" (blur)="onBlur()" [attr.contenteditable]="!authService.restrictedUser">
+          <!--{{t.SpeakerTranscript.Speaker}}-->
+        </span>
+        <!--<span class="transcriptDetails duration" *ngIf="t.SpeakerTranscript.Content[0].Begin != undefined">
+    {{dataService.formatTime(t.SpeakerTranscript.Content[0].Begin)}}
+  </span>-->
+        <span class="wordTranscript">
+          <app-view-transcript-data [selectedTagType]="selectedTagType" [transcriptIndex]=i [transcriptFilter]="transcriptFilter" [replaceText]="replaceText" [transcript]="t.SpeakerTranscript.Content" [originalData]="transcription"></app-view-transcript-data>
+        </span>
+      </div>
+      </div>
+  </div>
+  <!--<span class="wordTranscript">
+    <app-view-transcript-data [selectedTagType]="selectedTagType" [transcriptIndex]=i [transcriptFilter]="transcriptFilter" [replaceText]="replaceText" [transcript]="t.SpeakerTranscript.Content" [originalData]="transcription"></app-view-transcript-data>
+  </span>-->
+  
+</div>
